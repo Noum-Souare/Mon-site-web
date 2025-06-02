@@ -536,9 +536,10 @@ body {
 
 .services-grid {
   display: grid;
-  grid-template-columns: repeat(auto-fit, minmax(350px, 1fr));
+  grid-template-columns: repeat(auto-fit, minmax(320px, 1fr));
   gap: 2rem;
   margin-top: 3rem;
+  justify-items: center;
 }
 
 .service-card {
@@ -1575,6 +1576,14 @@ body {
 
   .services-grid {
     grid-template-columns: 1fr;
+    gap: 1.5rem;
+    padding: 0 1rem;
+    justify-items: center;
+  }
+
+  .service-card {
+    max-width: 100%;
+    width: 100%;
   }
 
   .workflow-steps {
