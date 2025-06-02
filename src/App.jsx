@@ -1,6 +1,63 @@
 import React, { useState, useEffect } from 'react'
 import './App.css'
 
+// Composants réutilisables
+const FeatureBlock = ({ color, gradient, icon, title, children, borderColor }) => (
+  <div className={`feature-block feature-block--${color}`} style={{
+    background: gradient,
+    borderLeftColor: borderColor
+  }}>
+    <h5 style={{ color: borderColor }}>{icon} {title}</h5>
+    {children}
+  </div>
+)
+
+const StatCard = ({ value, label, color = 'var(--primary-blue)' }) => (
+  <div className="stat-card">
+    <div className="stat-value" style={{ color }}>{value}</div>
+    <div className="stat-label">{label}</div>
+  </div>
+)
+
+const ServiceCard = ({ icon, title, description }) => (
+  <div className="service-card-grid">
+    <div className="service-card-icon">{icon}</div>
+    <div className="service-card-title">{title}</div>
+    <div className="service-card-description">{description}</div>
+  </div>
+)
+
+const StatsGrid = ({ title, stats }) => (
+  <div className="stats-section">
+    <h4 className="stats-title">{title}</h4>
+    <div className="stats-grid">
+      {stats.map((stat, index) => (
+        <StatCard key={index} {...stat} />
+      ))}
+    </div>
+  </div>
+)
+
+// Constantes pour les thèmes de couleurs
+const THEME_COLORS = {
+  blue: {
+    color: 'var(--primary-blue)',
+    gradient: 'linear-gradient(135deg, #f8f9ff 0%, #e8f2ff 100%)'
+  },
+  lightBlue: {
+    color: '#4285f4',
+    gradient: 'linear-gradient(135deg, #f0f8ff 0%, #e0f0ff 100%)'
+  },
+  orange: {
+    color: '#ff9800',
+    gradient: 'linear-gradient(135deg, #fff8f0 0%, #ffe8d0 100%)'
+  },
+  green: {
+    color: '#4caf50',
+    gradient: 'linear-gradient(135deg, #f0fff0 0%, #e0ffe0 100%)'
+  }
+}
+
 function App() {
   const [selectedDate, setSelectedDate] = useState(null)
   const [selectedTime, setSelectedTime] = useState(null)
@@ -38,43 +95,63 @@ function App() {
           <h4 style="color: var(--primary-blue); margin-bottom: 1.5rem; font-size: 1.3rem;">🎯 Notre expertise complète :</h4>
         </div>
         
-        <div style="margin-bottom: 2.5rem; padding: 1.5rem; background: linear-gradient(135deg, #f8f9ff 0%, #e8f2ff 100%); border-radius: 12px; border-left: 4px solid var(--primary-blue);">
-          <h5 style="color: var(--primary-blue); font-weight: bold; font-size: 1.1rem; margin-bottom: 1rem;">🌐 Applications Web Modernes</h5>
-          <ul style="line-height: 1.8; margin-left: 1rem;">
+        <FeatureBlock 
+          color="blue" 
+          gradient={THEME_COLORS.blue.gradient}
+          borderColor={THEME_COLORS.blue.color}
+          icon="🌐" 
+          title="Applications Web Modernes"
+        >
+          <ul>
             <li>SPAs React/Vue.js/Angular haute performance</li>
             <li>PWAs avec fonctionnalités offline</li>
             <li>Applications temps réel WebSockets</li>
           </ul>
-        </div>
+        </FeatureBlock>
         
-        <div style="margin-bottom: 2.5rem; padding: 1.5rem; background: linear-gradient(135deg, #f0f8ff 0%, #e0f0ff 100%); border-radius: 12px; border-left: 4px solid #4285f4;">
-          <h5 style="color: #4285f4; font-weight: bold; font-size: 1.1rem; margin-bottom: 1rem;">📱 Applications Mobiles</h5>
-          <ul style="line-height: 1.8; margin-left: 1rem;">
+        <FeatureBlock 
+          color="lightBlue" 
+          gradient={THEME_COLORS.lightBlue.gradient}
+          borderColor={THEME_COLORS.lightBlue.color}
+          icon="📱" 
+          title="Applications Mobiles"
+        >
+          <ul>
             <li>iOS natif (Swift/SwiftUI)</li>
             <li>Android natif (Kotlin/Jetpack Compose)</li>
             <li>Cross-platform (React Native, Flutter)</li>
           </ul>
-        </div>
+        </FeatureBlock>
         
-        <div style="margin-bottom: 2.5rem; padding: 1.5rem; background: linear-gradient(135deg, #fff8f0 0%, #ffe8d0 100%); border-radius: 12px; border-left: 4px solid #ff9800;">
-          <h5 style="color: #ff9800; font-weight: bold; font-size: 1.1rem; margin-bottom: 1rem;">💻 Applications Desktop</h5>
-          <ul style="line-height: 1.8; margin-left: 1rem;">
+        <FeatureBlock 
+          color="orange" 
+          gradient={THEME_COLORS.orange.gradient}
+          borderColor={THEME_COLORS.orange.color}
+          icon="💻" 
+          title="Applications Desktop"
+        >
+          <ul>
             <li>Electron pour applications cross-platform</li>
             <li>.NET MAUI pour Windows/macOS/Linux</li>
             <li>Qt et Tauri pour performance native</li>
           </ul>
-        </div>
+        </FeatureBlock>
         
-        <div style="margin-bottom: 2.5rem; padding: 1.5rem; background: linear-gradient(135deg, #f0fff0 0%, #e0ffe0 100%); border-radius: 12px; border-left: 4px solid #4caf50;">
-          <h5 style="color: #4caf50; font-weight: bold; font-size: 1.1rem; margin-bottom: 1rem;">⚙️ Backend & Infrastructure</h5>
-          <ul style="line-height: 1.8; margin-left: 1rem;">
+        <FeatureBlock 
+          color="green" 
+          gradient={THEME_COLORS.green.gradient}
+          borderColor={THEME_COLORS.green.color}
+          icon="⚙️" 
+          title="Backend & Infrastructure"
+        >
+          <ul>
             <li>APIs REST/GraphQL avec Spring Boot, Node.js, Express.js</li>
             <li>Python (Django, FastAPI), PHP (Symfony)</li>
             <li>Microservices et architectures serverless</li>
             <li>Bases de données relationnelles (PostgreSQL, MySQL) et NoSQL (MongoDB, Redis)</li>
             <li>Cloud & DevOps (AWS, Azure, GCP)</li>
           </ul>
-        </div>
+        </FeatureBlock>
         
         <div style="margin-bottom: 2.5rem; padding: 2rem; background: linear-gradient(135deg, #faf5ff 0%, #f3e8ff 100%); border-radius: 16px; border: 2px solid #9c27b0;">
           <h4 style="color: #9c27b0; font-weight: bold; font-size: 1.3rem; margin-bottom: 1.5rem; text-align: center;">🚀 Quelques solutions que nous développons</h4>
