@@ -30,7 +30,7 @@ function App() {
         <div style="margin-bottom: 2.5rem; padding: 1.5rem; background: linear-gradient(135deg, #f8f9ff 0%, #e8f2ff 100%); border-radius: 12px; border-left: 4px solid var(--primary-blue);">
           <h5 style="color: var(--primary-blue); font-weight: bold; font-size: 1.1rem; margin-bottom: 1rem;">🌐 Applications Web Modernes</h5>
           <ul style="line-height: 1.8; margin-left: 1rem;">
-            <li>SPAs React/Vue.js haute performance</li>
+            <li>SPAs React/Vue.js/Angular haute performance</li>
             <li>PWAs avec fonctionnalités offline</li>
             <li>Applications temps réel WebSockets</li>
           </ul>
@@ -57,17 +57,55 @@ function App() {
         <div style="margin-bottom: 2.5rem; padding: 1.5rem; background: linear-gradient(135deg, #f0fff0 0%, #e0ffe0 100%); border-radius: 12px; border-left: 4px solid #4caf50;">
           <h5 style="color: #4caf50; font-weight: bold; font-size: 1.1rem; margin-bottom: 1rem;">⚙️ Backend & Infrastructure</h5>
           <ul style="line-height: 1.8; margin-left: 1rem;">
-            <li>APIs REST/GraphQL scalables</li>
+            <li>APIs REST/GraphQL avec Spring Boot, Node.js, Express.js</li>
+            <li>Python (Django, FastAPI), PHP (Symfony)</li>
             <li>Microservices et architectures serverless</li>
+            <li>Bases de données relationnelles (PostgreSQL, MySQL) et NoSQL (MongoDB, Redis)</li>
             <li>Cloud & DevOps (AWS, Azure, GCP)</li>
           </ul>
+        </div>
+        
+        <div style="margin-bottom: 2.5rem; padding: 2rem; background: linear-gradient(135deg, #faf5ff 0%, #f3e8ff 100%); border-radius: 16px; border: 2px solid #9c27b0;">
+          <h4 style="color: #9c27b0; font-weight: bold; font-size: 1.3rem; margin-bottom: 1.5rem; text-align: center;">🚀 Quelques solutions que nous développons</h4>
+          <div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(280px, 1fr)); gap: 1.5rem; margin-top: 1.5rem;">
+            <div style="text-align: center; padding: 1.5rem; background: white; border-radius: 12px; box-shadow: 0 4px 12px rgba(156, 39, 176, 0.1); border: 1px solid #e8d5f2;">
+              <div style="font-size: 2.5rem; margin-bottom: 1rem;">💼</div>
+              <div style="font-size: 1.1rem; font-weight: bold; color: #9c27b0; margin-bottom: 0.5rem;">SaaS</div>
+              <div style="font-size: 0.9rem; color: #666;">Plateformes logicielles en tant que service</div>
+            </div>
+            <div style="text-align: center; padding: 1.5rem; background: white; border-radius: 12px; box-shadow: 0 4px 12px rgba(156, 39, 176, 0.1); border: 1px solid #e8d5f2;">
+              <div style="font-size: 2.5rem; margin-bottom: 1rem;">🛒</div>
+              <div style="font-size: 1.1rem; font-weight: bold; color: #9c27b0; margin-bottom: 0.5rem;">E-commerce</div>
+              <div style="font-size: 0.9rem; color: #666;">Boutiques en ligne et marketplaces</div>
+            </div>
+            <div style="text-align: center; padding: 1.5rem; background: white; border-radius: 12px; box-shadow: 0 4px 12px rgba(156, 39, 176, 0.1); border: 1px solid #e8d5f2;">
+              <div style="font-size: 2.5rem; margin-bottom: 1rem;">🏥</div>
+              <div style="font-size: 1.1rem; font-weight: bold; color: #9c27b0; margin-bottom: 0.5rem;">Santé digitale</div>
+              <div style="font-size: 0.9rem; color: #666;">Applications médicales et télémédecine</div>
+            </div>
+            <div style="text-align: center; padding: 1.5rem; background: white; border-radius: 12px; box-shadow: 0 4px 12px rgba(156, 39, 176, 0.1); border: 1px solid #e8d5f2;">
+              <div style="font-size: 2.5rem; margin-bottom: 1rem;">🎓</div>
+              <div style="font-size: 1.1rem; font-weight: bold; color: #9c27b0; margin-bottom: 0.5rem;">EdTech</div>
+              <div style="font-size: 0.9rem; color: #666;">Plateformes d'apprentissage en ligne</div>
+            </div>
+            <div style="text-align: center; padding: 1.5rem; background: white; border-radius: 12px; box-shadow: 0 4px 12px rgba(156, 39, 176, 0.1); border: 1px solid #e8d5f2;">
+              <div style="font-size: 2.5rem; margin-bottom: 1rem;">🏦</div>
+              <div style="font-size: 1.1rem; font-weight: bold; color: #9c27b0; margin-bottom: 0.5rem;">FinTech</div>
+              <div style="font-size: 0.9rem; color: #666;">Solutions financières et paiements</div>
+            </div>
+            <div style="text-align: center; padding: 1.5rem; background: white; border-radius: 12px; box-shadow: 0 4px 12px rgba(156, 39, 176, 0.1); border: 1px solid #e8d5f2;">
+              <div style="font-size: 2.5rem; margin-bottom: 1rem;">🏭</div>
+              <div style="font-size: 1.1rem; font-weight: bold; color: #9c27b0; margin-bottom: 0.5rem;">IoT & Industrie 4.0</div>
+              <div style="font-size: 0.9rem; color: #666;">Solutions connectées et automatisation</div>
+            </div>
+          </div>
         </div>
         
         <div style="margin-top: 3rem; padding: 2rem; background: linear-gradient(135deg, #f5f8ff 0%, #e8f2ff 100%); border-radius: 16px; border: 2px solid var(--primary-blue); box-shadow: 0 8px 24px rgba(0, 102, 255, 0.1);">
           <h4 style="color: var(--primary-blue); font-weight: bold; font-size: 1.3rem; margin-bottom: 1.5rem; text-align: center;">📊 Résultats exceptionnels</h4>
           <div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(250px, 1fr)); gap: 1.5rem; margin-top: 1.5rem;">
             <div style="text-align: center; padding: 1rem; background: white; border-radius: 12px; box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);">
-              <div style="font-size: 2rem; font-weight: bold; color: var(--primary-blue); margin-bottom: 0.5rem;">150+</div>
+              <div style="font-size: 2rem; font-weight: bold; color: var(--primary-blue); margin-bottom: 0.5rem;">15+</div>
               <div style="font-size: 0.9rem; color: #666;">Projets livrés avec succès</div>
             </div>
             <div style="text-align: center; padding: 1rem; background: white; border-radius: 12px; box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);">
@@ -164,6 +202,42 @@ function App() {
             <li>Gestion autonome de votre contenu</li>
             <li>Formation incluse et support technique</li>
           </ul>
+        </div>
+        
+        <div style="margin-bottom: 2.5rem; padding: 2rem; background: linear-gradient(135deg, #faf5ff 0%, #f3e8ff 100%); border-radius: 16px; border: 2px solid #9c27b0;">
+          <h4 style="color: #9c27b0; font-weight: bold; font-size: 1.3rem; margin-bottom: 1.5rem; text-align: center;">🎨 Types de sites vitrines que nous créons</h4>
+          <div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(280px, 1fr)); gap: 1.5rem; margin-top: 1.5rem;">
+            <div style="text-align: center; padding: 1.5rem; background: white; border-radius: 12px; box-shadow: 0 4px 12px rgba(156, 39, 176, 0.1); border: 1px solid #e8d5f2;">
+              <div style="font-size: 2.5rem; margin-bottom: 1rem;">🏢</div>
+              <div style="font-size: 1.1rem; font-weight: bold; color: #9c27b0; margin-bottom: 0.5rem;">Corporate</div>
+              <div style="font-size: 0.9rem; color: #666;">Sites d'entreprise professionnels</div>
+            </div>
+            <div style="text-align: center; padding: 1.5rem; background: white; border-radius: 12px; box-shadow: 0 4px 12px rgba(156, 39, 176, 0.1); border: 1px solid #e8d5f2;">
+              <div style="font-size: 2.5rem; margin-bottom: 1rem;">🎨</div>
+              <div style="font-size: 1.1rem; font-weight: bold; color: #9c27b0; margin-bottom: 0.5rem;">Portfolio</div>
+              <div style="font-size: 0.9rem; color: #666;">Mise en valeur créative</div>
+            </div>
+            <div style="text-align: center; padding: 1.5rem; background: white; border-radius: 12px; box-shadow: 0 4px 12px rgba(156, 39, 176, 0.1); border: 1px solid #e8d5f2;">
+              <div style="font-size: 2.5rem; margin-bottom: 1rem;">🏨</div>
+              <div style="font-size: 1.1rem; font-weight: bold; color: #9c27b0; margin-bottom: 0.5rem;">Hôtellerie</div>
+              <div style="font-size: 0.9rem; color: #666;">Réservation et présentation</div>
+            </div>
+            <div style="text-align: center; padding: 1.5rem; background: white; border-radius: 12px; box-shadow: 0 4px 12px rgba(156, 39, 176, 0.1); border: 1px solid #e8d5f2;">
+              <div style="font-size: 2.5rem; margin-bottom: 1rem;">🍽️</div>
+              <div style="font-size: 1.1rem; font-weight: bold; color: #9c27b0; margin-bottom: 0.5rem;">Restauration</div>
+              <div style="font-size: 0.9rem; color: #666;">Menus et commandes en ligne</div>
+            </div>
+            <div style="text-align: center; padding: 1.5rem; background: white; border-radius: 12px; box-shadow: 0 4px 12px rgba(156, 39, 176, 0.1); border: 1px solid #e8d5f2;">
+              <div style="font-size: 2.5rem; margin-bottom: 1rem;">🏥</div>
+              <div style="font-size: 1.1rem; font-weight: bold; color: #9c27b0; margin-bottom: 0.5rem;">Médical</div>
+              <div style="font-size: 0.9rem; color: #666;">Prise de rendez-vous en ligne</div>
+            </div>
+            <div style="text-align: center; padding: 1.5rem; background: white; border-radius: 12px; box-shadow: 0 4px 12px rgba(156, 39, 176, 0.1); border: 1px solid #e8d5f2;">
+              <div style="font-size: 2.5rem; margin-bottom: 1rem;">🎓</div>
+              <div style="font-size: 1.1rem; font-weight: bold; color: #9c27b0; margin-bottom: 0.5rem;">Éducation</div>
+              <div style="font-size: 0.9rem; color: #666;">Établissements et formations</div>
+            </div>
+          </div>
         </div>
         
         <div style="margin-top: 3rem; padding: 2rem; background: linear-gradient(135deg, #f5f8ff 0%, #e8f2ff 100%); border-radius: 16px; border: 2px solid var(--primary-blue); box-shadow: 0 8px 24px rgba(0, 102, 255, 0.1);">
@@ -269,6 +343,42 @@ function App() {
           </ul>
         </div>
         
+        <div style="margin-bottom: 2.5rem; padding: 2rem; background: linear-gradient(135deg, #faf5ff 0%, #f3e8ff 100%); border-radius: 16px; border: 2px solid #9c27b0;">
+          <h4 style="color: #9c27b0; font-weight: bold; font-size: 1.3rem; margin-bottom: 1.5rem; text-align: center;">🤖 Solutions IA que nous développons</h4>
+          <div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(280px, 1fr)); gap: 1.5rem; margin-top: 1.5rem;">
+            <div style="text-align: center; padding: 1.5rem; background: white; border-radius: 12px; box-shadow: 0 4px 12px rgba(156, 39, 176, 0.1); border: 1px solid #e8d5f2;">
+              <div style="font-size: 2.5rem; margin-bottom: 1rem;">🧠</div>
+              <div style="font-size: 1.1rem; font-weight: bold; color: #9c27b0; margin-bottom: 0.5rem;">Chatbots intelligents</div>
+              <div style="font-size: 0.9rem; color: #666;">Assistants virtuels et support client IA</div>
+            </div>
+            <div style="text-align: center; padding: 1.5rem; background: white; border-radius: 12px; box-shadow: 0 4px 12px rgba(156, 39, 176, 0.1); border: 1px solid #e8d5f2;">
+              <div style="font-size: 2.5rem; margin-bottom: 1rem;">📈</div>
+              <div style="font-size: 1.1rem; font-weight: bold; color: #9c27b0; margin-bottom: 0.5rem;">Analytics prédictifs</div>
+              <div style="font-size: 0.9rem; color: #666;">Prévisions et optimisation métier</div>
+            </div>
+            <div style="text-align: center; padding: 1.5rem; background: white; border-radius: 12px; box-shadow: 0 4px 12px rgba(156, 39, 176, 0.1); border: 1px solid #e8d5f2;">
+              <div style="font-size: 2.5rem; margin-bottom: 1rem;">👁️</div>
+              <div style="font-size: 1.1rem; font-weight: bold; color: #9c27b0; margin-bottom: 0.5rem;">Vision par ordinateur</div>
+              <div style="font-size: 0.9rem; color: #666;">Reconnaissance et analyse d'images</div>
+            </div>
+            <div style="text-align: center; padding: 1.5rem; background: white; border-radius: 12px; box-shadow: 0 4px 12px rgba(156, 39, 176, 0.1); border: 1px solid #e8d5f2;">
+              <div style="font-size: 2.5rem; margin-bottom: 1rem;">🔍</div>
+              <div style="font-size: 1.1rem; font-weight: bold; color: #9c27b0; margin-bottom: 0.5rem;">Détection d'anomalies</div>
+              <div style="font-size: 0.9rem; color: #666;">Surveillance intelligente et alertes</div>
+            </div>
+            <div style="text-align: center; padding: 1.5rem; background: white; border-radius: 12px; box-shadow: 0 4px 12px rgba(156, 39, 176, 0.1); border: 1px solid #e8d5f2;">
+              <div style="font-size: 2.5rem; margin-bottom: 1rem;">📊</div>
+              <div style="font-size: 1.1rem; font-weight: bold; color: #9c27b0; margin-bottom: 0.5rem;">Tableaux de bord IA</div>
+              <div style="font-size: 0.9rem; color: #666;">Dashboards intelligents temps réel</div>
+            </div>
+            <div style="text-align: center; padding: 1.5rem; background: white; border-radius: 12px; box-shadow: 0 4px 12px rgba(156, 39, 176, 0.1); border: 1px solid #e8d5f2;">
+              <div style="font-size: 2.5rem; margin-bottom: 1rem;">🤖</div>
+              <div style="font-size: 1.1rem; font-weight: bold; color: #9c27b0; margin-bottom: 0.5rem;">Automatisation RPA</div>
+              <div style="font-size: 0.9rem; color: #666;">Processus métier automatisés</div>
+            </div>
+          </div>
+        </div>
+        
         <div style="margin-top: 3rem; padding: 2rem; background: linear-gradient(135deg, #f5f8ff 0%, #e8f2ff 100%); border-radius: 16px; border: 2px solid var(--primary-blue); box-shadow: 0 8px 24px rgba(0, 102, 255, 0.1);">
           <h4 style="color: var(--primary-blue); font-weight: bold; font-size: 1.3rem; margin-bottom: 1.5rem; text-align: center;">💰 ROI impressionnant</h4>
           <div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(250px, 1fr)); gap: 1.5rem; margin-top: 1.5rem;">
@@ -370,6 +480,42 @@ function App() {
             <li>Sauvegardes ultra-sécurisées et disaster recovery</li>
             <li>Solutions IAM, PAM et gestion des identités</li>
           </ul>
+        </div>
+        
+        <div style="margin-bottom: 2.5rem; padding: 2rem; background: linear-gradient(135deg, #faf5ff 0%, #f3e8ff 100%); border-radius: 16px; border: 2px solid #9c27b0;">
+          <h4 style="color: #9c27b0; font-weight: bold; font-size: 1.3rem; margin-bottom: 1.5rem; text-align: center;">🛡️ Solutions cybersécurité que nous déployons</h4>
+          <div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(280px, 1fr)); gap: 1.5rem; margin-top: 1.5rem;">
+            <div style="text-align: center; padding: 1.5rem; background: white; border-radius: 12px; box-shadow: 0 4px 12px rgba(156, 39, 176, 0.1); border: 1px solid #e8d5f2;">
+              <div style="font-size: 2.5rem; margin-bottom: 1rem;">🔍</div>
+              <div style="font-size: 1.1rem; font-weight: bold; color: #9c27b0; margin-bottom: 0.5rem;">Audit sécurité</div>
+              <div style="font-size: 0.9rem; color: #666;">Tests d'intrusion et évaluation</div>
+            </div>
+            <div style="text-align: center; padding: 1.5rem; background: white; border-radius: 12px; box-shadow: 0 4px 12px rgba(156, 39, 176, 0.1); border: 1px solid #e8d5f2;">
+              <div style="font-size: 2.5rem; margin-bottom: 1rem;">🚨</div>
+              <div style="font-size: 1.1rem; font-weight: bold; color: #9c27b0; margin-bottom: 0.5rem;">SOC 24/7</div>
+              <div style="font-size: 0.9rem; color: #666;">Centre opérationnel sécurité</div>
+            </div>
+            <div style="text-align: center; padding: 1.5rem; background: white; border-radius: 12px; box-shadow: 0 4px 12px rgba(156, 39, 176, 0.1); border: 1px solid #e8d5f2;">
+              <div style="font-size: 2.5rem; margin-bottom: 1rem;">🔥</div>
+              <div style="font-size: 1.1rem; font-weight: bold; color: #9c27b0; margin-bottom: 0.5rem;">Firewall Zero Trust</div>
+              <div style="font-size: 0.9rem; color: #666;">Architecture sécurisée avancée</div>
+            </div>
+            <div style="text-align: center; padding: 1.5rem; background: white; border-radius: 12px; box-shadow: 0 4px 12px rgba(156, 39, 176, 0.1); border: 1px solid #e8d5f2;">
+              <div style="font-size: 2.5rem; margin-bottom: 1rem;">🎓</div>
+              <div style="font-size: 1.1rem; font-weight: bold; color: #9c27b0; margin-bottom: 0.5rem;">Formation équipes</div>
+              <div style="font-size: 0.9rem; color: #666;">Sensibilisation cybersécurité</div>
+            </div>
+            <div style="text-align: center; padding: 1.5rem; background: white; border-radius: 12px; box-shadow: 0 4px 12px rgba(156, 39, 176, 0.1); border: 1px solid #e8d5f2;">
+              <div style="font-size: 2.5rem; margin-bottom: 1rem;">🔐</div>
+              <div style="font-size: 1.1rem; font-weight: bold; color: #9c27b0; margin-bottom: 0.5rem;">Gestion identités</div>
+              <div style="font-size: 0.9rem; color: #666;">IAM et contrôle d'accès</div>
+            </div>
+            <div style="text-align: center; padding: 1.5rem; background: white; border-radius: 12px; box-shadow: 0 4px 12px rgba(156, 39, 176, 0.1); border: 1px solid #e8d5f2;">
+              <div style="font-size: 2.5rem; margin-bottom: 1rem;">💾</div>
+              <div style="font-size: 1.1rem; font-weight: bold; color: #9c27b0; margin-bottom: 0.5rem;">Plan de continuité</div>
+              <div style="font-size: 0.9rem; color: #666;">Sauvegarde et disaster recovery</div>
+            </div>
+          </div>
         </div>
         
         <div style="margin-top: 3rem; padding: 2rem; background: linear-gradient(135deg, #f5f8ff 0%, #e8f2ff 100%); border-radius: 16px; border: 2px solid var(--primary-blue); box-shadow: 0 8px 24px rgba(0, 102, 255, 0.1);">
@@ -475,6 +621,42 @@ function App() {
           </ul>
         </div>
         
+        <div style="margin-bottom: 2.5rem; padding: 2rem; background: linear-gradient(135deg, #faf5ff 0%, #f3e8ff 100%); border-radius: 16px; border: 2px solid #9c27b0;">
+          <h4 style="color: #9c27b0; font-weight: bold; font-size: 1.3rem; margin-bottom: 1.5rem; text-align: center;">⛓️ Solutions blockchain que nous développons</h4>
+          <div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(280px, 1fr)); gap: 1.5rem; margin-top: 1.5rem;">
+            <div style="text-align: center; padding: 1.5rem; background: white; border-radius: 12px; box-shadow: 0 4px 12px rgba(156, 39, 176, 0.1); border: 1px solid #e8d5f2;">
+              <div style="font-size: 2.5rem; margin-bottom: 1rem;">🏪</div>
+              <div style="font-size: 1.1rem; font-weight: bold; color: #9c27b0; margin-bottom: 0.5rem;">Marketplaces NFT</div>
+              <div style="font-size: 0.9rem; color: #666;">Plateformes de trading et certification</div>
+            </div>
+            <div style="text-align: center; padding: 1.5rem; background: white; border-radius: 12px; box-shadow: 0 4px 12px rgba(156, 39, 176, 0.1); border: 1px solid #e8d5f2;">
+              <div style="font-size: 2.5rem; margin-bottom: 1rem;">🏦</div>
+              <div style="font-size: 1.1rem; font-weight: bold; color: #9c27b0; margin-bottom: 0.5rem;">Protocoles DeFi</div>
+              <div style="font-size: 0.9rem; color: #666;">Lending, staking et échanges décentralisés</div>
+            </div>
+            <div style="text-align: center; padding: 1.5rem; background: white; border-radius: 12px; box-shadow: 0 4px 12px rgba(156, 39, 176, 0.1); border: 1px solid #e8d5f2;">
+              <div style="font-size: 2.5rem; margin-bottom: 1rem;">📦</div>
+              <div style="font-size: 1.1rem; font-weight: bold; color: #9c27b0; margin-bottom: 0.5rem;">Supply Chain</div>
+              <div style="font-size: 0.9rem; color: #666;">Traçabilité et anti-contrefaçon</div>
+            </div>
+            <div style="text-align: center; padding: 1.5rem; background: white; border-radius: 12px; box-shadow: 0 4px 12px rgba(156, 39, 176, 0.1); border: 1px solid #e8d5f2;">
+              <div style="font-size: 2.5rem; margin-bottom: 1rem;">🗳️</div>
+              <div style="font-size: 1.1rem; font-weight: bold; color: #9c27b0; margin-bottom: 0.5rem;">Gouvernance DAO</div>
+              <div style="font-size: 0.9rem; color: #666;">Organisations décentralisées autonomes</div>
+            </div>
+            <div style="text-align: center; padding: 1.5rem; background: white; border-radius: 12px; box-shadow: 0 4px 12px rgba(156, 39, 176, 0.1); border: 1px solid #e8d5f2;">
+              <div style="font-size: 2.5rem; margin-bottom: 1rem;">💎</div>
+              <div style="font-size: 1.1rem; font-weight: bold; color: #9c27b0; margin-bottom: 0.5rem;">Tokenisation</div>
+              <div style="font-size: 0.9rem; color: #666;">Actifs numériques et physiques</div>
+            </div>
+            <div style="text-align: center; padding: 1.5rem; background: white; border-radius: 12px; box-shadow: 0 4px 12px rgba(156, 39, 176, 0.1); border: 1px solid #e8d5f2;">
+              <div style="font-size: 2.5rem; margin-bottom: 1rem;">🔐</div>
+              <div style="font-size: 1.1rem; font-weight: bold; color: #9c27b0; margin-bottom: 0.5rem;">Identité digitale</div>
+              <div style="font-size: 0.9rem; color: #666;">KYC/AML et vérification décentralisée</div>
+            </div>
+          </div>
+        </div>
+        
         <div style="margin-top: 3rem; padding: 2rem; background: linear-gradient(135deg, #f5f8ff 0%, #e8f2ff 100%); border-radius: 16px; border: 2px solid var(--primary-blue); box-shadow: 0 8px 24px rgba(0, 102, 255, 0.1);">
           <h4 style="color: var(--primary-blue); font-weight: bold; font-size: 1.3rem; margin-bottom: 1.5rem; text-align: center;">💎 Avantages concurrentiels</h4>
           <div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(250px, 1fr)); gap: 1.5rem; margin-top: 1.5rem;">
@@ -576,6 +758,42 @@ function App() {
             <li>Sécurité intégrée dès le code (0 vulnérabilité en production)</li>
             <li>Observabilité complète et alerting intelligent</li>
           </ul>
+        </div>
+        
+        <div style="margin-bottom: 2.5rem; padding: 2rem; background: linear-gradient(135deg, #faf5ff 0%, #f3e8ff 100%); border-radius: 16px; border: 2px solid #9c27b0;">
+          <h4 style="color: #9c27b0; font-weight: bold; font-size: 1.3rem; margin-bottom: 1.5rem; text-align: center;">☁️ Solutions cloud que nous déployons</h4>
+          <div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(280px, 1fr)); gap: 1.5rem; margin-top: 1.5rem;">
+            <div style="text-align: center; padding: 1.5rem; background: white; border-radius: 12px; box-shadow: 0 4px 12px rgba(156, 39, 176, 0.1); border: 1px solid #e8d5f2;">
+              <div style="font-size: 2.5rem; margin-bottom: 1rem;">🚀</div>
+              <div style="font-size: 1.1rem; font-weight: bold; color: #9c27b0; margin-bottom: 0.5rem;">Migration cloud</div>
+              <div style="font-size: 0.9rem; color: #666;">AWS, Azure, GCP avec stratégie multi-cloud</div>
+            </div>
+            <div style="text-align: center; padding: 1.5rem; background: white; border-radius: 12px; box-shadow: 0 4px 12px rgba(156, 39, 176, 0.1); border: 1px solid #e8d5f2;">
+              <div style="font-size: 2.5rem; margin-bottom: 1rem;">🏗️</div>
+              <div style="font-size: 1.1rem; font-weight: bold; color: #9c27b0; margin-bottom: 0.5rem;">Infrastructure as Code</div>
+              <div style="font-size: 0.9rem; color: #666;">Terraform, Ansible et automatisation</div>
+            </div>
+            <div style="text-align: center; padding: 1.5rem; background: white; border-radius: 12px; box-shadow: 0 4px 12px rgba(156, 39, 176, 0.1); border: 1px solid #e8d5f2;">
+              <div style="font-size: 2.5rem; margin-bottom: 1rem;">🐳</div>
+              <div style="font-size: 1.1rem; font-weight: bold; color: #9c27b0; margin-bottom: 0.5rem;">Containerisation</div>
+              <div style="font-size: 0.9rem; color: #666;">Docker, Kubernetes et orchestration</div>
+            </div>
+            <div style="text-align: center; padding: 1.5rem; background: white; border-radius: 12px; box-shadow: 0 4px 12px rgba(156, 39, 176, 0.1); border: 1px solid #e8d5f2;">
+              <div style="font-size: 2.5rem; margin-bottom: 1rem;">🔄</div>
+              <div style="font-size: 1.1rem; font-weight: bold; color: #9c27b0; margin-bottom: 0.5rem;">CI/CD Pipelines</div>
+              <div style="font-size: 0.9rem; color: #666;">Déploiements automatisés et sécurisés</div>
+            </div>
+            <div style="text-align: center; padding: 1.5rem; background: white; border-radius: 12px; box-shadow: 0 4px 12px rgba(156, 39, 176, 0.1); border: 1px solid #e8d5f2;">
+              <div style="font-size: 2.5rem; margin-bottom: 1rem;">📊</div>
+              <div style="font-size: 1.1rem; font-weight: bold; color: #9c27b0; margin-bottom: 0.5rem;">Monitoring avancé</div>
+              <div style="font-size: 0.9rem; color: #666;">Prometheus, Grafana et observabilité</div>
+            </div>
+            <div style="text-align: center; padding: 1.5rem; background: white; border-radius: 12px; box-shadow: 0 4px 12px rgba(156, 39, 176, 0.1); border: 1px solid #e8d5f2;">
+              <div style="font-size: 2.5rem; margin-bottom: 1rem;">💰</div>
+              <div style="font-size: 1.1rem; font-weight: bold; color: #9c27b0; margin-bottom: 0.5rem;">FinOps</div>
+              <div style="font-size: 0.9rem; color: #666;">Optimisation des coûts cloud</div>
+            </div>
+          </div>
         </div>
         
         <div style="margin-top: 3rem; padding: 2rem; background: linear-gradient(135deg, #f5f8ff 0%, #e8f2ff 100%); border-radius: 16px; border: 2px solid var(--primary-blue); box-shadow: 0 8px 24px rgba(0, 102, 255, 0.1);">
@@ -681,6 +899,42 @@ function App() {
           </ul>
         </div>
         
+        <div style="margin-bottom: 2.5rem; padding: 2rem; background: linear-gradient(135deg, #faf5ff 0%, #f3e8ff 100%); border-radius: 16px; border: 2px solid #9c27b0;">
+          <h4 style="color: #9c27b0; font-weight: bold; font-size: 1.3rem; margin-bottom: 1.5rem; text-align: center;">🔧 Services d'exploitation que nous fournissons</h4>
+          <div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(280px, 1fr)); gap: 1.5rem; margin-top: 1.5rem;">
+            <div style="text-align: center; padding: 1.5rem; background: white; border-radius: 12px; box-shadow: 0 4px 12px rgba(156, 39, 176, 0.1); border: 1px solid #e8d5f2;">
+              <div style="font-size: 2.5rem; margin-bottom: 1rem;">📊</div>
+              <div style="font-size: 1.1rem; font-weight: bold; color: #9c27b0; margin-bottom: 0.5rem;">Monitoring 24/7</div>
+              <div style="font-size: 0.9rem; color: #666;">Surveillance continue et alertes proactives</div>
+            </div>
+            <div style="text-align: center; padding: 1.5rem; background: white; border-radius: 12px; box-shadow: 0 4px 12px rgba(156, 39, 176, 0.1); border: 1px solid #e8d5f2;">
+              <div style="font-size: 2.5rem; margin-bottom: 1rem;">🔧</div>
+              <div style="font-size: 1.1rem; font-weight: bold; color: #9c27b0; margin-bottom: 0.5rem;">Maintenance préventive</div>
+              <div style="font-size: 0.9rem; color: #666;">Interventions planifiées et patches</div>
+            </div>
+            <div style="text-align: center; padding: 1.5rem; background: white; border-radius: 12px; box-shadow: 0 4px 12px rgba(156, 39, 176, 0.1); border: 1px solid #e8d5f2;">
+              <div style="font-size: 2.5rem; margin-bottom: 1rem;">🆘</div>
+              <div style="font-size: 1.1rem; font-weight: bold; color: #9c27b0; margin-bottom: 0.5rem;">Support réactif</div>
+              <div style="font-size: 0.9rem; color: #666;">Assistance technique multicanal</div>
+            </div>
+            <div style="text-align: center; padding: 1.5rem; background: white; border-radius: 12px; box-shadow: 0 4px 12px rgba(156, 39, 176, 0.1); border: 1px solid #e8d5f2;">
+              <div style="font-size: 2.5rem; margin-bottom: 1rem;">💾</div>
+              <div style="font-size: 1.1rem; font-weight: bold; color: #9c27b0; margin-bottom: 0.5rem;">Sauvegarde & Recovery</div>
+              <div style="font-size: 0.9rem; color: #666;">Plans de reprise d'activité</div>
+            </div>
+            <div style="text-align: center; padding: 1.5rem; background: white; border-radius: 12px; box-shadow: 0 4px 12px rgba(156, 39, 176, 0.1); border: 1px solid #e8d5f2;">
+              <div style="font-size: 2.5rem; margin-bottom: 1rem;">⚡</div>
+              <div style="font-size: 1.1rem; font-weight: bold; color: #9c27b0; margin-bottom: 0.5rem;">Optimisation</div>
+              <div style="font-size: 0.9rem; color: #666;">Amélioration continue des performances</div>
+            </div>
+            <div style="text-align: center; padding: 1.5rem; background: white; border-radius: 12px; box-shadow: 0 4px 12px rgba(156, 39, 176, 0.1); border: 1px solid #e8d5f2;">
+              <div style="font-size: 2.5rem; margin-bottom: 1rem;">📋</div>
+              <div style="font-size: 1.1rem; font-weight: bold; color: #9c27b0; margin-bottom: 0.5rem;">Gestion des incidents</div>
+              <div style="font-size: 0.9rem; color: #666;">Résolution rapide et documentation</div>
+            </div>
+          </div>
+        </div>
+        
         <div style="margin-top: 3rem; padding: 2rem; background: linear-gradient(135deg, #f5f8ff 0%, #e8f2ff 100%); border-radius: 16px; border: 2px solid var(--primary-blue); box-shadow: 0 8px 24px rgba(0, 102, 255, 0.1);">
           <h4 style="color: var(--primary-blue); font-weight: bold; font-size: 1.3rem; margin-bottom: 1.5rem; text-align: center;">🎯 Performance garantie</h4>
           <div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(250px, 1fr)); gap: 1.5rem; margin-top: 1.5rem;">
@@ -778,6 +1032,42 @@ function App() {
             <li>Interface drag & drop intuitive</li>
             <li>Formation et accompagnement utilisateur</li>
           </ul>
+        </div>
+        
+        <div style="margin-bottom: 2.5rem; padding: 2rem; background: linear-gradient(135deg, #faf5ff 0%, #f3e8ff 100%); border-radius: 16px; border: 2px solid #9c27b0;">
+          <h4 style="color: #9c27b0; font-weight: bold; font-size: 1.3rem; margin-bottom: 1.5rem; text-align: center;">📊 Solutions BI que nous créons</h4>
+          <div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(280px, 1fr)); gap: 1.5rem; margin-top: 1.5rem;">
+            <div style="text-align: center; padding: 1.5rem; background: white; border-radius: 12px; box-shadow: 0 4px 12px rgba(156, 39, 176, 0.1); border: 1px solid #e8d5f2;">
+              <div style="font-size: 2.5rem; margin-bottom: 1rem;">🏢</div>
+              <div style="font-size: 1.1rem; font-weight: bold; color: #9c27b0; margin-bottom: 0.5rem;">Data Warehouse</div>
+              <div style="font-size: 0.9rem; color: #666;">Entrepôts de données centralisés</div>
+            </div>
+            <div style="text-align: center; padding: 1.5rem; background: white; border-radius: 12px; box-shadow: 0 4px 12px rgba(156, 39, 176, 0.1); border: 1px solid #e8d5f2;">
+              <div style="font-size: 2.5rem; margin-bottom: 1rem;">📈</div>
+              <div style="font-size: 1.1rem; font-weight: bold; color: #9c27b0; margin-bottom: 0.5rem;">Dashboards KPI</div>
+              <div style="font-size: 0.9rem; color: #666;">Tableaux de bord temps réel</div>
+            </div>
+            <div style="text-align: center; padding: 1.5rem; background: white; border-radius: 12px; box-shadow: 0 4px 12px rgba(156, 39, 176, 0.1); border: 1px solid #e8d5f2;">
+              <div style="font-size: 2.5rem; margin-bottom: 1rem;">📊</div>
+              <div style="font-size: 1.1rem; font-weight: bold; color: #9c27b0; margin-bottom: 0.5rem;">Cubes OLAP</div>
+              <div style="font-size: 0.9rem; color: #666;">Analyse multidimensionnelle</div>
+            </div>
+            <div style="text-align: center; padding: 1.5rem; background: white; border-radius: 12px; box-shadow: 0 4px 12px rgba(156, 39, 176, 0.1); border: 1px solid #e8d5f2;">
+              <div style="font-size: 2.5rem; margin-bottom: 1rem;">📋</div>
+              <div style="font-size: 1.1rem; font-weight: bold; color: #9c27b0; margin-bottom: 0.5rem;">Self-Service BI</div>
+              <div style="font-size: 0.9rem; color: #666;">Outils autonomes pour métiers</div>
+            </div>
+            <div style="text-align: center; padding: 1.5rem; background: white; border-radius: 12px; box-shadow: 0 4px 12px rgba(156, 39, 176, 0.1); border: 1px solid #e8d5f2;">
+              <div style="font-size: 2.5rem; margin-bottom: 1rem;">🔮</div>
+              <div style="font-size: 1.1rem; font-weight: bold; color: #9c27b0; margin-bottom: 0.5rem;">Analytics prédictifs</div>
+              <div style="font-size: 0.9rem; color: #666;">Forecasting et prévisions</div>
+            </div>
+            <div style="text-align: center; padding: 1.5rem; background: white; border-radius: 12px; box-shadow: 0 4px 12px rgba(156, 39, 176, 0.1); border: 1px solid #e8d5f2;">
+              <div style="font-size: 2.5rem; margin-bottom: 1rem;">⚙️</div>
+              <div style="font-size: 1.1rem; font-weight: bold; color: #9c27b0; margin-bottom: 0.5rem;">ETL performants</div>
+              <div style="font-size: 0.9rem; color: #666;">Pipelines de données automatisés</div>
+            </div>
+          </div>
         </div>
         
         <div style="margin-top: 3rem; padding: 2rem; background: linear-gradient(135deg, #f5f8ff 0%, #e8f2ff 100%); border-radius: 16px; border: 2px solid var(--primary-blue); box-shadow: 0 8px 24px rgba(0, 102, 255, 0.1);">
