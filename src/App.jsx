@@ -95,63 +95,43 @@ function App() {
           <h4 style="color: var(--primary-blue); margin-bottom: 1.5rem; font-size: 1.3rem;">🎯 Notre expertise complète :</h4>
         </div>
         
-        <FeatureBlock 
-          color="blue" 
-          gradient={THEME_COLORS.blue.gradient}
-          borderColor={THEME_COLORS.blue.color}
-          icon="🌐" 
-          title="Applications Web Modernes"
-        >
-          <ul>
+        <div style="margin-bottom: 2.5rem; padding: 1.5rem; background: linear-gradient(135deg, #f8f9ff 0%, #e8f2ff 100%); border-radius: 12px; border-left: 4px solid var(--primary-blue);">
+          <h5 style="color: var(--primary-blue); font-weight: bold; font-size: 1.1rem; margin-bottom: 1rem;">🌐 Applications Web Modernes</h5>
+          <ul style="line-height: 1.8; margin-left: 1rem;">
             <li>SPAs React/Vue.js/Angular haute performance</li>
             <li>PWAs avec fonctionnalités offline</li>
             <li>Applications temps réel WebSockets</li>
           </ul>
-        </FeatureBlock>
+        </div>
         
-        <FeatureBlock 
-          color="lightBlue" 
-          gradient={THEME_COLORS.lightBlue.gradient}
-          borderColor={THEME_COLORS.lightBlue.color}
-          icon="📱" 
-          title="Applications Mobiles"
-        >
-          <ul>
+        <div style="margin-bottom: 2.5rem; padding: 1.5rem; background: linear-gradient(135deg, #f0f8ff 0%, #e0f0ff 100%); border-radius: 12px; border-left: 4px solid #4285f4;">
+          <h5 style="color: #4285f4; font-weight: bold; font-size: 1.1rem; margin-bottom: 1rem;">📱 Applications Mobiles</h5>
+          <ul style="line-height: 1.8; margin-left: 1rem;">
             <li>iOS natif (Swift/SwiftUI)</li>
             <li>Android natif (Kotlin/Jetpack Compose)</li>
             <li>Cross-platform (React Native, Flutter)</li>
           </ul>
-        </FeatureBlock>
+        </div>
         
-        <FeatureBlock 
-          color="orange" 
-          gradient={THEME_COLORS.orange.gradient}
-          borderColor={THEME_COLORS.orange.color}
-          icon="💻" 
-          title="Applications Desktop"
-        >
-          <ul>
+        <div style="margin-bottom: 2.5rem; padding: 1.5rem; background: linear-gradient(135deg, #fff8f0 0%, #ffe8d0 100%); border-radius: 12px; border-left: 4px solid #ff9800;">
+          <h5 style="color: #ff9800; font-weight: bold; font-size: 1.1rem; margin-bottom: 1rem;">💻 Applications Desktop</h5>
+          <ul style="line-height: 1.8; margin-left: 1rem;">
             <li>Electron pour applications cross-platform</li>
             <li>.NET MAUI pour Windows/macOS/Linux</li>
             <li>Qt et Tauri pour performance native</li>
           </ul>
-        </FeatureBlock>
+        </div>
         
-        <FeatureBlock 
-          color="green" 
-          gradient={THEME_COLORS.green.gradient}
-          borderColor={THEME_COLORS.green.color}
-          icon="⚙️" 
-          title="Backend & Infrastructure"
-        >
-          <ul>
+        <div style="margin-bottom: 2.5rem; padding: 1.5rem; background: linear-gradient(135deg, #f0fff0 0%, #e0ffe0 100%); border-radius: 12px; border-left: 4px solid #4caf50;">
+          <h5 style="color: #4caf50; font-weight: bold; font-size: 1.1rem; margin-bottom: 1rem;">⚙️ Backend & Infrastructure</h5>
+          <ul style="line-height: 1.8; margin-left: 1rem;">
             <li>APIs REST/GraphQL avec Spring Boot, Node.js, Express.js</li>
             <li>Python (Django, FastAPI), PHP (Symfony)</li>
             <li>Microservices et architectures serverless</li>
             <li>Bases de données relationnelles (PostgreSQL, MySQL) et NoSQL (MongoDB, Redis)</li>
             <li>Cloud & DevOps (AWS, Azure, GCP)</li>
           </ul>
-        </FeatureBlock>
+        </div>
         
         <div style="margin-bottom: 2.5rem; padding: 2rem; background: linear-gradient(135deg, #faf5ff 0%, #f3e8ff 100%); border-radius: 16px; border: 2px solid #9c27b0;">
           <h4 style="color: #9c27b0; font-weight: bold; font-size: 1.3rem; margin-bottom: 1.5rem; text-align: center;">🚀 Quelques solutions que nous développons</h4>
@@ -570,6 +550,61 @@ function App() {
           </ul>
         </div>
         
+        <div style="margin-bottom: 2.5rem; padding: 1.5rem; background: linear-gradient(135deg, #fff0f8 0%, #ffe0f0 100%); border-radius: 12px; border-left: 4px solid #e91e63;">
+          <h5 style="color: #e91e63; font-weight: bold; font-size: 1.1rem; margin-bottom: 1rem;">⚖️ Gestion du Risque SI</h5>
+          <ul style="line-height: 1.8; margin-left: 1rem;">
+            <li>Analyse des risques liés aux SI avec méthodologie EBIOS RM et ISO 27005</li>
+            <li>Élaboration d'une politique de sécurité SI (PSSI) sur mesure et adaptée à votre contexte</li>
+            <li>Mise en place d'un Plan de Continuité d'Activité (PCA) et Plan de Reprise d'Activité (PRA)</li>
+            <li>Maîtrise des risques juridiques liés au numérique et conformité réglementaire</li>
+            <li>Cartographie des actifs critiques et évaluation des menaces cybersécurité</li>
+            <li>Matrice de risques avec priorisation selon l'impact business</li>
+            <li>Gouvernance des risques SI et pilotage des indicateurs de sécurité</li>
+            <li>Formation et sensibilisation des équipes à la gestion des risques</li>
+          </ul>
+        </div>
+        
+        <div style="margin-bottom: 2.5rem; padding: 1.5rem; background: linear-gradient(135deg, #f0f4ff 0%, #e0e8ff 100%); border-radius: 12px; border-left: 4px solid #667eea;">
+          <h5 style="color: #667eea; font-weight: bold; font-size: 1.1rem; margin-bottom: 1rem;">🏢 Sécurisation de l'Infrastructure SI</h5>
+          <ul style="line-height: 1.8; margin-left: 1rem;">
+            <li>Audit complet de l'infrastructure réseau et serveurs</li>
+            <li>Mise en place de firewalls nouvelle génération (NGFW)</li>
+            <li>Segmentation réseau et micro-segmentation avancée</li>
+            <li>Durcissement des systèmes (Windows, Linux, VMware)</li>
+            <li>Déploiement de solutions EDR/XDR pour la détection avancée</li>
+            <li>Configuration sécurisée des équipements actifs (switches, routeurs)</li>
+            <li>Mise en place de VPN sécurisés et accès à distance</li>
+          </ul>
+        </div>
+        
+        <div style="margin-bottom: 2.5rem; padding: 1.5rem; background: linear-gradient(135deg, #f0fff4 0%, #e0ffe8 100%); border-radius: 12px; border-left: 4px solid #48bb78;">
+          <h5 style="color: #48bb78; font-weight: bold; font-size: 1.1rem; margin-bottom: 1rem;">🛡️ Sécurisation des Applications SI</h5>
+          <ul style="line-height: 1.8; margin-left: 1rem;">
+            <li>Audit de sécurité applicative (SAST/DAST/IAST)</li>
+            <li>Tests d'intrusion spécialisés sur applications web et mobiles</li>
+            <li>Analyse du code source et revue de sécurité</li>
+            <li>Implémentation de WAF (Web Application Firewall)</li>
+            <li>Sécurisation des API REST/GraphQL et microservices</li>
+            <li>Chiffrement des données en transit et au repos</li>
+            <li>Mise en place de l'authentification forte (MFA/2FA)</li>
+            <li>Protection contre OWASP Top 10 et vulnérabilités émergentes</li>
+          </ul>
+        </div>
+        
+        <div style="margin-bottom: 2.5rem; padding: 1.5rem; background: linear-gradient(135deg, #fff8f0 0%, #ffedd5 100%); border-radius: 12px; border-left: 4px solid #fb923c;">
+          <h5 style="color: #fb923c; font-weight: bold; font-size: 1.1rem; margin-bottom: 1rem;">🔍 Investigation d'Incidents de Sécurité</h5>
+          <ul style="line-height: 1.8; margin-left: 1rem;">
+            <li>Forensic numérique et analyse post-incident</li>
+            <li>Collecte et préservation des preuves numériques</li>
+            <li>Analyse des logs et corrélation d'événements</li>
+            <li>Identification des vecteurs d'attaque et IOC (Indicators of Compromise)</li>
+            <li>Reconstruction de la chronologie des incidents</li>
+            <li>Analyse de malwares et reverse engineering</li>
+            <li>Rapport d'expertise judiciaire et support légal</li>
+            <li>Recommandations de remédiation et amélioration continue</li>
+          </ul>
+        </div>
+        
         <div style="margin-bottom: 2.5rem; padding: 2rem; background: linear-gradient(135deg, #faf5ff 0%, #f3e8ff 100%); border-radius: 16px; border: 2px solid #9c27b0;">
           <h4 style="color: #9c27b0; font-weight: bold; font-size: 1.3rem; margin-bottom: 1.5rem; text-align: center;">🛡️ Solutions cybersécurité que nous déployons</h4>
           <div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(280px, 1fr)); gap: 1.5rem; margin-top: 1.5rem;">
@@ -630,28 +665,32 @@ function App() {
       `,
       workflow: [
         { 
-          title: 'Audit de Sécurité Global (2-3 semaines)', 
-          desc: 'Cartographie complète de l\'infrastructure IT, inventaire des actifs critiques, évaluation des vulnérabilités techniques (scan automatisé + manuel), audit des configurations et des politiques de sécurité existantes, compliance check (RGPD, ISO 27001, SOC2).'
+          title: 'Audit de Sécurité Global & Cartographie des Risques (2-3 semaines)', 
+          desc: 'Cartographie complète de l\'infrastructure IT, inventaire des actifs critiques, évaluation des vulnérabilités techniques (scan automatisé + manuel), audit des configurations et des politiques de sécurité existantes, compliance check (RGPD, ISO 27001, SOC2), analyse des risques méthodologie EBIOS RM.'
         },
         { 
-          title: 'Analyse des Risques & Threat Modeling (1-2 semaines)', 
-          desc: 'Identification et classification des menaces spécifiques au secteur, analyse d\'impact business des scénarios d\'attaque, calcul de la matrice de risques (probabilité x impact), priorisation des vulnérabilités critiques et définition des seuils de risque acceptables.'
+          title: 'Sécurisation Infrastructure SI & Durcissement (3-4 semaines)', 
+          desc: 'Audit complet infrastructure réseau et serveurs, déploiement firewalls NGFW et segmentation réseau avancée, durcissement systèmes (Windows, Linux, VMware), configuration VPN sécurisés, déploiement solutions EDR/XDR, sécurisation équipements actifs (switches, routeurs).'
         },
         { 
-          title: 'Conception de la Stratégie de Sécurité (2-3 semaines)', 
-          desc: 'Définition de l\'architecture de sécurité Zero Trust, sélection des solutions techniques (SIEM, EDR, PAM), planification de la segmentation réseau, conception des politiques de sécurité et définition des processus incident response.'
+          title: 'Sécurisation Applications SI & Tests Intrusion (3-4 semaines)', 
+          desc: 'Audit sécurité applicative (SAST/DAST/IAST), tests d\'intrusion spécialisés applications web/mobiles, analyse code source et revue sécurité, implémentation WAF, sécurisation APIs REST/GraphQL, chiffrement données transit/repos, authentification forte (MFA/2FA).'
         },
         { 
-          title: 'Implémentation des Solutions (4-8 semaines)', 
-          desc: 'Déploiement des solutions de sécurité (firewalls, antivirus, SIEM), configuration du monitoring et alerting 24/7, mise en place de la sauvegarde et disaster recovery, implémentation des contrôles d\'accès (MFA, SSO) et durcissement des systèmes.'
+          title: 'Architecture Zero Trust & Gouvernance (2-3 semaines)', 
+          desc: 'Définition de l\'architecture de sécurité Zero Trust, sélection des solutions techniques (SIEM, EDR, PAM), planification de la segmentation réseau et micro-segmentation, conception des politiques de sécurité (PSSI), définition processus incident response et gouvernance SI.'
         },
         { 
-          title: 'Tests de Pénétration & Validation (2-3 semaines)', 
-          desc: 'Tests d\'intrusion externes et internes (black/white/grey box), social engineering et phishing simulé, validation des défenses en profondeur, tests de résilience et de récupération, rapport détaillé avec plan de remédiation priorisé.'
+          title: 'Déploiement SOC 24/7 & Monitoring Avancé (2-3 semaines)', 
+          desc: 'Mise en place centre opérationnel sécurité 24/7, déploiement SIEM dernière génération avec IA, configuration monitoring et alerting proactif, mise en place threat hunting, intégration solutions IAM/PAM, configuration sauvegarde ultra-sécurisée et disaster recovery.'
         },
         { 
-          title: 'Monitoring & Amélioration Continue (Continu)', 
-          desc: 'Surveillance 24/7 via SOC (Security Operations Center), threat hunting proactif, mise à jour des signatures et règles de détection, formation continue des équipes, audits de sécurité trimestriels et optimisation des processus sécuritaires.'
+          title: 'Investigation Forensique & Formation Équipes (2-3 semaines)', 
+          desc: 'Mise en place capacités forensic numérique et analyse post-incident, formation équipes cybersécurité et sensibilisation anti-phishing, simulations d\'attaques et exercices pratiques, documentation procédures incident response, tests de résilience et récupération.'
+        },
+        { 
+          title: 'Plan Continuité Activité & Amélioration Continue (Continu)', 
+          desc: 'Élaboration Plans de Continuité (PCA) et Reprise d\'Activité (PRA), surveillance 24/7 via SOC, threat hunting proactif, mise à jour signatures et règles détection, audits sécurité trimestriels, formation continue équipes, optimisation processus et gouvernance risques SI.'
         }
       ],
       blog: [
