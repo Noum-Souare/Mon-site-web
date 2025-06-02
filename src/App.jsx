@@ -12,6 +12,17 @@ function App() {
   const [showContactModal, setShowContactModal] = useState(false)
   const [selectedFormation, setSelectedFormation] = useState(null)
   const [showBackToTop, setShowBackToTop] = useState(false)
+  const [showBookingModal, setShowBookingModal] = useState(false)
+  const [bookingStep, setBookingStep] = useState(1)
+  const [bookingData, setBookingData] = useState({
+    date: null,
+    time: null,
+    name: '',
+    email: '',
+    guestEmails: '',
+    meetingType: 'google-meet',
+    notes: ''
+  })
 
   const serviceData = {
     'web-dev': {
@@ -1662,19 +1673,7 @@ function App() {
     setModalService(null)
   }
 
-  const selectDate = (date) => {
-    setSelectedDate(date)
-    setSelectedTime(null)
-  }
 
-  const selectTime = (time) => {
-    setSelectedTime(time)
-  }
-
-  const submitBooking = (e) => {
-    e.preventDefault()
-    alert('Rendez-vous confirmé ! Nous vous enverrons un email de confirmation.')
-  }
 
   const submitContact = (e) => {
     e.preventDefault()
@@ -1773,7 +1772,7 @@ function App() {
             <h1>Solutions Tech <span className="highlight">Innovantes</span> pour votre Entreprise</h1>
             <p>Ensemble, donnons vie à vos ambitions numériques. Nous co-créons des solutions sur mesure et innovantes, alliant expertise en développement web/mobile, IA, cybersécurité, cloud, la valorisation de vos données et conseil stratégique pour concrétiser vos projets les plus ambitieux.</p>
             <div className="cta-buttons">
-              <a href="#booking" className="btn-primary">Réserver un appel</a>
+              <button className="btn-primary" onClick={() => setShowBookingModal(true)}>Prenez rendez-vous</button>
               <a href="#services" className="btn-secondary">Découvrir nos services</a>
             </div>
           </div>
@@ -2490,6 +2489,200 @@ function App() {
                       </div>
                     ))}
                   </div>
+                </div>
+              )}
+            </div>
+          </div>
+        </div>
+      )}
+
+      {/* Booking Modal */}
+      {showBookingModal && (
+        <div className="modal" style={{display: 'block'}}>
+          <div className="modal-content booking-modal">
+            <div className="modal-header">
+              <h2>📅 Réserver un appel avec notre équipe</h2>
+              <button className="modal-close" onClick={() => setShowBookingModal(false)}>&times;</button>
+            </div>
+            <div className="modal-body">
+              {bookingStep === 1 && (
+                <div className="booking-step">
+                  <h3>📅 Choisissez une date</h3>
+                  <div className="calendar">
+                    {/* En-têtes des jours de la semaine */}
+                    <div className="calendar-header">
+                      {['Dim', 'Lun', 'Mar', 'Mer', 'Jeu', 'Ven', 'Sam'].map((day, index) => (
+                        <div key={day} className={`calendar-day-header ${index === 0 || index === 6 ? 'weekend-header' : ''}`}>
+                          {day}
+                        </div>
+                      ))}
+                    </div>
+                    {/* Calendrier simple */}
+                    <div className="calendar-grid">
+                      {/* Génération des jours du mois */}
+                      {(() => {
+                        const today = new Date()
+                        const currentMonth = today.getMonth()
+                        const currentYear = today.getFullYear()
+                        const daysInMonth = new Date(currentYear, currentMonth + 1, 0).getDate()
+                        const firstDayOfMonth = new Date(currentYear, currentMonth, 1).getDay()
+                        const days = []
+                        
+                        // Jours vides pour aligner le premier jour
+                        for (let i = 0; i < firstDayOfMonth; i++) {
+                          days.push(<div key={`empty-${i}`} className="calendar-day empty"></div>)
+                        }
+                        
+                        // Jours du mois
+                        for (let day = 1; day <= daysInMonth; day++) {
+                          const isToday = day === today.getDate()
+                          const isPast = day < today.getDate()
+                          const isWeekend = new Date(currentYear, currentMonth, day).getDay() === 0 || new Date(currentYear, currentMonth, day).getDay() === 6
+                          
+                          days.push(
+                            <div 
+                              key={day}
+                              className={`calendar-day ${
+                                isPast ? 'past' : ''
+                              } ${
+                                isToday ? 'today' : ''
+                              } ${
+                                isWeekend ? 'weekend' : ''
+                              } ${
+                                selectedDate === day ? 'selected' : ''
+                              }`}
+                              onClick={() => {
+                                if (!isPast && !isWeekend) {
+                                  setSelectedDate(day)
+                                  setBookingStep(2)
+                                }
+                              }}
+                            >
+                              {day}
+                            </div>
+                          )
+                        }
+                        
+                        return days
+                      })()} 
+                    </div>
+                    <div className="calendar-legend">
+                      <span>Sélectionnez une date disponible (Lun-Ven)</span>
+                    </div>
+                  </div>
+                </div>
+              )}
+              
+              {bookingStep === 2 && (
+                <div className="booking-step">
+                  <h3>🕐 Choisissez un créneau</h3>
+                  <p>Date sélectionnée : {selectedDate} {new Date().toLocaleDateString('fr-FR', { month: 'long', year: 'numeric' })}</p>
+                  <div className="time-slots">
+                    {['09:00', '10:00', '11:00', '14:00', '15:00', '16:00', '17:00'].map(time => (
+                      <button 
+                        key={time}
+                        className={`time-slot ${selectedTime === time ? 'selected' : ''}`}
+                        onClick={() => {
+                          setSelectedTime(time)
+                          setBookingStep(3)
+                        }}
+                      >
+                        {time}
+                      </button>
+                    ))}
+                  </div>
+                  <button className="btn-secondary" onClick={() => setBookingStep(1)}>← Retour</button>
+                </div>
+              )}
+              
+              {bookingStep === 3 && (
+                <div className="booking-step">
+                  <h3>📋 Informations de contact</h3>
+                  <div className="booking-summary">
+                    <p><strong>📅 Date :</strong> {selectedDate} {new Date().toLocaleDateString('fr-FR', { month: 'long', year: 'numeric' })}</p>
+                    <p><strong>🕐 Heure :</strong> {selectedTime}</p>
+                  </div>
+                  
+                  <form onSubmit={(e) => {
+                    e.preventDefault()
+                    alert('Rendez-vous confirmé ! Nous vous enverrons une invitation par email.')
+                    setShowBookingModal(false)
+                    setBookingStep(1)
+                    setSelectedDate(null)
+                    setSelectedTime(null)
+                  }}>
+                    <div className="form-group">
+                      <label>Nom complet *</label>
+                      <input 
+                        type="text" 
+                        required 
+                        value={bookingData.name}
+                        onChange={(e) => setBookingData({...bookingData, name: e.target.value})}
+                      />
+                    </div>
+                    
+                    <div className="form-group">
+                      <label>Email *</label>
+                      <input 
+                        type="email" 
+                        required 
+                        value={bookingData.email}
+                        onChange={(e) => setBookingData({...bookingData, email: e.target.value})}
+                      />
+                    </div>
+                    
+                    <div className="form-group">
+                      <label>Email(s) pour invité(s) (optionnel)</label>
+                      <input 
+                        type="text" 
+                        placeholder="invites@exemple.com, autre@exemple.com"
+                        value={bookingData.guestEmails}
+                        onChange={(e) => setBookingData({...bookingData, guestEmails: e.target.value})}
+                      />
+                      <small style={{color: '#666', fontSize: '0.8rem'}}>Séparez plusieurs emails par des virgules</small>
+                    </div>
+                    
+                    <div className="form-group">
+                      <label>Type de réunion *</label>
+                      <div className="radio-group">
+                        <label className="radio-option">
+                          <input 
+                            type="radio" 
+                            name="meetingType" 
+                            value="google-meet"
+                            checked={bookingData.meetingType === 'google-meet'}
+                            onChange={(e) => setBookingData({...bookingData, meetingType: e.target.value})}
+                          />
+                          <span>🎥 Google Meet</span>
+                        </label>
+                        <label className="radio-option">
+                          <input 
+                            type="radio" 
+                            name="meetingType" 
+                            value="phone-call"
+                            checked={bookingData.meetingType === 'phone-call'}
+                            onChange={(e) => setBookingData({...bookingData, meetingType: e.target.value})}
+                          />
+                          <span>📞 Appel téléphonique</span>
+                        </label>
+                      </div>
+                    </div>
+                    
+                    <div className="form-group">
+                      <label>Veuillez partager tout ce qui pourra être utile à la préparation de notre réunion</label>
+                      <textarea 
+                        rows="4"
+                        placeholder="Décrivez votre projet, vos besoins, vos objectifs, ou toute information qui nous aiderait à préparer au mieux cette réunion..."
+                        value={bookingData.notes}
+                        onChange={(e) => setBookingData({...bookingData, notes: e.target.value})}
+                      ></textarea>
+                    </div>
+                    
+                    <div className="form-actions">
+                      <button type="button" className="btn-secondary" onClick={() => setBookingStep(2)}>← Retour</button>
+                      <button type="submit" className="btn-primary">✅ Confirmer le rendez-vous</button>
+                    </div>
+                  </form>
                 </div>
               )}
             </div>
