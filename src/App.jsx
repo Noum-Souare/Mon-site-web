@@ -2298,11 +2298,11 @@ function App() {
               <div className="member-avatar">
                 <img 
                   src="https://via.placeholder.com/120x120/0066ff/ffffff?text=AS" 
-                  alt="Alexandre Souaré"
+                  alt="Noumouké SOUARE"
                   className="member-photo"
                 />
               </div>
-              <h3>Noumouké Souaré</h3>
+              <h3>Noumouké SOUARE</h3>
               <h4>Gérant & Responsable technique</h4>
               <p>Vision stratégique et expertise technique pour piloter vos projets vers le succès</p>
             </div>
@@ -2310,11 +2310,11 @@ function App() {
               <div className="member-avatar">
                 <img 
                   src="https://via.placeholder.com/120x120/4285f4/ffffff?text=MF" 
-                  alt="Marie Fontaine"
+                  alt="Fatoumata SOUARE"
                   className="member-photo"
                 />
               </div>
-              <h3>Fatoumata Souaré</h3>
+              <h3>Fatoumata SOUARE</h3>
               <h4>Product Owner & UI/UX Designer</h4>
               <p>Conception centrée utilisateur et gestion produit pour des expériences optimales</p>
             </div>
@@ -2322,11 +2322,11 @@ function App() {
               <div className="member-avatar">
                 <img 
                   src="https://via.placeholder.com/120x120/0066ff/ffffff?text=JM" 
-                  alt="Julien Martin"
+                  alt="Fodé SYLLA"
                   className="member-photo"
                 />
               </div>
-              <h3>Fodé Sylla</h3>
+              <h3>Fodé SYLLA</h3>
               <h4>Développeur Fullstack</h4>
               <p>Maîtrise complète des technologies frontend et backend pour des solutions robustes</p>
             </div>
@@ -2334,7 +2334,7 @@ function App() {
               <div className="member-avatar">
                 <img 
                   src="https://via.placeholder.com/120x120/4285f4/ffffff?text=SB" 
-                  alt="Sarah Bernard"
+                  alt="Abdoulaye Bademba DIALLO"
                   className="member-photo"
                 />
               </div>
