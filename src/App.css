@@ -2670,3 +2670,80 @@ body {
     flex: none;
   }
 }
+
+/* Media queries pour très petits écrans - Centrage des cartes */
+@media (max-width: 480px) {
+  .container {
+    padding: 0 1rem;
+  }
+
+  .services-grid {
+    grid-template-columns: 1fr;
+    gap: 1rem;
+    padding: 0;
+    justify-items: center;
+    place-items: center;
+    margin: 0 auto;
+  }
+
+  .service-card {
+    margin: 0 auto;
+    max-width: calc(100vw - 2rem);
+    width: 100%;
+    box-sizing: border-box;
+  }
+
+  /* Corrections spécifiques pour les grilles dans les modales */
+  .modal-body div[style*="grid-template-columns"] {
+    display: grid !important;
+    grid-template-columns: 1fr !important;
+    gap: 1rem !important;
+    justify-items: center !important;
+    place-items: center !important;
+    margin: 0 auto !important;
+  }
+
+  .modal-body div[style*="grid-template-columns"] > div {
+    width: 100% !important;
+    max-width: calc(100% - 1rem) !important;
+    margin: 0 auto !important;
+    box-sizing: border-box !important;
+  }
+
+  /* Centrage spécifique pour les cartes de solutions dans les modales */
+  .modal-body div[style*="minmax(280px, 1fr)"] {
+    grid-template-columns: 1fr !important;
+    justify-items: center !important;
+    place-items: center !important;
+  }
+
+  .modal-body div[style*="minmax(280px, 1fr)"] > div {
+    width: 100% !important;
+    max-width: calc(100vw - 6rem) !important;
+    margin: 0 auto !important;
+  }
+
+  /* Responsive pour toutes les grilles de cartes */
+  .workflow-detail {
+    grid-template-columns: 1fr;
+    justify-items: center;
+    place-items: center;
+  }
+
+  .formation-grid {
+    grid-template-columns: 1fr;
+    justify-items: center;
+    place-items: center;
+  }
+
+  .formation-card {
+    width: 100%;
+    max-width: calc(100vw - 2rem);
+    margin: 0 auto;
+  }
+
+  /* Corrections pour les cartes flottantes dans le hero */
+  .floating-card {
+    max-width: calc(45vw - 1rem) !important;
+  }
+}
