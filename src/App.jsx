@@ -1,0 +1,2144 @@
+import React, { useState, useEffect } from 'react'
+import './App.css'
+
+function App() {
+  const [selectedDate, setSelectedDate] = useState(null)
+  const [selectedTime, setSelectedTime] = useState(null)
+  const [modalService, setModalService] = useState(null)
+  const [activeTab, setActiveTab] = useState('overview')
+  const [isDarkTheme, setIsDarkTheme] = useState(false)
+  const [activeFaq, setActiveFaq] = useState(null)
+  const [mobileMenuOpen, setMobileMenuOpen] = useState(false)
+  const [showContactModal, setShowContactModal] = useState(false)
+  const [selectedFormation, setSelectedFormation] = useState(null)
+  const [showBackToTop, setShowBackToTop] = useState(false)
+
+  const serviceData = {
+    'web-dev': {
+      title: 'Développement Web, Desktop & Mobile',
+      icon: '🌐',
+      overview: `
+        <div class="persuasive-intro">
+          <p><strong>🌐 Créez les applications de demain dès aujourd'hui !</strong></p>
+          <p>⚡ <em>Nos applications génèrent +250% d'engagement utilisateur en moyenne.</em> Transformez votre vision en solutions numériques qui captivent, convertissent et dominent leur marché. De l'idée au succès, nous maîtrisons chaque étape pour faire de votre projet le prochain phénomène digital !</p>
+        </div>
+        
+        <div style="margin: 2rem 0;">
+          <h4 style="color: var(--primary-blue); margin-bottom: 1.5rem; font-size: 1.3rem;">🎯 Notre expertise complète :</h4>
+        </div>
+        
+        <div style="margin-bottom: 2.5rem; padding: 1.5rem; background: linear-gradient(135deg, #f8f9ff 0%, #e8f2ff 100%); border-radius: 12px; border-left: 4px solid var(--primary-blue);">
+          <h5 style="color: var(--primary-blue); font-weight: bold; font-size: 1.1rem; margin-bottom: 1rem;">🌐 Applications Web Modernes</h5>
+          <ul style="line-height: 1.8; margin-left: 1rem;">
+            <li>SPAs React/Vue.js haute performance</li>
+            <li>PWAs avec fonctionnalités offline</li>
+            <li>Applications temps réel WebSockets</li>
+          </ul>
+        </div>
+        
+        <div style="margin-bottom: 2.5rem; padding: 1.5rem; background: linear-gradient(135deg, #f0f8ff 0%, #e0f0ff 100%); border-radius: 12px; border-left: 4px solid #4285f4;">
+          <h5 style="color: #4285f4; font-weight: bold; font-size: 1.1rem; margin-bottom: 1rem;">📱 Applications Mobiles</h5>
+          <ul style="line-height: 1.8; margin-left: 1rem;">
+            <li>iOS natif (Swift/SwiftUI)</li>
+            <li>Android natif (Kotlin/Jetpack Compose)</li>
+            <li>Cross-platform (React Native, Flutter)</li>
+          </ul>
+        </div>
+        
+        <div style="margin-bottom: 2.5rem; padding: 1.5rem; background: linear-gradient(135deg, #fff8f0 0%, #ffe8d0 100%); border-radius: 12px; border-left: 4px solid #ff9800;">
+          <h5 style="color: #ff9800; font-weight: bold; font-size: 1.1rem; margin-bottom: 1rem;">💻 Applications Desktop</h5>
+          <ul style="line-height: 1.8; margin-left: 1rem;">
+            <li>Electron pour applications cross-platform</li>
+            <li>.NET MAUI pour Windows/macOS/Linux</li>
+            <li>Qt et Tauri pour performance native</li>
+          </ul>
+        </div>
+        
+        <div style="margin-bottom: 2.5rem; padding: 1.5rem; background: linear-gradient(135deg, #f0fff0 0%, #e0ffe0 100%); border-radius: 12px; border-left: 4px solid #4caf50;">
+          <h5 style="color: #4caf50; font-weight: bold; font-size: 1.1rem; margin-bottom: 1rem;">⚙️ Backend & Infrastructure</h5>
+          <ul style="line-height: 1.8; margin-left: 1rem;">
+            <li>APIs REST/GraphQL scalables</li>
+            <li>Microservices et architectures serverless</li>
+            <li>Cloud & DevOps (AWS, Azure, GCP)</li>
+          </ul>
+        </div>
+        
+        <div style="margin-top: 3rem; padding: 2rem; background: linear-gradient(135deg, #f5f8ff 0%, #e8f2ff 100%); border-radius: 16px; border: 2px solid var(--primary-blue); box-shadow: 0 8px 24px rgba(0, 102, 255, 0.1);">
+          <h4 style="color: var(--primary-blue); font-weight: bold; font-size: 1.3rem; margin-bottom: 1.5rem; text-align: center;">📊 Résultats exceptionnels</h4>
+          <div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(250px, 1fr)); gap: 1.5rem; margin-top: 1.5rem;">
+            <div style="text-align: center; padding: 1rem; background: white; border-radius: 12px; box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);">
+              <div style="font-size: 2rem; font-weight: bold; color: var(--primary-blue); margin-bottom: 0.5rem;">150+</div>
+              <div style="font-size: 0.9rem; color: #666;">Projets livrés avec succès</div>
+            </div>
+            <div style="text-align: center; padding: 1rem; background: white; border-radius: 12px; box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);">
+              <div style="font-size: 2rem; font-weight: bold; color: #4caf50; margin-bottom: 0.5rem;">98%</div>
+              <div style="font-size: 0.9rem; color: #666;">Satisfaction client (NPS 9.2/10)</div>
+            </div>
+            <div style="text-align: center; padding: 1rem; background: white; border-radius: 12px; box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);">
+              <div style="font-size: 2rem; font-weight: bold; color: #ff9800; margin-bottom: 0.5rem;">95%</div>
+              <div style="font-size: 0.9rem; color: #666;">Délais respectés (méthodologie agile)</div>
+            </div>
+            <div style="text-align: center; padding: 1rem; background: white; border-radius: 12px; box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);">
+              <div style="font-size: 2rem; font-weight: bold; color: #9c27b0; margin-bottom: 0.5rem;">90+</div>
+              <div style="font-size: 0.9rem; color: #666;">Score Lighthouse moyen</div>
+            </div>
+          </div>
+        </div>
+      `,
+      workflow: [
+        { 
+          title: 'Analyse & Cadrage (1-2 semaines)', 
+          desc: 'Audit technique existant, définition du périmètre fonctionnel, analyse des besoins utilisateurs, étude de faisabilité technique, benchmark concurrentiel et définition des KPIs de succès.'
+        },
+        { 
+          title: 'Architecture & Conception (2-3 semaines)', 
+          desc: 'Modélisation de la base de données, conception de l\'architecture microservices/monolithique, définition des APIs REST/GraphQL, choix de la stack technique optimale et planification des sprints de développement.'
+        },
+        { 
+          title: 'Design System & UX/UI (2-4 semaines)', 
+          desc: 'Création du design system, wireframing et prototypage interactif, tests utilisateurs, optimisation de l\'expérience mobile-first, validation de l\'accessibilité WCAG et finalisation des maquettes haute-fidélité.'
+        },
+        { 
+          title: 'Développement MVP (4-8 semaines)', 
+          desc: 'Développement du backend avec APIs sécurisées, intégration frontend responsive, implémentation des fonctionnalités core, tests unitaires et d\'intégration continus, code review systématique et documentation technique.'
+        },
+        { 
+          title: 'Tests & Optimisation (2-3 semaines)', 
+          desc: 'Tests fonctionnels automatisés (Cypress/Jest), tests de charge et performance (Lighthouse), audit de sécurité (OWASP), tests cross-browser/device, optimisation SEO technique et validation finale avec le client.'
+        },
+        { 
+          title: 'Déploiement & Support (1-2 semaines puis continu)', 
+          desc: 'Déploiement sur infrastructure cloud (AWS/Azure/GCP), mise en place du monitoring (Grafana/New Relic), formation des équipes client, documentation utilisateur complète et support technique 24/7 pendant 3 mois.'
+        }
+      ],
+      blog: [
+        { date: '15 Mai 2025', title: 'Les tendances du développement web en 2025', excerpt: 'Découvrez les technologies émergentes qui façonnent l\'avenir du web : WebAssembly, Web3, et l\'intégration native de l\'IA.' },
+        { date: '10 Mai 2025', title: 'React vs Vue.js : Guide de choix pour 2025', excerpt: 'Comparatif détaillé des deux frameworks les plus populaires avec des exemples concrets et recommandations.' },
+        { date: '5 Mai 2025', title: 'Optimisation des performances mobiles', excerpt: 'Techniques avancées pour créer des applications mobiles ultra-performantes avec React Native et Flutter.' }
+      ]
+    },
+    'websites': {
+      title: 'Sites Vitrines',
+      icon: '🎨',
+      overview: `
+        <div class="persuasive-intro">
+          <p><strong>🎯 Transformez votre présence web en machine à conversions !</strong></p>
+          <p>⚡ <em>Nos sites vitrine génèrent en moyenne 340% de leads supplémentaires pour nos clients.</em> Créez une présence web professionnelle qui reflète parfaitement votre marque et convertit vos visiteurs en clients payants !</p>
+        </div>
+        
+        <div style="margin: 2rem 0;">
+          <h4 style="color: var(--primary-blue); margin-bottom: 1.5rem; font-size: 1.3rem;">🚀 Services haute performance :</h4>
+        </div>
+        
+        <div style="margin-bottom: 2.5rem; padding: 1.5rem; background: linear-gradient(135deg, #f8f9ff 0%, #e8f2ff 100%); border-radius: 12px; border-left: 4px solid var(--primary-blue);">
+          <h5 style="color: var(--primary-blue); font-weight: bold; font-size: 1.1rem; margin-bottom: 1rem;">🎨 Design Sur Mesure</h5>
+          <ul style="line-height: 1.8; margin-left: 1rem;">
+            <li>Création graphique unique qui vous démarque de 95% de vos concurrents</li>
+            <li>Identité visuelle cohérente avec votre marque</li>
+            <li>Expérience utilisateur optimisée pour la conversion</li>
+          </ul>
+        </div>
+        
+        <div style="margin-bottom: 2.5rem; padding: 1.5rem; background: linear-gradient(135deg, #f0f8ff 0%, #e0f0ff 100%); border-radius: 12px; border-left: 4px solid #4285f4;">
+          <h5 style="color: #4285f4; font-weight: bold; font-size: 1.1rem; margin-bottom: 1rem;">🔍 SEO & Performance</h5>
+          <ul style="line-height: 1.8; margin-left: 1rem;">
+            <li>Référencement naturel intégré dès la conception</li>
+            <li>Temps de chargement < 2 secondes garantis</li>
+            <li>Optimisation Core Web Vitals pour Google</li>
+          </ul>
+        </div>
+        
+        <div style="margin-bottom: 2.5rem; padding: 1.5rem; background: linear-gradient(135deg, #fff8f0 0%, #ffe8d0 100%); border-radius: 12px; border-left: 4px solid #ff9800;">
+          <h5 style="color: #ff9800; font-weight: bold; font-size: 1.1rem; margin-bottom: 1rem;">📱 Responsive & Mobile-First</h5>
+          <ul style="line-height: 1.8; margin-left: 1rem;">
+            <li>Design adaptatif pour tous les appareils</li>
+            <li>Optimisation spéciale mobile (78% de votre trafic)</li>
+            <li>Tests sur tous les navigateurs et résolutions</li>
+          </ul>
+        </div>
+        
+        <div style="margin-bottom: 2.5rem; padding: 1.5rem; background: linear-gradient(135deg, #f0fff0 0%, #e0ffe0 100%); border-radius: 12px; border-left: 4px solid #4caf50;">
+          <h5 style="color: #4caf50; font-weight: bold; font-size: 1.1rem; margin-bottom: 1rem;">⚙️ CMS & Autonomie</h5>
+          <ul style="line-height: 1.8; margin-left: 1rem;">
+            <li>Interface d'administration intuitive</li>
+            <li>Gestion autonome de votre contenu</li>
+            <li>Formation incluse et support technique</li>
+          </ul>
+        </div>
+        
+        <div style="margin-top: 3rem; padding: 2rem; background: linear-gradient(135deg, #f5f8ff 0%, #e8f2ff 100%); border-radius: 16px; border: 2px solid var(--primary-blue); box-shadow: 0 8px 24px rgba(0, 102, 255, 0.1);">
+          <h4 style="color: var(--primary-blue); font-weight: bold; font-size: 1.3rem; margin-bottom: 1.5rem; text-align: center;">💰 ROI démontré</h4>
+          <div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(250px, 1fr)); gap: 1.5rem; margin-top: 1.5rem;">
+            <div style="text-align: center; padding: 1rem; background: white; border-radius: 12px; box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);">
+              <div style="font-size: 2rem; font-weight: bold; color: var(--primary-blue); margin-bottom: 0.5rem;">+340%</div>
+              <div style="font-size: 0.9rem; color: #666;">Leads générés en moyenne</div>
+            </div>
+            <div style="text-align: center; padding: 1rem; background: white; border-radius: 12px; box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);">
+              <div style="font-size: 2rem; font-weight: bold; color: #4caf50; margin-bottom: 0.5rem;">-50%</div>
+              <div style="font-size: 0.9rem; color: #666;">Coûts marketing (SEO intégré)</div>
+            </div>
+            <div style="text-align: center; padding: 1rem; background: white; border-radius: 12px; box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);">
+              <div style="font-size: 2rem; font-weight: bold; color: #ff9800; margin-bottom: 0.5rem;">+89%</div>
+              <div style="font-size: 0.9rem; color: #666;">Temps de visite (design optimisé)</div>
+            </div>
+            <div style="text-align: center; padding: 1rem; background: white; border-radius: 12px; box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);">
+              <div style="font-size: 2rem; font-weight: bold; color: #9c27b0; margin-bottom: 0.5rem;"><2s</div>
+              <div style="font-size: 0.9rem; color: #666;">Temps de chargement garanti</div>
+            </div>
+          </div>
+        </div>
+      `,
+      workflow: [
+        { 
+          title: 'Brief Stratégique & Analyse (3-5 jours)', 
+          desc: 'Audit de l\'identité visuelle existante, analyse de la concurrence digitale, définition des objectifs business et conversion, persona mapping des visiteurs cibles et benchmark des best practices sectorielles.'
+        },
+        { 
+          title: 'Architecture de l\'Information (1 semaine)', 
+          desc: 'Structuration de l\'arborescence du site, définition du parcours utilisateur optimal, création de la stratégie de contenu SEO, planification des call-to-actions et optimisation du tunnel de conversion.'
+        },
+        { 
+          title: 'Design & Prototypage (2-3 semaines)', 
+          desc: 'Création de wireframes détaillés, conception du design system responsive, prototypage interactif avec micro-animations, tests A/B des variantes design et validation client avec itérations.'
+        },
+        { 
+          title: 'Développement Frontend (2-4 semaines)', 
+          desc: 'Intégration HTML5/CSS3 sémantique, développement responsive mobile-first, optimisation des performances (Core Web Vitals), intégration CMS headless et mise en place des analytics/tracking.'
+        },
+        { 
+          title: 'Optimisation SEO & Performance (1-2 semaines)', 
+          desc: 'Optimisation technique SEO (meta tags, schema markup), compression d\'images et lazy loading, configuration CDN et cache browser, audit Lighthouse et PageSpeed, tests de compatibilité navigateurs.'
+        },
+        { 
+          title: 'Lancement & Formation (1 semaine)', 
+          desc: 'Configuration domaine et certificat SSL, déploiement sur hébergement optimisé, formation à la gestion de contenu CMS, mise en place des outils de monitoring et support technique post-lancement.'
+        }
+      ],
+      blog: [
+        { date: '12 Mai 2025', title: 'Design web 2025 : les nouvelles tendances', excerpt: 'Explorez les tendances design qui marquent 2025 : glassmorphisme, micro-interactions et design inclusif.' },
+        { date: '8 Mai 2025', title: 'SEO technique : guide complet 2025', excerpt: 'Maîtrisez les aspects techniques du référencement pour propulser votre site en première page.' },
+        { date: '3 Mai 2025', title: 'Accessibilité web : bonnes pratiques', excerpt: 'Comment créer des sites web accessibles à tous et conformes aux standards WCAG 2.1.' }
+      ]
+    },
+    'ai-data': {
+      title: 'Intelligence Artificielle & Data Science',
+      icon: '🤖',
+      overview: `
+        <div class="persuasive-intro">
+          <p><strong>🤖 Révolutionnez votre business avec l'IA !</strong></p>
+          <p>⚡ <em>L'IA génère +25% de revenus supplémentaires chez nos clients.</em> Ne restez pas spectateur de la révolution IA ! Exploitez la puissance de l'intelligence artificielle et transformez vos données en insights stratégiques pour propulser votre business vers le futur.</p>
+        </div>
+        
+        <div style="margin: 2rem 0;">
+          <h4 style="color: var(--primary-blue); margin-bottom: 1.5rem; font-size: 1.3rem;">🎯 Solutions IA révolutionnaires :</h4>
+        </div>
+        
+        <div style="margin-bottom: 2.5rem; padding: 1.5rem; background: linear-gradient(135deg, #f8f9ff 0%, #e8f2ff 100%); border-radius: 12px; border-left: 4px solid var(--primary-blue);">
+          <h5 style="color: var(--primary-blue); font-weight: bold; font-size: 1.1rem; margin-bottom: 1rem;">🧠 Machine Learning & IA Prédictive</h5>
+          <ul style="line-height: 1.8; margin-left: 1rem;">
+            <li>Modèles prédictifs qui anticipent vos besoins business avec 95% de précision</li>
+            <li>Algorithmes d'optimisation pour la supply chain et pricing</li>
+            <li>Détection d'anomalies et maintenance prédictive</li>
+          </ul>
+        </div>
+        
+        <div style="margin-bottom: 2.5rem; padding: 1.5rem; background: linear-gradient(135deg, #f0f8ff 0%, #e0f0ff 100%); border-radius: 12px; border-left: 4px solid #4285f4;">
+          <h5 style="color: #4285f4; font-weight: bold; font-size: 1.1rem; margin-bottom: 1rem;">💬 NLP & Computer Vision</h5>
+          <ul style="line-height: 1.8; margin-left: 1rem;">
+            <li>Chatbots intelligents qui augmentent la satisfaction client de 40%</li>
+            <li>Analyse de sentiment et traitement du langage naturel</li>
+            <li>Reconnaissance d'images ultra-performante pour l'automatisation</li>
+          </ul>
+        </div>
+        
+        <div style="margin-bottom: 2.5rem; padding: 1.5rem; background: linear-gradient(135deg, #fff8f0 0%, #ffe8d0 100%); border-radius: 12px; border-left: 4px solid #ff9800;">
+          <h5 style="color: #ff9800; font-weight: bold; font-size: 1.1rem; margin-bottom: 1rem;">📊 Data Science & Analytics</h5>
+          <ul style="line-height: 1.8; margin-left: 1rem;">
+            <li>Tableaux de bord temps réel pour des décisions éclairées</li>
+            <li>Forecasting précis qui optimise vos stocks de 20%</li>
+            <li>Traitement de téraoctets de données en temps record</li>
+          </ul>
+        </div>
+        
+        <div style="margin-bottom: 2.5rem; padding: 1.5rem; background: linear-gradient(135deg, #f0fff0 0%, #e0ffe0 100%); border-radius: 12px; border-left: 4px solid #4caf50;">
+          <h5 style="color: #4caf50; font-weight: bold; font-size: 1.1rem; margin-bottom: 1rem;">🤖 Automatisation Intelligente</h5>
+          <ul style="line-height: 1.8; margin-left: 1rem;">
+            <li>RPA intelligent qui libère 30h/semaine de tâches répétitives</li>
+            <li>Workflows d'automatisation avec prise de décision IA</li>
+            <li>Intégration seamless avec vos systèmes existants</li>
+          </ul>
+        </div>
+        
+        <div style="margin-top: 3rem; padding: 2rem; background: linear-gradient(135deg, #f5f8ff 0%, #e8f2ff 100%); border-radius: 16px; border: 2px solid var(--primary-blue); box-shadow: 0 8px 24px rgba(0, 102, 255, 0.1);">
+          <h4 style="color: var(--primary-blue); font-weight: bold; font-size: 1.3rem; margin-bottom: 1.5rem; text-align: center;">💰 ROI impressionnant</h4>
+          <div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(250px, 1fr)); gap: 1.5rem; margin-top: 1.5rem;">
+            <div style="text-align: center; padding: 1rem; background: white; border-radius: 12px; box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);">
+              <div style="font-size: 2rem; font-weight: bold; color: var(--primary-blue); margin-bottom: 0.5rem;">+25%</div>
+              <div style="font-size: 0.9rem; color: #666;">Revenus supplémentaires après déploiement IA</div>
+            </div>
+            <div style="text-align: center; padding: 1rem; background: white; border-radius: 12px; box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);">
+              <div style="font-size: 2rem; font-weight: bold; color: #4caf50; margin-bottom: 0.5rem;">-40%</div>
+              <div style="font-size: 0.9rem; color: #666;">Coûts opérationnels (automatisation)</div>
+            </div>
+            <div style="text-align: center; padding: 1rem; background: white; border-radius: 12px; box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);">
+              <div style="font-size: 2rem; font-weight: bold; color: #ff9800; margin-bottom: 0.5rem;">95%</div>
+              <div style="font-size: 0.9rem; color: #666;">Précision des modèles prédictifs</div>
+            </div>
+            <div style="text-align: center; padding: 1rem; background: white; border-radius: 12px; box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);">
+              <div style="font-size: 2rem; font-weight: bold; color: #9c27b0; margin-bottom: 0.5rem;">300%</div>
+              <div style="font-size: 0.9rem; color: #666;">ROI en 18 mois (études clients)</div>
+            </div>
+          </div>
+        </div>
+      `,
+      workflow: [
+        { 
+          title: 'Audit Data & Stratégie IA (2-3 semaines)', 
+          desc: 'Cartographie complète des sources de données, évaluation de la qualité et volumétrie, identification des cas d\'usage IA à fort ROI, définition de la roadmap IA/ML et estimation des bénéfices métier quantifiés.'
+        },
+        { 
+          title: 'Architecture Data & MLOps (2-4 semaines)', 
+          desc: 'Conception du data lake/warehouse, mise en place des pipelines ETL/ELT, architecture MLOps avec CI/CD, sélection des technologies (TensorFlow, PyTorch, Spark) et définition des métriques de performance des modèles.'
+        },
+        { 
+          title: 'Exploration & Préparation des Données (3-4 semaines)', 
+          desc: 'Analyse exploratoire approfondie (EDA), nettoyage et enrichissement des datasets, feature engineering avancé, gestion des données manquantes/aberrantes et création des jeux de données d\'entraînement/validation/test.'
+        },
+        { 
+          title: 'Développement & Entraînement des Modèles (4-6 semaines)', 
+          desc: 'Sélection et comparaison d\'algorithmes ML/DL, hyperparameter tuning avec cross-validation, entraînement distribué si nécessaire, validation rigoureuse des performances et documentation technique complète des modèles.'
+        },
+        { 
+          title: 'Validation & Tests Métier (2-3 semaines)', 
+          desc: 'Tests A/B en environnement contrôlé, validation des prédictions avec experts métier, analyse de biais et équité des modèles, stress testing sur données réelles et optimisation des performances en production.'
+        },
+        { 
+          title: 'Déploiement & Monitoring (2-3 semaines puis continu)', 
+          desc: 'Déploiement via APIs REST/gRPC, mise en place du monitoring de drift des modèles, alerting automatique sur dégradation performances, re-entraînement automatisé et formation des équipes à l\'utilisation des insights IA.'
+        }
+      ],
+      blog: [
+        { date: '18 Mai 2025', title: 'IA générative en entreprise : guide pratique', excerpt: 'Comment intégrer efficacement l\'IA générative dans vos processus métier avec des exemples concrets.' },
+        { date: '14 Mai 2025', title: 'Machine Learning explicable (XAI)', excerpt: 'Comprendre et expliquer les décisions de vos modèles IA pour une adoption en confiance.' },
+        { date: '9 Mai 2025', title: 'Éthique et IA : enjeux et bonnes pratiques', excerpt: 'Les considérations éthiques essentielles pour un déploiement responsable de l\'IA.' }
+      ]
+    },
+    'cybersecurity': {
+      title: 'Cybersécurité',
+      icon: '🔒',
+      overview: `
+        <div class="persuasive-intro">
+          <p><strong>🛡️ Sécurisez votre avenir numérique !</strong></p>
+          <p>⚡ <em>Une cyberattaque coûte en moyenne 4.45M$ à une entreprise.</em> Ne laissez pas les hackers détruire des années de travail ! Protégez votre entreprise avec nos solutions de cybersécurité militaire et dormez enfin sur vos deux oreilles.</p>
+        </div>
+        
+        <div style="margin: 2rem 0;">
+          <h4 style="color: var(--primary-blue); margin-bottom: 1.5rem; font-size: 1.3rem;">🔐 Protection niveau militaire :</h4>
+        </div>
+        
+        <div style="margin-bottom: 2.5rem; padding: 1.5rem; background: linear-gradient(135deg, #f8f9ff 0%, #e8f2ff 100%); border-radius: 12px; border-left: 4px solid var(--primary-blue);">
+          <h5 style="color: var(--primary-blue); font-weight: bold; font-size: 1.1rem; margin-bottom: 1rem;">🔍 Audit & Tests d'Intrusion</h5>
+          <ul style="line-height: 1.8; margin-left: 1rem;">
+            <li>Évaluation par d'anciens experts NSA qui découvrent 99.7% des failles</li>
+            <li>Tests d'intrusion par des hackers éthiques certifiés OSCP</li>
+            <li>Audit de conformité RGPD, ISO 27001 garantie</li>
+          </ul>
+        </div>
+        
+        <div style="margin-bottom: 2.5rem; padding: 1.5rem; background: linear-gradient(135deg, #f0f8ff 0%, #e0f0ff 100%); border-radius: 12px; border-left: 4px solid #4285f4;">
+          <h5 style="color: #4285f4; font-weight: bold; font-size: 1.1rem; margin-bottom: 1rem;">🚨 Monitoring & SOC 24/7</h5>
+          <ul style="line-height: 1.8; margin-left: 1rem;">
+            <li>Centre opérationnel 24/7 qui bloque 50,000 attaques/jour</li>
+            <li>SIEM dernière génération avec intelligence artificielle</li>
+            <li>Formation de vos équipes en remparts humains anti-phishing</li>
+          </ul>
+        </div>
+        
+        <div style="margin-bottom: 2.5rem; padding: 1.5rem; background: linear-gradient(135deg, #fff8f0 0%, #ffe8d0 100%); border-radius: 12px; border-left: 4px solid #ff9800;">
+          <h5 style="color: #ff9800; font-weight: bold; font-size: 1.1rem; margin-bottom: 1rem;">🎓 Formation & Sensibilisation</h5>
+          <ul style="line-height: 1.8; margin-left: 1rem;">
+            <li>Transformation de vos équipes en remparts humains anti-phishing</li>
+            <li>Programmes de sensibilisation cybersécurité</li>
+            <li>Simulations d'attaques et exercices pratiques</li>
+          </ul>
+        </div>
+        
+        <div style="margin-bottom: 2.5rem; padding: 1.5rem; background: linear-gradient(135deg, #f0fff0 0%, #e0ffe0 100%); border-radius: 12px; border-left: 4px solid #4caf50;">
+          <h5 style="color: #4caf50; font-weight: bold; font-size: 1.1rem; margin-bottom: 1rem;">🛡️ Architecture Zero Trust</h5>
+          <ul style="line-height: 1.8; margin-left: 1rem;">
+            <li>Firewall Zero Trust et segmentation réseau</li>
+            <li>Sauvegardes ultra-sécurisées et disaster recovery</li>
+            <li>Solutions IAM, PAM et gestion des identités</li>
+          </ul>
+        </div>
+        
+        <div style="margin-top: 3rem; padding: 2rem; background: linear-gradient(135deg, #f5f8ff 0%, #e8f2ff 100%); border-radius: 16px; border: 2px solid var(--primary-blue); box-shadow: 0 8px 24px rgba(0, 102, 255, 0.1);">
+          <h4 style="color: var(--primary-blue); font-weight: bold; font-size: 1.3rem; margin-bottom: 1.5rem; text-align: center;">💰 Économies garanties</h4>
+          <div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(250px, 1fr)); gap: 1.5rem; margin-top: 1.5rem;">
+            <div style="text-align: center; padding: 1rem; background: white; border-radius: 12px; box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);">
+              <div style="font-size: 2rem; font-weight: bold; color: var(--primary-blue); margin-bottom: 0.5rem;">-95%</div>
+              <div style="font-size: 0.9rem; color: #666;">Risques de cyberattaques réussies</div>
+            </div>
+            <div style="text-align: center; padding: 1rem; background: white; border-radius: 12px; box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);">
+              <div style="font-size: 2rem; font-weight: bold; color: #4caf50; margin-bottom: 0.5rem;">0€</div>
+              <div style="font-size: 0.9rem; color: #666;">Rançon grâce aux sauvegardes sécurisées</div>
+            </div>
+            <div style="text-align: center; padding: 1rem; background: white; border-radius: 12px; box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);">
+              <div style="font-size: 2rem; font-weight: bold; color: #ff9800; margin-bottom: 0.5rem;">250%</div>
+              <div style="font-size: 0.9rem; color: #666;">ROI en évitant une cyberattaque majeure</div>
+            </div>
+            <div style="text-align: center; padding: 1rem; background: white; border-radius: 12px; box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);">
+              <div style="font-size: 2rem; font-weight: bold; color: #9c27b0; margin-bottom: 0.5rem;">99.7%</div>
+              <div style="font-size: 0.9rem; color: #666;">Failles détectées par nos experts</div>
+            </div>
+          </div>
+        </div>
+      `,
+      workflow: [
+        { 
+          title: 'Audit de Sécurité Global (2-3 semaines)', 
+          desc: 'Cartographie complète de l\'infrastructure IT, inventaire des actifs critiques, évaluation des vulnérabilités techniques (scan automatisé + manuel), audit des configurations et des politiques de sécurité existantes, compliance check (RGPD, ISO 27001, SOC2).'
+        },
+        { 
+          title: 'Analyse des Risques & Threat Modeling (1-2 semaines)', 
+          desc: 'Identification et classification des menaces spécifiques au secteur, analyse d\'impact business des scénarios d\'attaque, calcul de la matrice de risques (probabilité x impact), priorisation des vulnérabilités critiques et définition des seuils de risque acceptables.'
+        },
+        { 
+          title: 'Conception de la Stratégie de Sécurité (2-3 semaines)', 
+          desc: 'Définition de l\'architecture de sécurité Zero Trust, sélection des solutions techniques (SIEM, EDR, PAM), planification de la segmentation réseau, conception des politiques de sécurité et définition des processus incident response.'
+        },
+        { 
+          title: 'Implémentation des Solutions (4-8 semaines)', 
+          desc: 'Déploiement des solutions de sécurité (firewalls, antivirus, SIEM), configuration du monitoring et alerting 24/7, mise en place de la sauvegarde et disaster recovery, implémentation des contrôles d\'accès (MFA, SSO) et durcissement des systèmes.'
+        },
+        { 
+          title: 'Tests de Pénétration & Validation (2-3 semaines)', 
+          desc: 'Tests d\'intrusion externes et internes (black/white/grey box), social engineering et phishing simulé, validation des défenses en profondeur, tests de résilience et de récupération, rapport détaillé avec plan de remédiation priorisé.'
+        },
+        { 
+          title: 'Monitoring & Amélioration Continue (Continu)', 
+          desc: 'Surveillance 24/7 via SOC (Security Operations Center), threat hunting proactif, mise à jour des signatures et règles de détection, formation continue des équipes, audits de sécurité trimestriels et optimisation des processus sécuritaires.'
+        }
+      ],
+      blog: [
+        { date: '20 Mai 2025', title: 'Zero Trust : révolution de la sécurité IT', excerpt: 'Découvrez comment l\'approche Zero Trust transforme la cybersécurité d\'entreprise.' },
+        { date: '16 Mai 2025', title: 'Ransomware : prévention et réponse', excerpt: 'Guide complet pour se protéger contre les ransomwares et réagir en cas d\'attaque.' },
+        { date: '11 Mai 2025', title: 'RGPD en 2025 : nouveautés et sanctions', excerpt: 'Mise à jour des exigences RGPD et bonnes pratiques pour rester conforme.' }
+      ]
+    },
+    'blockchain': {
+      title: 'Blockchain',
+      icon: '⛓️',
+      overview: `
+        <div class="persuasive-intro">
+          <p><strong>⛓️ Révolutionnez votre business avec la Blockchain !</strong></p>
+          <p>⚡ <em>La blockchain va générer 3.1 trillions$ de valeur d'ici 2030.</em> Ne ratez pas la révolution Web3 ! Créez des solutions décentralisées innovantes qui positionnent votre entreprise à l'avant-garde technologique et ouvrent de nouveaux modèles économiques.</p>
+        </div>
+        
+        <div style="margin: 2rem 0;">
+          <h4 style="color: var(--primary-blue); margin-bottom: 1.5rem; font-size: 1.3rem;">🚀 Solutions Web3 révolutionnaires :</h4>
+        </div>
+        
+        <div style="margin-bottom: 2.5rem; padding: 1.5rem; background: linear-gradient(135deg, #f8f9ff 0%, #e8f2ff 100%); border-radius: 12px; border-left: 4px solid var(--primary-blue);">
+          <h5 style="color: var(--primary-blue); font-weight: bold; font-size: 1.1rem; margin-bottom: 1rem;">🔗 Applications Décentralisées (DApps)</h5>
+          <ul style="line-height: 1.8; margin-left: 1rem;">
+            <li>Applications décentralisées qui éliminent les intermédiaires (-50% de coûts de transaction)</li>
+            <li>Smart Contracts auto-exécutables 100% transparents</li>
+            <li>Gouvernance décentralisée et voting on-chain</li>
+          </ul>
+        </div>
+        
+        <div style="margin-bottom: 2.5rem; padding: 1.5rem; background: linear-gradient(135deg, #f0f8ff 0%, #e0f0ff 100%); border-radius: 12px; border-left: 4px solid #4285f4;">
+          <h5 style="color: #4285f4; font-weight: bold; font-size: 1.1rem; margin-bottom: 1rem;">💎 NFT & Tokenisation</h5>
+          <ul style="line-height: 1.8; margin-left: 1rem;">
+            <li>Plateformes de certification numérique qui créent de nouveaux revenus</li>
+            <li>Tokenisation d'actifs physiques et numériques</li>
+            <li>Marketplaces NFT sur-mesure</li>
+          </ul>
+        </div>
+        
+        <div style="margin-bottom: 2.5rem; padding: 1.5rem; background: linear-gradient(135deg, #fff8f0 0%, #ffe8d0 100%); border-radius: 12px; border-left: 4px solid #ff9800;">
+          <h5 style="color: #ff9800; font-weight: bold; font-size: 1.1rem; margin-bottom: 1rem;">💰 DeFi & Finance Décentralisée</h5>
+          <ul style="line-height: 1.8; margin-left: 1rem;">
+            <li>Solutions financières décentralisées avec rendements jusqu'à 20% APY</li>
+            <li>Protocoles de lending et staking</li>
+            <li>Échanges décentralisés (DEX)</li>
+          </ul>
+        </div>
+        
+        <div style="margin-bottom: 2.5rem; padding: 1.5rem; background: linear-gradient(135deg, #f0fff0 0%, #e0ffe0 100%); border-radius: 12px; border-left: 4px solid #4caf50;">
+          <h5 style="color: #4caf50; font-weight: bold; font-size: 1.1rem; margin-bottom: 1rem;">📦 Traçabilité & Supply Chain</h5>
+          <ul style="line-height: 1.8; margin-left: 1rem;">
+            <li>Supply chain immuable qui élimine la contrefaçon</li>
+            <li>Traçabilité de bout en bout</li>
+            <li>Certification d'authenticité blockchain</li>
+          </ul>
+        </div>
+        
+        <div style="margin-top: 3rem; padding: 2rem; background: linear-gradient(135deg, #f5f8ff 0%, #e8f2ff 100%); border-radius: 16px; border: 2px solid var(--primary-blue); box-shadow: 0 8px 24px rgba(0, 102, 255, 0.1);">
+          <h4 style="color: var(--primary-blue); font-weight: bold; font-size: 1.3rem; margin-bottom: 1.5rem; text-align: center;">💎 Avantages concurrentiels</h4>
+          <div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(250px, 1fr)); gap: 1.5rem; margin-top: 1.5rem;">
+            <div style="text-align: center; padding: 1rem; background: white; border-radius: 12px; box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);">
+              <div style="font-size: 2rem; font-weight: bold; color: var(--primary-blue); margin-bottom: 0.5rem;">-50%</div>
+              <div style="font-size: 0.9rem; color: #666;">Réduction des coûts de transaction</div>
+            </div>
+            <div style="text-align: center; padding: 1rem; background: white; border-radius: 12px; box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);">
+              <div style="font-size: 2rem; font-weight: bold; color: #4caf50; margin-bottom: 0.5rem;">3.1T$</div>
+              <div style="font-size: 0.9rem; color: #666;">Valeur blockchain prévue d'ici 2030</div>
+            </div>
+            <div style="text-align: center; padding: 1rem; background: white; border-radius: 12px; box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);">
+              <div style="font-size: 2rem; font-weight: bold; color: #ff9800; margin-bottom: 0.5rem;">20%</div>
+              <div style="font-size: 0.9rem; color: #666;">Rendements DeFi possibles (APY)</div>
+            </div>
+            <div style="text-align: center; padding: 1rem; background: white; border-radius: 12px; box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);">
+              <div style="font-size: 2rem; font-weight: bold; color: #9c27b0; margin-bottom: 0.5rem;">100%</div>
+              <div style="font-size: 0.9rem; color: #666;">Transparence des smart contracts</div>
+            </div>
+          </div>
+        </div>
+      `,
+      workflow: [
+        { 
+          title: 'Analyse de Faisabilité Blockchain (1-2 semaines)', 
+          desc: 'Évaluation de la pertinence blockchain pour votre cas d\'usage, analyse coût/bénéfice vs solutions traditionnelles, sélection de la blockchain optimale (publique/privée/consortium), étude de la tokenomics si applicable et validation de la viabilité technique et économique.'
+        },
+        { 
+          title: 'Architecture Décentralisée (2-3 semaines)', 
+          desc: 'Conception de l\'architecture on-chain/off-chain, modélisation des smart contracts et interactions, définition des mécanismes de consensus et gouvernance, planification de l\'interopérabilité multi-chaînes et conception des bridges si nécessaires.'
+        },
+        { 
+          title: 'Développement Smart Contracts (3-5 semaines)', 
+          desc: 'Développement en Solidity/Rust selon la blockchain, implémentation des standards (ERC-20, ERC-721, ERC-1155), optimisation du gas et des performances, tests unitaires exhaustifs avec frameworks dédiés (Hardhat, Foundry) et documentation technique complète.'
+        },
+        { 
+          title: 'Interface DApp & Intégration Web3 (3-4 semaines)', 
+          desc: 'Développement de l\'interface utilisateur Web3, intégration avec wallets (MetaMask, WalletConnect), implémentation des interactions blockchain (lecture/écriture), gestion des états de transaction et UX optimisée pour l\'écosystème décentralisé.'
+        },
+        { 
+          title: 'Audit de Sécurité & Tests (2-3 semaines)', 
+          desc: 'Audit de sécurité des smart contracts par experts tiers, tests de pénétration spécifiques blockchain, validation des mécanismes économiques, tests de stress sur testnets publics et correction des vulnérabilités identifiées.'
+        },
+        { 
+          title: 'Déploiement Mainnet & Gouvernance (1-2 semaines puis continu)', 
+          desc: 'Déploiement progressif sur mainnet avec monitoring, mise en place de la gouvernance décentralisée, configuration des oracles si nécessaires, formation des utilisateurs aux wallets et interfaces Web3, support technique spécialisé blockchain.'
+        }
+      ],
+      blog: [
+        { date: '22 Mai 2025', title: 'Web3 et entreprises : cas d\'usage concrets', excerpt: 'Comment les entreprises utilisent la blockchain pour transformer leurs activités.' },
+        { date: '17 Mai 2025', title: 'Sécurité des Smart Contracts', excerpt: 'Bonnes pratiques pour développer des contrats intelligents sécurisés.' },
+        { date: '13 Mai 2025', title: 'NFT B2B : au-delà de l\'art numérique', excerpt: 'Applications professionnelles des NFT : certification, authentification, propriété.' }
+      ]
+    },
+    'cloud-devops': {
+      title: 'Cloud & DevOps',
+      icon: '☁️',
+      overview: `
+        <div class="persuasive-intro">
+          <p><strong>☁️ Propulsez votre business dans le cloud !</strong></p>
+          <p>⚡ <em>Les entreprises cloud-natives croissent 2.5x plus vite que leurs concurrents.</em> Rejoignez les géants technologiques ! Accélérez votre transformation digitale avec nos solutions cloud et DevOps ultra-performantes qui garantissent scalabilité infinie et coûts optimisés.</p>
+        </div>
+        
+        <div style="margin: 2rem 0;">
+          <h4 style="color: var(--primary-blue); margin-bottom: 1.5rem; font-size: 1.3rem;">🚀 Services Cloud révolutionnaires :</h4>
+        </div>
+        
+        <div style="margin-bottom: 2.5rem; padding: 1.5rem; background: linear-gradient(135deg, #f8f9ff 0%, #e8f2ff 100%); border-radius: 12px; border-left: 4px solid var(--primary-blue);">
+          <h5 style="color: var(--primary-blue); font-weight: bold; font-size: 1.1rem; margin-bottom: 1rem;">☁️ Migration & Architecture Cloud</h5>
+          <ul style="line-height: 1.8; margin-left: 1rem;">
+            <li>Transition fluide vers AWS/Azure/GCP avec 99.99% d'uptime garanti</li>
+            <li>Architecture microservices et serverless</li>
+            <li>Stratégies multi-cloud anti-vendor lock</li>
+          </ul>
+        </div>
+        
+        <div style="margin-bottom: 2.5rem; padding: 1.5rem; background: linear-gradient(135deg, #f0f8ff 0%, #e0f0ff 100%); border-radius: 12px; border-left: 4px solid #4285f4;">
+          <h5 style="color: #4285f4; font-weight: bold; font-size: 1.1rem; margin-bottom: 1rem;">🛠️ Infrastructure as Code</h5>
+          <ul style="line-height: 1.8; margin-left: 1rem;">
+            <li>Automatisation Terraform qui réduit les erreurs de 95%</li>
+            <li>Provisioning automatisé et reproductible</li>
+            <li>Gestion de configuration centralisée</li>
+          </ul>
+        </div>
+        
+        <div style="margin-bottom: 2.5rem; padding: 1.5rem; background: linear-gradient(135deg, #fff8f0 0%, #ffe8d0 100%); border-radius: 12px; border-left: 4px solid #ff9800;">
+          <h5 style="color: #ff9800; font-weight: bold; font-size: 1.1rem; margin-bottom: 1rem;">🐳 Containerisation & Orchestration</h5>
+          <ul style="line-height: 1.8; margin-left: 1rem;">
+            <li>Docker/Kubernetes pour scalabilité instantanée jusqu'à 10,000 utilisateurs</li>
+            <li>Déploiements 50x plus rapides avec pipelines CI/CD</li>
+            <li>Auto-scaling et load balancing intelligents</li>
+          </ul>
+        </div>
+        
+        <div style="margin-bottom: 2.5rem; padding: 1.5rem; background: linear-gradient(135deg, #f0fff0 0%, #e0ffe0 100%); border-radius: 12px; border-left: 4px solid #4caf50;">
+          <h5 style="color: #4caf50; font-weight: bold; font-size: 1.1rem; margin-bottom: 1rem;">📊 Monitoring & DevSecOps</h5>
+          <ul style="line-height: 1.8; margin-left: 1rem;">
+            <li>Prometheus/Grafana qui préviennent 99% des pannes</li>
+            <li>Sécurité intégrée dès le code (0 vulnérabilité en production)</li>
+            <li>Observabilité complète et alerting intelligent</li>
+          </ul>
+        </div>
+        
+        <div style="margin-top: 3rem; padding: 2rem; background: linear-gradient(135deg, #f5f8ff 0%, #e8f2ff 100%); border-radius: 16px; border: 2px solid var(--primary-blue); box-shadow: 0 8px 24px rgba(0, 102, 255, 0.1);">
+          <h4 style="color: var(--primary-blue); font-weight: bold; font-size: 1.3rem; margin-bottom: 1.5rem; text-align: center;">💰 ROI immédiat</h4>
+          <div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(250px, 1fr)); gap: 1.5rem; margin-top: 1.5rem;">
+            <div style="text-align: center; padding: 1rem; background: white; border-radius: 12px; box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);">
+              <div style="font-size: 2rem; font-weight: bold; color: var(--primary-blue); margin-bottom: 0.5rem;">-60%</div>
+              <div style="font-size: 0.9rem; color: #666;">Coûts infrastructure après migration cloud</div>
+            </div>
+            <div style="text-align: center; padding: 1rem; background: white; border-radius: 12px; box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);">
+              <div style="font-size: 2rem; font-weight: bold; color: #4caf50; margin-bottom: 0.5rem;">×10</div>
+              <div style="font-size: 0.9rem; color: #666;">Accélération time-to-market (DevOps)</div>
+            </div>
+            <div style="text-align: center; padding: 1rem; background: white; border-radius: 12px; box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);">
+              <div style="font-size: 2rem; font-weight: bold; color: #ff9800; margin-bottom: 0.5rem;">99.99%</div>
+              <div style="font-size: 0.9rem; color: #666;">Disponibilité garantie</div>
+            </div>
+            <div style="text-align: center; padding: 1rem; background: white; border-radius: 12px; box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);">
+              <div style="font-size: 2rem; font-weight: bold; color: #9c27b0; margin-bottom: 0.5rem;">-95%</div>
+              <div style="font-size: 0.9rem; color: #666;">Réduction des erreurs (IaC)</div>
+            </div>
+          </div>
+        </div>
+      `,
+      workflow: [
+        { 
+          title: 'Assessment & Stratégie Cloud (2-3 semaines)', 
+          desc: 'Audit complet de l\'infrastructure existante (serveurs, applications, données), évaluation des coûts actuels vs cloud, analyse des dépendances et contraintes techniques, définition de la stratégie multi-cloud/hybride et roadmap de migration priorisée par criticité business.'
+        },
+        { 
+          title: 'Architecture Cloud-Native (2-4 semaines)', 
+          desc: 'Conception de l\'architecture microservices/serverless, définition des VPC et segmentation réseau, planification de la haute disponibilité et disaster recovery, sélection des services managés optimaux, design des patterns de sécurité et compliance cloud.'
+        },
+        { 
+          title: 'Infrastructure as Code & Automatisation (3-4 semaines)', 
+          desc: 'Développement des templates Terraform/CloudFormation, mise en place des pipelines CI/CD (GitLab/GitHub Actions), automatisation des déploiements avec blue/green ou canary, configuration du monitoring et alerting (Prometheus/Grafana), implémentation des politiques de backup automatisées.'
+        },
+        { 
+          title: 'Migration & Containerisation (4-8 semaines)', 
+          desc: 'Migration des applications selon stratégie 6R (Rehost/Refactor/Rebuild), containerisation avec Docker et orchestration Kubernetes, migration des bases de données avec minimal downtime, tests de charge et validation des performances, migration des données avec synchronisation.'
+        },
+        { 
+          title: 'DevSecOps & Optimisation (2-3 semaines)', 
+          desc: 'Intégration de la sécurité dans les pipelines (SAST/DAST), mise en place de la gestion des secrets (Vault/AWS Secrets), configuration du scanning de vulnérabilités automatisé, optimisation des coûts cloud (right-sizing, reserved instances), tuning des performances applicatives.'
+        },
+        { 
+          title: 'Gouvernance & FinOps (1-2 semaines puis continu)', 
+          desc: 'Mise en place de la gouvernance cloud (policies, budgets, tagging), formation des équipes aux bonnes pratiques DevOps, établissement des SLA et métriques de performance, monitoring continu des coûts avec optimisation automatisée, support et amélioration continue.'
+        }
+      ],
+      blog: [
+        { date: '25 Mai 2025', title: 'FinOps : optimiser les coûts cloud', excerpt: 'Stratégies pour maîtriser et optimiser vos dépenses cloud avec les bonnes pratiques FinOps.' },
+        { date: '21 Mai 2025', title: 'Kubernetes en production : guide complet', excerpt: 'Déployer et gérer Kubernetes en production avec sécurité et performance.' },
+        { date: '19 Mai 2025', title: 'GitOps : révolution du déploiement', excerpt: 'Comment GitOps transforme la façon de déployer et gérer les applications.' }
+      ]
+    },
+    'exploitation-maintenance': {
+      title: 'Exploitation et Maintenance',
+      icon: '🔧',
+      overview: `
+        <div class="persuasive-intro">
+          <p><strong>🔧 Zéro panne, performance maximale !</strong></p>
+          <p>⚡ <em>Nos clients évitent 99.7% des pannes grâce à notre maintenance préventive.</em> Plus jamais de stress lié aux plantages système ! Nos experts veillent 24/7 sur vos infrastructures pour garantir une disponibilité parfaite et des performances optimales qui boostent votre productivité.</p>
+        </div>
+        
+        <div style="margin: 2rem 0;">
+          <h4 style="color: var(--primary-blue); margin-bottom: 1.5rem; font-size: 1.3rem;">🛠️ Services d'exploitation niveau entreprise :</h4>
+        </div>
+        
+        <div style="margin-bottom: 2.5rem; padding: 1.5rem; background: linear-gradient(135deg, #f8f9ff 0%, #e8f2ff 100%); border-radius: 12px; border-left: 4px solid var(--primary-blue);">
+          <h5 style="color: var(--primary-blue); font-weight: bold; font-size: 1.1rem; margin-bottom: 1rem;">📊 Monitoring & Surveillance 24/7</h5>
+          <ul style="line-height: 1.8; margin-left: 1rem;">
+            <li>Surveillance continue de vos infrastructures critiques</li>
+            <li>Alertes proactives avant les incidents</li>
+            <li>Tableaux de bord temps réel des performances</li>
+          </ul>
+        </div>
+        
+        <div style="margin-bottom: 2.5rem; padding: 1.5rem; background: linear-gradient(135deg, #f0f8ff 0%, #e0f0ff 100%); border-radius: 12px; border-left: 4px solid #4285f4;">
+          <h5 style="color: #4285f4; font-weight: bold; font-size: 1.1rem; margin-bottom: 1rem;">🔧 Maintenance Préventive</h5>
+          <ul style="line-height: 1.8; margin-left: 1rem;">
+            <li>Interventions planifiées pour éviter les pannes</li>
+            <li>Mises à jour et patches de sécurité automatisés</li>
+            <li>Optimisation continue des performances système</li>
+          </ul>
+        </div>
+        
+        <div style="margin-bottom: 2.5rem; padding: 1.5rem; background: linear-gradient(135deg, #fff8f0 0%, #ffe8d0 100%); border-radius: 12px; border-left: 4px solid #ff9800;">
+          <h5 style="color: #ff9800; font-weight: bold; font-size: 1.1rem; margin-bottom: 1rem;">🆘 Support & Assistance</h5>
+          <ul style="line-height: 1.8; margin-left: 1rem;">
+            <li>Assistance réactive en cas d'incident critique</li>
+            <li>Support technique multicanal (téléphone, email, ticket)</li>
+            <li>Escalade automatique selon les SLA définis</li>
+          </ul>
+        </div>
+        
+        <div style="margin-bottom: 2.5rem; padding: 1.5rem; background: linear-gradient(135deg, #f0fff0 0%, #e0ffe0 100%); border-radius: 12px; border-left: 4px solid #4caf50;">
+          <h5 style="color: #4caf50; font-weight: bold; font-size: 1.1rem; margin-bottom: 1rem;">💾 Sauvegarde & Recovery</h5>
+          <ul style="line-height: 1.8; margin-left: 1rem;">
+            <li>Stratégies de backup automatisées et sécurisées</li>
+            <li>Tests réguliers de restauration des données</li>
+            <li>Plan de reprise d'activité (PRA) personnalisé</li>
+          </ul>
+        </div>
+        
+        <div style="margin-top: 3rem; padding: 2rem; background: linear-gradient(135deg, #f5f8ff 0%, #e8f2ff 100%); border-radius: 16px; border: 2px solid var(--primary-blue); box-shadow: 0 8px 24px rgba(0, 102, 255, 0.1);">
+          <h4 style="color: var(--primary-blue); font-weight: bold; font-size: 1.3rem; margin-bottom: 1.5rem; text-align: center;">🎯 Performance garantie</h4>
+          <div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(250px, 1fr)); gap: 1.5rem; margin-top: 1.5rem;">
+            <div style="text-align: center; padding: 1rem; background: white; border-radius: 12px; box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);">
+              <div style="font-size: 2rem; font-weight: bold; color: var(--primary-blue); margin-bottom: 0.5rem;">99.7%</div>
+              <div style="font-size: 0.9rem; color: #666;">Pannes évitées (maintenance préventive)</div>
+            </div>
+            <div style="text-align: center; padding: 1rem; background: white; border-radius: 12px; box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);">
+              <div style="font-size: 2rem; font-weight: bold; color: #4caf50; margin-bottom: 0.5rem;">24/7</div>
+              <div style="font-size: 0.9rem; color: #666;">Surveillance continue des systèmes</div>
+            </div>
+            <div style="text-align: center; padding: 1rem; background: white; border-radius: 12px; box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);">
+              <div style="font-size: 2rem; font-weight: bold; color: #ff9800; margin-bottom: 0.5rem;">99.99%</div>
+              <div style="font-size: 0.9rem; color: #666;">Disponibilité des services garantie</div>
+            </div>
+            <div style="text-align: center; padding: 1rem; background: white; border-radius: 12px; box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);">
+              <div style="font-size: 2rem; font-weight: bold; color: #9c27b0; margin-bottom: 0.5rem;">< 2h</div>
+              <div style="font-size: 0.9rem; color: #666;">Temps de réponse en cas d'incident</div>
+            </div>
+          </div>
+        </div>
+      `,
+      workflow: [
+        { 
+          title: 'Audit Infrastructure Existante (1-2 semaines)', 
+          desc: 'Inventaire complet des équipements et logiciels, évaluation de l\'état de santé des systèmes, identification des risques et vulnérabilités, analyse des performances actuelles et documentation de l\'architecture existante.'
+        },
+        { 
+          title: 'Mise en Place du Monitoring (1-2 semaines)', 
+          desc: 'Installation des outils de surveillance (Nagios, Zabbix, PRTG), configuration des alertes et seuils personnalisés, mise en place des tableaux de bord temps réel, intégration avec les systèmes existants et formation des équipes.'
+        },
+        { 
+          title: 'Plan de Maintenance Préventive (1 semaine)', 
+          desc: 'Définition du calendrier des interventions planifiées, création des procédures de maintenance standardisées, planification des mises à jour et patches de sécurité, organisation des fenêtres de maintenance et validation avec les équipes métier.'
+        },
+        { 
+          title: 'Mise en Production du Support (1 semaine)', 
+          desc: 'Activation du support technique multicanal (téléphone, email, ticket), mise en place des astreintes et escalades, configuration des outils de ticketing, définition des SLA par criticité et formation du support utilisateur.'
+        },
+        { 
+          title: 'Optimisation Continue (Continu)', 
+          desc: 'Analyse régulière des performances et logs, identification des goulots d\'étranglement, optimisation des configurations, mise à jour technologique progressive, reporting mensuel des KPI et recommandations d\'amélioration.'
+        }
+      ],
+      blog: [
+        { date: '26 Mai 2025', title: 'ITIL v4 : révolution de la gestion des services IT', excerpt: 'Découvrez comment ITIL v4 transforme l\'approche de l\'exploitation et de la maintenance IT.' },
+        { date: '23 Mai 2025', title: 'Monitoring proactif : prévenir plutôt que guérir', excerpt: 'Les bonnes pratiques pour mettre en place un monitoring efficace de votre infrastructure.' },
+        { date: '21 Mai 2025', title: 'Maintenance prédictive avec l\'IA', excerpt: 'Comment l\'intelligence artificielle révolutionne la maintenance des systèmes informatiques.' }
+      ]
+    },
+    'modelisation-decisionnelle': {
+      title: 'Modélisation Décisionnelle',
+      icon: '📊',
+      overview: `
+        <div class="persuasive-intro">
+          <p><strong>📊 Transformez vos données en or numérique !</strong></p>
+          <p>⚡ <em>Nos solutions BI augmentent la productivité décisionnelle de 45% en moyenne.</em> Fini les décisions à l'aveugle ! Exploitez la puissance de vos données avec nos tableaux de bord intelligents qui révèlent les insights cachés et accélèrent vos prises de décision stratégiques.</p>
+        </div>
+        
+        <div style="margin: 2rem 0;">
+          <h4 style="color: var(--primary-blue); margin-bottom: 1.5rem; font-size: 1.3rem;">🎯 Solutions décisionnelles révolutionnaires :</h4>
+        </div>
+        
+        <div style="margin-bottom: 2.5rem; padding: 1.5rem; background: linear-gradient(135deg, #f8f9ff 0%, #e8f2ff 100%); border-radius: 12px; border-left: 4px solid var(--primary-blue);">
+          <h5 style="color: var(--primary-blue); font-weight: bold; font-size: 1.1rem; margin-bottom: 1rem;">🏗️ Data Warehouse & Architecture</h5>
+          <ul style="line-height: 1.8; margin-left: 1rem;">
+            <li>Entrepôts de données centralisés et optimisés</li>
+            <li>Modélisation dimensionnelle avancée</li>
+            <li>ETL haute performance et gouvernance des données</li>
+          </ul>
+        </div>
+        
+        <div style="margin-bottom: 2.5rem; padding: 1.5rem; background: linear-gradient(135deg, #f0f8ff 0%, #e0f0ff 100%); border-radius: 12px; border-left: 4px solid #4285f4;">
+          <h5 style="color: #4285f4; font-weight: bold; font-size: 1.1rem; margin-bottom: 1rem;">📈 Dashboards & Reporting</h5>
+          <ul style="line-height: 1.8; margin-left: 1rem;">
+            <li>Tableaux de bord interactifs et temps réel</li>
+            <li>Rapports automatisés et personnalisés</li>
+            <li>KPI tracking et alertes intelligentes</li>
+          </ul>
+        </div>
+        
+        <div style="margin-bottom: 2.5rem; padding: 1.5rem; background: linear-gradient(135deg, #fff8f0 0%, #ffe8d0 100%); border-radius: 12px; border-left: 4px solid #ff9800;">
+          <h5 style="color: #ff9800; font-weight: bold; font-size: 1.1rem; margin-bottom: 1rem;">🔮 Analyse Prédictive</h5>
+          <ul style="line-height: 1.8; margin-left: 1rem;">
+            <li>Modèles de forecasting et prévisions avancées</li>
+            <li>Détection de tendances et patterns cachés</li>
+            <li>Algorithmes de machine learning intégrés</li>
+          </ul>
+        </div>
+        
+        <div style="margin-bottom: 2.5rem; padding: 1.5rem; background: linear-gradient(135deg, #f0fff0 0%, #e0ffe0 100%); border-radius: 12px; border-left: 4px solid #4caf50;">
+          <h5 style="color: #4caf50; font-weight: bold; font-size: 1.1rem; margin-bottom: 1rem;">🛠️ Self-Service BI</h5>
+          <ul style="line-height: 1.8; margin-left: 1rem;">
+            <li>Outils d'analyse autonome pour les métiers</li>
+            <li>Interface drag & drop intuitive</li>
+            <li>Formation et accompagnement utilisateur</li>
+          </ul>
+        </div>
+        
+        <div style="margin-top: 3rem; padding: 2rem; background: linear-gradient(135deg, #f5f8ff 0%, #e8f2ff 100%); border-radius: 16px; border: 2px solid var(--primary-blue); box-shadow: 0 8px 24px rgba(0, 102, 255, 0.1);">
+          <h4 style="color: var(--primary-blue); font-weight: bold; font-size: 1.3rem; margin-bottom: 1.5rem; text-align: center;">💎 Impact business mesurable</h4>
+          <div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(250px, 1fr)); gap: 1.5rem; margin-top: 1.5rem;">
+            <div style="text-align: center; padding: 1rem; background: white; border-radius: 12px; box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);">
+              <div style="font-size: 2rem; font-weight: bold; color: var(--primary-blue); margin-bottom: 0.5rem;">+45%</div>
+              <div style="font-size: 0.9rem; color: #666;">Productivité décisionnelle améliorée</div>
+            </div>
+            <div style="text-align: center; padding: 1rem; background: white; border-radius: 12px; box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);">
+              <div style="font-size: 2rem; font-weight: bold; color: #4caf50; margin-bottom: 0.5rem;">-70%</div>
+              <div style="font-size: 0.9rem; color: #666;">Temps de préparation des rapports</div>
+            </div>
+            <div style="text-align: center; padding: 1rem; background: white; border-radius: 12px; box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);">
+              <div style="font-size: 2rem; font-weight: bold; color: #ff9800; margin-bottom: 0.5rem;">85%</div>
+              <div style="font-size: 0.9rem; color: #666;">Précision des prévisions métier</div>
+            </div>
+            <div style="text-align: center; padding: 1rem; background: white; border-radius: 12px; box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);">
+              <div style="font-size: 2rem; font-weight: bold; color: #9c27b0; margin-bottom: 0.5rem;">24/7</div>
+              <div style="font-size: 0.9rem; color: #666;">Accès aux données en temps réel</div>
+            </div>
+          </div>
+        </div>
+      `,
+      workflow: [
+        { 
+          title: 'Analyse des Besoins Décisionnels (2-3 semaines)', 
+          desc: 'Cartographie des processus décisionnels existants, identification des KPI critiques métier, analyse des sources de données disponibles, définition des profils utilisateurs et de leurs besoins spécifiques en reporting et analyse.'
+        },
+        { 
+          title: 'Architecture Data Warehouse (2-4 semaines)', 
+          desc: 'Conception du modèle dimensionnel (étoile/flocon), définition des ETL et processus d\'intégration, architecture du data warehouse avec historisation, mise en place de la gouvernance des données et définition des méta-données.'
+        },
+        { 
+          title: 'Développement ETL et Intégration (3-5 semaines)', 
+          desc: 'Développement des processus d\'extraction et transformation, intégration des sources hétérogènes (ERP, CRM, fichiers), mise en place de la qualité des données, automatisation des flux de données et tests de cohérence et performance.'
+        },
+        { 
+          title: 'Création des Cubes et Dashboards (3-4 semaines)', 
+          desc: 'Modélisation des cubes OLAP pour l\'analyse multidimensionnelle, développement des tableaux de bord interactifs, création des rapports automatisés, mise en place des alertes métier et optimisation des performances d\'affichage.'
+        },
+        { 
+          title: 'Déploiement et Formation (2-3 semaines)', 
+          desc: 'Déploiement en production avec migration des données historiques, formation des utilisateurs finaux aux outils BI, mise en place de la gouvernance et des rôles d\'accès, documentation utilisateur complète et support post-déploiement.'
+        }
+      ],
+      blog: [
+        { date: '28 Mai 2025', title: 'Power BI vs Tableau : comparatif 2025', excerpt: 'Guide détaillé pour choisir la meilleure solution de Business Intelligence selon vos besoins.' },
+        { date: '25 Mai 2025', title: 'Data Warehouse moderne : cloud-first approach', excerpt: 'Les architectures cloud-native révolutionnent la conception des entrepôts de données.' },
+        { date: '22 Mai 2025', title: 'Self-Service BI : démocratiser l\'analyse', excerpt: 'Comment permettre aux métiers de créer leurs propres analyses sans dépendre de l\'IT.' }
+      ]
+    },
+    'marketing-digital': {
+      title: 'Marketing Digital',
+      icon: '📈',
+      overview: `
+        <div class="persuasive-intro">
+          <p><strong>📈 Explosez vos ventes avec le marketing digital !</strong></p>
+          <p>⚡ <em>Nos clients augmentent leur chiffre d'affaires de 180% en moyenne grâce à nos stratégies.</em> Stop aux budgets marketing gaspillés ! Dominez votre marché avec nos campagnes ultra-ciblées qui transforment chaque euro investi en revenus exponentiels.</p>
+        </div>
+        
+        <div style="margin: 2rem 0;">
+          <h4 style="color: var(--primary-blue); margin-bottom: 1.5rem; font-size: 1.3rem;">🚀 Services marketing révolutionnaires :</h4>
+        </div>
+        
+        <div style="margin-bottom: 2.5rem; padding: 1.5rem; background: linear-gradient(135deg, #f8f9ff 0%, #e8f2ff 100%); border-radius: 12px; border-left: 4px solid var(--primary-blue);">
+          <h5 style="color: var(--primary-blue); font-weight: bold; font-size: 1.1rem; margin-bottom: 1rem;">🔍 SEO & Référencement Payant</h5>
+          <ul style="line-height: 1.8; margin-left: 1rem;">
+            <li>Référencement naturel et payant optimisé</li>
+            <li>Stratégie de contenu et mots-clés</li>
+            <li>Campagnes Google Ads et Bing Ads</li>
+          </ul>
+        </div>
+        
+        <div style="margin-bottom: 2.5rem; padding: 1.5rem; background: linear-gradient(135deg, #f0f8ff 0%, #e0f0ff 100%); border-radius: 12px; border-left: 4px solid #4285f4;">
+          <h5 style="color: #4285f4; font-weight: bold; font-size: 1.1rem; margin-bottom: 1rem;">📱 Social Media & Community</h5>
+          <ul style="line-height: 1.8; margin-left: 1rem;">
+            <li>Stratégie et gestion des réseaux sociaux</li>
+            <li>Création de contenu engageant</li>
+            <li>Community management et influence</li>
+          </ul>
+        </div>
+        
+        <div style="margin-bottom: 2.5rem; padding: 1.5rem; background: linear-gradient(135deg, #fff8f0 0%, #ffe8d0 100%); border-radius: 12px; border-left: 4px solid #ff9800;">
+          <h5 style="color: #ff9800; font-weight: bold; font-size: 1.1rem; margin-bottom: 1rem;">📧 Email Marketing & Automation</h5>
+          <ul style="line-height: 1.8; margin-left: 1rem;">
+            <li>Campagnes automatisées et personnalisées</li>
+            <li>Workflows et nurturing leads</li>
+            <li>Segmentation avancée et scoring</li>
+          </ul>
+        </div>
+        
+        <div style="margin-bottom: 2.5rem; padding: 1.5rem; background: linear-gradient(135deg, #f0fff0 0%, #e0ffe0 100%); border-radius: 12px; border-left: 4px solid #4caf50;">
+          <h5 style="color: #4caf50; font-weight: bold; font-size: 1.1rem; margin-bottom: 1rem;">📊 Analytics & Data Driven</h5>
+          <ul style="line-height: 1.8; margin-left: 1rem;">
+            <li>Mesure et optimisation des performances</li>
+            <li>Tableaux de bord marketing KPI</li>
+            <li>Tests A/B et optimisation continue</li>
+          </ul>
+        </div>
+        
+        <div style="margin-top: 3rem; padding: 2rem; background: linear-gradient(135deg, #f5f8ff 0%, #e8f2ff 100%); border-radius: 16px; border: 2px solid var(--primary-blue); box-shadow: 0 8px 24px rgba(0, 102, 255, 0.1);">
+          <h4 style="color: var(--primary-blue); font-weight: bold; font-size: 1.3rem; margin-bottom: 1.5rem; text-align: center;">📈 Croissance explosive</h4>
+          <div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(250px, 1fr)); gap: 1.5rem; margin-top: 1.5rem;">
+            <div style="text-align: center; padding: 1rem; background: white; border-radius: 12px; box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);">
+              <div style="font-size: 2rem; font-weight: bold; color: var(--primary-blue); margin-bottom: 0.5rem;">+180%</div>
+              <div style="font-size: 0.9rem; color: #666;">Augmentation moyenne du CA clients</div>
+            </div>
+            <div style="text-align: center; padding: 1rem; background: white; border-radius: 12px; box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);">
+              <div style="font-size: 2rem; font-weight: bold; color: #4caf50; margin-bottom: 0.5rem;">-60%</div>
+              <div style="font-size: 0.9rem; color: #666;">Réduction coût d'acquisition client</div>
+            </div>
+            <div style="text-align: center; padding: 1rem; background: white; border-radius: 12px; box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);">
+              <div style="font-size: 2rem; font-weight: bold; color: #ff9800; margin-bottom: 0.5rem;">400%</div>
+              <div style="font-size: 0.9rem; color: #666;">ROI marketing moyen constaté</div>
+            </div>
+            <div style="text-align: center; padding: 1rem; background: white; border-radius: 12px; box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);">
+              <div style="font-size: 2rem; font-weight: bold; color: #9c27b0; margin-bottom: 0.5rem;">90%</div>
+              <div style="font-size: 0.9rem; color: #666;">Taux de rétention clients amélioré</div>
+            </div>
+          </div>
+        </div>
+      `,
+      workflow: [
+        { 
+          title: 'Audit Digital et Stratégie (2-3 semaines)', 
+          desc: 'Analyse de la présence digitale actuelle (site, réseaux sociaux, SEO), étude de la concurrence et benchmark, définition des buyer personas et parcours client, audit des outils marketing existants et élaboration de la stratégie digitale globale.'
+        },
+        { 
+          title: 'Optimisation SEO et Site Web (3-4 semaines)', 
+          desc: 'Audit technique SEO complet du site web, optimisation on-page et structure des contenus, recherche de mots-clés et stratégie de contenu, amélioration de l\'expérience utilisateur et des conversions, mise en place du tracking analytics avancé.'
+        },
+        { 
+          title: 'Campagnes Publicitaires Digitales (2-3 semaines)', 
+          desc: 'Création des campagnes Google Ads et réseaux sociaux, définition des audiences et ciblages avancés, création des visuels et copies publicitaires, mise en place du tracking des conversions et optimisation continue des performances ROI.'
+        },
+        { 
+          title: 'Marketing Automation et Email (2-3 semaines)', 
+          desc: 'Mise en place des workflows d\'automation marketing, création des séquences d\'emails nurturing, segmentation avancée des bases de données, personnalisation des contenus selon les profils, intégration CRM et scoring des leads.'
+        },
+        { 
+          title: 'Analytics et Optimisation Continue (Continu)', 
+          desc: 'Configuration des tableaux de bord marketing KPI, analyse des performances et ROI par canal, tests A/B réguliers sur les campagnes et contenus, optimisation des tunnels de conversion, reporting mensuel avec recommandations stratégiques.'
+        }
+      ],
+      blog: [
+        { date: '30 Mai 2025', title: 'Marketing automation : booster ses conversions', excerpt: 'Stratégies avancées pour automatiser vos campagnes marketing et maximiser le ROI.' },
+        { date: '27 Mai 2025', title: 'SEO 2025 : les nouvelles tendances', excerpt: 'Les évolutions du référencement naturel et les stratégies gagnantes pour 2025.' },
+        { date: '24 Mai 2025', title: 'Social media B2B : guide complet', excerpt: 'Comment développer efficacement votre présence sur les réseaux sociaux en B2B.' }
+      ]
+    },
+    'telephonie-ip': {
+      title: 'Téléphonie IP',
+      icon: '☎️',
+      overview: `
+        <div class="persuasive-intro">
+          <p><strong>☎️ Révolutionnez vos communications d'entreprise !</strong></p>
+          <p>⚡ <em>Économisez jusqu'à 60% sur vos coûts téléphoniques tout en doublant votre productivité.</em> Fini les lignes occupées et les frais exorbitants ! Passez à la téléphonie IP nouvelle génération qui transforme votre entreprise en hub de communication ultra-moderne et flexible.</p>
+        </div>
+        
+        <div style="margin: 2rem 0;">
+          <h4 style="color: var(--primary-blue); margin-bottom: 1.5rem; font-size: 1.3rem;">📞 Solutions téléphoniques révolutionnaires :</h4>
+        </div>
+        
+        <div style="margin-bottom: 2.5rem; padding: 1.5rem; background: linear-gradient(135deg, #f8f9ff 0%, #e8f2ff 100%); border-radius: 12px; border-left: 4px solid var(--primary-blue);">
+          <h5 style="color: var(--primary-blue); font-weight: bold; font-size: 1.1rem; margin-bottom: 1rem;">☁️ IPBX Cloud & Softphones</h5>
+          <ul style="line-height: 1.8; margin-left: 1rem;">
+            <li>Standard téléphonique virtualisé dans le cloud</li>
+            <li>Applications téléphoniques sur ordinateurs et mobiles</li>
+            <li>Configuration flexible et évolutive</li>
+          </ul>
+        </div>
+        
+        <div style="margin-bottom: 2.5rem; padding: 1.5rem; background: linear-gradient(135deg, #f0f8ff 0%, #e0f0ff 100%); border-radius: 12px; border-left: 4px solid #4285f4;">
+          <h5 style="color: #4285f4; font-weight: bold; font-size: 1.1rem; margin-bottom: 1rem;">📹 Visioconférence & Collaboration</h5>
+          <ul style="line-height: 1.8; margin-left: 1rem;">
+            <li>Solutions de réunions vidéo intégrées</li>
+            <li>Partage d'écran et collaboration temps réel</li>
+            <li>Intégration avec Microsoft Teams et autres outils</li>
+          </ul>
+        </div>
+        
+        <div style="margin-bottom: 2.5rem; padding: 1.5rem; background: linear-gradient(135deg, #fff8f0 0%, #ffe8d0 100%); border-radius: 12px; border-left: 4px solid #ff9800;">
+          <h5 style="color: #ff9800; font-weight: bold; font-size: 1.1rem; margin-bottom: 1rem;">📞 Centre d'Appels & CRM</h5>
+          <ul style="line-height: 1.8; margin-left: 1rem;">
+            <li>Outils de gestion des appels entrants/sortants</li>
+            <li>Couplage téléphonie-informatique (CTI)</li>
+            <li>Statistiques et reporting avancés</li>
+          </ul>
+        </div>
+        
+        <div style="margin-bottom: 2.5rem; padding: 1.5rem; background: linear-gradient(135deg, #f0fff0 0%, #e0ffe0 100%); border-radius: 12px; border-left: 4px solid #4caf50;">
+          <h5 style="color: #4caf50; font-weight: bold; font-size: 1.1rem; margin-bottom: 1rem;">🔧 Technologies & Protocoles</h5>
+          <ul style="line-height: 1.8; margin-left: 1rem;">
+            <li>Asterisk, FreePBX, Microsoft Teams Phone</li>
+            <li>Solutions Cisco, Avaya et protocoles SIP/RTP</li>
+            <li>Architecture redondante et haute disponibilité</li>
+          </ul>
+        </div>
+        
+        <div style="margin-top: 3rem; padding: 2rem; background: linear-gradient(135deg, #f5f8ff 0%, #e8f2ff 100%); border-radius: 16px; border: 2px solid var(--primary-blue); box-shadow: 0 8px 24px rgba(0, 102, 255, 0.1);">
+          <h4 style="color: var(--primary-blue); font-weight: bold; font-size: 1.3rem; margin-bottom: 1.5rem; text-align: center;">💰 Économies substantielles</h4>
+          <div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(250px, 1fr)); gap: 1.5rem; margin-top: 1.5rem;">
+            <div style="text-align: center; padding: 1rem; background: white; border-radius: 12px; box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);">
+              <div style="font-size: 2rem; font-weight: bold; color: var(--primary-blue); margin-bottom: 0.5rem;">-60%</div>
+              <div style="font-size: 0.9rem; color: #666;">Réduction des coûts téléphoniques</div>
+            </div>
+            <div style="text-align: center; padding: 1rem; background: white; border-radius: 12px; box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);">
+              <div style="font-size: 2rem; font-weight: bold; color: #4caf50; margin-bottom: 0.5rem;">×2</div>
+              <div style="font-size: 0.9rem; color: #666;">Amélioration de la productivité</div>
+            </div>
+            <div style="text-align: center; padding: 1rem; background: white; border-radius: 12px; box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);">
+              <div style="font-size: 2rem; font-weight: bold; color: #ff9800; margin-bottom: 0.5rem;">100%</div>
+              <div style="font-size: 0.9rem; color: #666;">Flexibilité télétravail garantie</div>
+            </div>
+            <div style="text-align: center; padding: 1rem; background: white; border-radius: 12px; box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);">
+              <div style="font-size: 2rem; font-weight: bold; color: #9c27b0; margin-bottom: 0.5rem;">24/7</div>
+              <div style="font-size: 0.9rem; color: #666;">Support technique disponible</div>
+            </div>
+          </div>
+        </div>
+      `,
+      workflow: [
+        { 
+          title: 'Audit Téléphonique Existant (1-2 semaines)', 
+          desc: 'Analyse de l\'infrastructure téléphonique actuelle, évaluation des coûts de communication, étude des besoins utilisateurs par service, audit de la qualité réseau et bande passante, identification des contraintes techniques et réglementaires.'
+        },
+        { 
+          title: 'Conception Solution IP (2-3 semaines)', 
+          desc: 'Dimensionnement de la solution IPBX selon les besoins, choix de l\'architecture (on-premise/cloud/hybride), définition du plan de numérotation et routage, conception de la redondance et haute disponibilité, validation de la conformité réglementaire.'
+        },
+        { 
+          title: 'Déploiement Infrastructure (2-4 semaines)', 
+          desc: 'Installation et configuration des serveurs IPBX, paramétrage des passerelles et trunks SIP, configuration des postes et softphones, mise en place de la sécurité (firewall, VPN), tests de qualité et latence réseau.'
+        },
+        { 
+          title: 'Migration et Formation (2-3 semaines)', 
+          desc: 'Migration progressive des numéros et services, portabilité des numéros existants, formation des utilisateurs aux nouvelles fonctionnalités, configuration des groupes d\'appels et messagerie, mise en place des procédures d\'urgence.'
+        },
+        { 
+          title: 'Support et Optimisation (Continu)', 
+          desc: 'Monitoring de la qualité des appels (QoS), support technique et maintenance préventive, optimisation des flux et routage d\'appels, mise à jour sécuritaire et fonctionnelle, formation continue et évolution des besoins.'
+        }
+      ],
+      blog: [
+        { date: '31 Mai 2025', title: 'Teams Phone : la téléphonie Microsoft', excerpt: 'Découvrez les avantages de la solution de téléphonie intégrée à Microsoft Teams.' },
+        { date: '29 Mai 2025', title: 'Sécurité en téléphonie IP', excerpt: 'Bonnes pratiques pour sécuriser votre infrastructure de téléphonie sur IP.' },
+        { date: '26 Mai 2025', title: 'Migration vers la téléphonie IP', excerpt: 'Guide complet pour réussir sa migration de la téléphonie traditionnelle vers l\'IP.' }
+      ]
+    },
+    'automatisation-n8n': {
+      title: 'Automatisation n8n',
+      icon: '⚡',
+      overview: `
+        <div class="persuasive-intro">
+          <p><strong>⚡ Libérez le potentiel caché de votre équipe !</strong></p>
+          <p>🤖 <em>L'automatisation n8n fait économiser 50k€/an à nos clients en moyenne.</em> Stop aux tâches répétitives qui tuent la créativité ! Connectez tous vos outils en workflows intelligents qui travaillent pour vous 24/7. Vos concurrents automatisent déjà... ne restez pas à la traîne !</p>
+        </div>
+        
+        <div style="margin: 2rem 0;">
+          <h4 style="color: var(--primary-blue); margin-bottom: 1.5rem; font-size: 1.3rem;">🚀 Solutions d'automatisation révolutionnaires :</h4>
+        </div>
+        
+        <div style="margin-bottom: 2.5rem; padding: 1.5rem; background: linear-gradient(135deg, #f8f9ff 0%, #e8f2ff 100%); border-radius: 12px; border-left: 4px solid var(--primary-blue);">
+          <h5 style="color: var(--primary-blue); font-weight: bold; font-size: 1.1rem; margin-bottom: 1rem;">⚙️ Workflows Sur Mesure</h5>
+          <ul style="line-height: 1.8; margin-left: 1rem;">
+            <li>Automatisation de processus métier complexes</li>
+            <li>Logique conditionnelle et branchements intelligents</li>
+            <li>Gestion d'erreurs et retry automatique</li>
+          </ul>
+        </div>
+        
+        <div style="margin-bottom: 2.5rem; padding: 1.5rem; background: linear-gradient(135deg, #f0f8ff 0%, #e0f0ff 100%); border-radius: 12px; border-left: 4px solid #4285f4;">
+          <h5 style="color: #4285f4; font-weight: bold; font-size: 1.1rem; margin-bottom: 1rem;">🔗 Intégrations & API</h5>
+          <ul style="line-height: 1.8; margin-left: 1rem;">
+            <li>500+ connecteurs prêts à l'emploi</li>
+            <li>Connexions API REST, GraphQL et webhooks</li>
+            <li>Authentification OAuth et sécurisée</li>
+          </ul>
+        </div>
+        
+        <div style="margin-bottom: 2.5rem; padding: 1.5rem; background: linear-gradient(135deg, #fff8f0 0%, #ffe8d0 100%); border-radius: 12px; border-left: 4px solid #ff9800;">
+          <h5 style="color: #ff9800; font-weight: bold; font-size: 1.1rem; margin-bottom: 1rem;">📊 Traitement & Transformation</h5>
+          <ul style="line-height: 1.8; margin-left: 1rem;">
+            <li>ETL et synchronisation automatisée des données</li>
+            <li>Transformation et enrichissement en temps réel</li>
+            <li>Manipulation JSON, XML et formats propriétaires</li>
+          </ul>
+        </div>
+        
+        <div style="margin-bottom: 2.5rem; padding: 1.5rem; background: linear-gradient(135deg, #f0fff0 0%, #e0ffe0 100%); border-radius: 12px; border-left: 4px solid #4caf50;">
+          <h5 style="color: #4caf50; font-weight: bold; font-size: 1.1rem; margin-bottom: 1rem;">🔔 Notifications & Monitoring</h5>
+          <ul style="line-height: 1.8; margin-left: 1rem;">
+            <li>Alertes intelligentes et rapports automatiques</li>
+            <li>Surveillance des workflows et métriques de performance</li>
+            <li>Notifications multi-canal (email, Slack, Teams)</li>
+          </ul>
+        </div>
+        
+        <div style="margin-top: 3rem; padding: 2rem; background: linear-gradient(135deg, #f5f8ff 0%, #e8f2ff 100%); border-radius: 16px; border: 2px solid var(--primary-blue); box-shadow: 0 8px 24px rgba(0, 102, 255, 0.1);">
+          <h4 style="color: var(--primary-blue); font-weight: bold; font-size: 1.3rem; margin-bottom: 1.5rem; text-align: center;">💰 ROI exceptionnel</h4>
+          <div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(250px, 1fr)); gap: 1.5rem; margin-top: 1.5rem;">
+            <div style="text-align: center; padding: 1rem; background: white; border-radius: 12px; box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);">
+              <div style="font-size: 2rem; font-weight: bold; color: var(--primary-blue); margin-bottom: 0.5rem;">50k€</div>
+              <div style="font-size: 0.9rem; color: #666;">Économies annuelles moyennes par client</div>
+            </div>
+            <div style="text-align: center; padding: 1rem; background: white; border-radius: 12px; box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);">
+              <div style="font-size: 2rem; font-weight: bold; color: #4caf50; margin-bottom: 0.5rem;">20h</div>
+              <div style="font-size: 0.9rem; color: #666;">Temps libéré par semaine</div>
+            </div>
+            <div style="text-align: center; padding: 1rem; background: white; border-radius: 12px; box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);">
+              <div style="font-size: 2rem; font-weight: bold; color: #ff9800; margin-bottom: 0.5rem;">500+</div>
+              <div style="font-size: 0.9rem; color: #666;">Intégrations disponibles</div>
+            </div>
+            <div style="text-align: center; padding: 1rem; background: white; border-radius: 12px; box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);">
+              <div style="font-size: 2rem; font-weight: bold; color: #9c27b0; margin-bottom: 0.5rem;">24/7</div>
+              <div style="font-size: 0.9rem; color: #666;">Workflows actifs en continu</div>
+            </div>
+          </div>
+        </div>
+      `,
+      workflow: [
+        { 
+          title: 'Analyse des Processus Métier (1-2 semaines)', 
+          desc: 'Cartographie des workflows existants et identification des tâches répétitives, analyse des outils et applications utilisés par les équipes, évaluation du potentiel d\'automatisation et ROI estimé, priorisation des cas d\'usage selon l\'impact business.'
+        },
+        { 
+          title: 'Conception des Workflows (1-2 semaines)', 
+          desc: 'Modélisation des flux automatisés avec n8n, définition des triggers et conditions d\'exécution, conception de la logique métier et des transformations de données, validation des workflows avec les utilisateurs finaux, documentation technique des processus.'
+        },
+        { 
+          title: 'Développement et Configuration (2-4 semaines)', 
+          desc: 'Installation et configuration de l\'instance n8n (cloud/self-hosted), développement des workflows avec les nœuds appropriés, configuration des authentifications et connexions API, mise en place de la gestion d\'erreurs et retry logic, tests unitaires et d\'intégration.'
+        },
+        { 
+          title: 'Tests et Validation Métier (1-2 semaines)', 
+          desc: 'Tests en environnement de pré-production avec données réelles, validation fonctionnelle avec les équipes métier, tests de charge et performance des workflows, correction des bugs et optimisation, validation de la conformité sécuritaire.'
+        },
+        { 
+          title: 'Déploiement et Formation (1 semaine)', 
+          desc: 'Mise en production des workflows avec migration progressive, formation des équipes à l\'utilisation et monitoring, documentation utilisateur et procédures de maintenance, mise en place des alertes et monitoring automatique.'
+        },
+        { 
+          title: 'Support et Évolution (Continu)', 
+          desc: 'Monitoring des performances et erreurs des workflows, support technique réactif, optimisation continue selon les retours utilisateurs, développement de nouveaux workflows selon les besoins, maintenance et mises à jour de n8n.'
+        }
+      ],
+      blog: [
+        { date: '2 Juin 2025', title: 'n8n vs Zapier : comparatif des outils d\'automatisation', excerpt: 'Analyse détaillée pour choisir la meilleure solution d\'automatisation pour votre entreprise.' },
+        { date: '1 Juin 2025', title: 'ROI de l\'automatisation : mesurer les gains', excerpt: 'Comment calculer et maximiser le retour sur investissement de vos projets d\'automatisation.' },
+        { date: '28 Mai 2025', title: 'Workflows n8n avancés : bonnes pratiques', excerpt: 'Techniques avancées pour créer des workflows robustes et maintenables avec n8n.' }
+      ]
+    },
+    'conseil-transformation': {
+      title: 'Conseil et Transformation',
+      icon: '🎯',
+      overview: `
+        <div class="persuasive-intro">
+          <p><strong>🎯 Révolutionnez votre approche IT avec notre expertise conseil !</strong></p>
+          <p>💡 <em>Boostez vos performances numériques et divisez vos coûts informatiques par deux.</em> Faites de votre Direction des Systèmes d'Information un véritable levier de croissance ! Notre accompagnement stratégique propulse votre organisation vers l'excellence opérationnelle et l'innovation continue.</p>
+        </div>
+        
+        <div style="margin: 2rem 0;">
+          <h4 style="color: var(--primary-blue); margin-bottom: 1.5rem; font-size: 1.3rem;">🛠️ Notre palette d'expertises complète :</h4>
+        </div>
+        
+        <div style="margin-bottom: 2.5rem; padding: 1.5rem; background: linear-gradient(135deg, #f8f9ff 0%, #e8f2ff 100%); border-radius: 12px; border-left: 4px solid var(--primary-blue);">
+          <h5 style="color: var(--primary-blue); font-weight: bold; font-size: 1.1rem; margin-bottom: 1rem;">🔍 Diagnostic et Vision Stratégique DSI</h5>
+          <ul style="line-height: 1.8; margin-left: 1rem;">
+            <li>Évaluation approfondie des performances et maturité informatique</li>
+            <li>Élaboration du Schéma Directeur et roadmap digitale</li>
+            <li>Conception de stratégies de transformation numérique</li>
+            <li>Modélisation financière et valorisation des bénéfices</li>
+            <li>Méthodologies d'optimisation permanente</li>
+            <li>Contrats de service managés et indicateurs de performance</li>
+          </ul>
+        </div>
+        
+        <div style="margin-bottom: 2.5rem; padding: 1.5rem; background: linear-gradient(135deg, #f0f8ff 0%, #e0f0ff 100%); border-radius: 12px; border-left: 4px solid #4285f4;">
+          <h5 style="color: #4285f4; font-weight: bold; font-size: 1.1rem; margin-bottom: 1rem;">🏗️ Conception Architecturale d'Entreprise</h5>
+          <ul style="line-height: 1.8; margin-left: 1rem;">
+            <li>Structuration et modernisation du Système d'Information</li>
+            <li>Expertise en conception d'architectures techniques</li>
+            <li>Rédaction de cahiers des charges et appels d'offres</li>
+            <li>Accompagnement dans la sélection de partenaires technologiques</li>
+            <li>Pilotage des standards et référentiels architecturaux</li>
+          </ul>
+        </div>
+        
+        <div style="margin-bottom: 2.5rem; padding: 1.5rem; background: linear-gradient(135deg, #fff8f0 0%, #ffe8d0 100%); border-radius: 12px; border-left: 4px solid #ff9800;">
+          <h5 style="color: #ff9800; font-weight: bold; font-size: 1.1rem; margin-bottom: 1rem;">⚡ Excellence en Pilotage de Projets</h5>
+          <ul style="line-height: 1.8; margin-left: 1rem;">
+            <li>Direction de programmes de transformation critiques</li>
+            <li>Redressement et optimisation de projets en difficulté</li>
+            <li>Mise en place de Bureau de Gestion de Projets (PMO)</li>
+          </ul>
+        </div>
+        
+        <div style="margin-bottom: 2.5rem; padding: 1.5rem; background: linear-gradient(135deg, #f0fff0 0%, #e0ffe0 100%); border-radius: 12px; border-left: 4px solid #4caf50;">
+          <h5 style="color: #4caf50; font-weight: bold; font-size: 1.1rem; margin-bottom: 1rem;">🛡️ Maîtrise des Enjeux Sécuritaires et Data</h5>
+          <ul style="line-height: 1.8; margin-left: 1rem;">
+            <li>Définition des Politiques de Sécurité SI et accompagnement RSSI</li>
+            <li>Certification et mise en conformité ISO 27001/2</li>
+            <li>Élaboration de Plans de Continuité d'Activité robustes</li>
+            <li>Déploiement de solutions IAM, SIEM, CASB et DLP</li>
+          </ul>
+        </div>
+        
+        <div style="margin-top: 3rem; padding: 2rem; background: linear-gradient(135deg, #f5f8ff 0%, #e8f2ff 100%); border-radius: 16px; border: 2px solid var(--primary-blue); box-shadow: 0 8px 24px rgba(0, 102, 255, 0.1);">
+          <h4 style="color: var(--primary-blue); font-weight: bold; font-size: 1.3rem; margin-bottom: 1.5rem; text-align: center;">📈 Résultats tangibles garantis</h4>
+          <div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(250px, 1fr)); gap: 1.5rem; margin-top: 1.5rem;">
+            <div style="text-align: center; padding: 1rem; background: white; border-radius: 12px; box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);">
+              <div style="font-size: 2rem; font-weight: bold; color: var(--primary-blue); margin-bottom: 0.5rem;">×1.6</div>
+              <div style="font-size: 0.9rem; color: #666;">Multiplication de l'efficacité des services IT</div>
+            </div>
+            <div style="text-align: center; padding: 1rem; background: white; border-radius: 12px; box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);">
+              <div style="font-size: 2rem; font-weight: bold; color: #4caf50; margin-bottom: 0.5rem;">-35%</div>
+              <div style="font-size: 0.9rem; color: #666;">Réduction des dépenses informatiques</div>
+            </div>
+            <div style="text-align: center; padding: 1rem; background: white; border-radius: 12px; box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);">
+              <div style="font-size: 2rem; font-weight: bold; color: #ff9800; margin-bottom: 0.5rem;">95%</div>
+              <div style="font-size: 0.9rem; color: #666;">Taux de réussite des projets après PMO</div>
+            </div>
+            <div style="text-align: center; padding: 1rem; background: white; border-radius: 12px; box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);">
+              <div style="font-size: 2rem; font-weight: bold; color: #9c27b0; margin-bottom: 0.5rem;">280%</div>
+              <div style="font-size: 0.9rem; color: #666;">ROI constaté en moins de 2 ans</div>
+            </div>
+          </div>
+        </div>
+      `,
+      workflow: [
+        { 
+          title: 'Audit et Diagnostic SI (3-4 semaines)', 
+          desc: 'Audit complet de l\'architecture existante, évaluation de la maturité des processus SI, analyse des coûts et performance, cartographie des applications et infrastructures, identification des points de friction et opportunités d\'amélioration.'
+        },
+        { 
+          title: 'Stratégie et Roadmap (2-3 semaines)', 
+          desc: 'Définition de la stratégie SI alignée sur les objectifs business, élaboration du schéma directeur et de la roadmap de transformation, priorisation des initiatives selon l\'impact et la complexité, budgétisation détaillée et calcul du ROI.'
+        },
+        { 
+          title: 'Architecture et Gouvernance (3-4 semaines)', 
+          desc: 'Conception de l\'architecture cible, mise en place de la gouvernance des projets et du PMO, définition des référentiels et standards, création des processus de pilotage et de contrôle, formation des équipes aux nouvelles pratiques.'
+        },
+        { 
+          title: 'Plan de Transformation (4-6 semaines)', 
+          desc: 'Déploiement du plan de transformation par phases, accompagnement du changement organisationnel, mise en place des outils de pilotage et reporting, migration progressive vers l\'architecture cible, conduite du changement utilisateur.'
+        },
+        { 
+          title: 'Sécurité et Conformité (2-3 semaines)', 
+          desc: 'Audit de sécurité et mise en conformité réglementaire, déploiement des politiques de sécurité (PSSI), mise en place des outils IAM, SIEM, DLP, formation à la cybersécurité, tests et validation des mesures de protection.'
+        },
+        { 
+          title: 'Optimisation Continue (Continu)', 
+          desc: 'Monitoring des KPIs de performance SI, optimisation continue des processus, évolution de l\'architecture selon les besoins, support et accompagnement des équipes, reporting régulier et recommandations d\'amélioration.'
+        }
+      ],
+      blog: [
+        { date: '5 Juin 2025', title: 'Transformation digitale : par où commencer ?', excerpt: 'Méthodologie éprouvée pour réussir sa transformation digitale en 6 étapes clés.' },
+        { date: '3 Juin 2025', title: 'Architecture d\'entreprise : enjeux et bénéfices', excerpt: 'Comment l\'urbanisation du SI optimise la performance et réduit les coûts IT.' },
+        { date: '1 Juin 2025', title: 'PMO : accélérateur de projets', excerpt: 'Les bonnes pratiques pour mettre en place un PMO efficace et performant.' }
+      ]
+    },
+    'formations': {
+      title: 'Formations Technologiques',
+      icon: '🎓',
+      overview: `
+        <p>Développez les compétences de vos équipes avec nos formations expertes adaptées à tous les niveaux.</p>
+        <h4>Modalités de formation :</h4>
+        <ul>
+          <li><strong>Présentiel:</strong> Dans nos locaux ou chez vous</li>
+          <li><strong>Distanciel:</strong> Sessions interactives en ligne</li>
+          <li><strong>Hybride:</strong> Combinaison présentiel/distanciel</li>
+          <li><strong>E-learning:</strong> Parcours autonomes avec mentoring</li>
+        </ul>
+        <h4>Certifications disponibles :</h4>
+        <p>Préparation aux certifications AWS, Google Cloud, Microsoft Azure, Kubernetes, Scrum Master</p>
+      `,
+      workflow: [
+        { 
+          title: 'Évaluation des Compétences & Besoins (3-5 jours)', 
+          desc: 'Assessment technique individuel et collectif, analyse des gaps de compétences par rapport aux objectifs métier, identification des profils d\'apprentissage, définition des KPIs de formation et validation des prérequis techniques par participant.'
+        },
+        { 
+          title: 'Conception Pédagogique Sur Mesure (1-2 semaines)', 
+          desc: 'Création du parcours de formation adapté aux niveaux détectés, développement des supports pédagogiques interactifs, conception des exercices pratiques et projets fil rouge, adaptation du contenu au secteur d\'activité et définition des modalités d\'évaluation.'
+        },
+        { 
+          title: 'Planification & Préparation (1 semaine)', 
+          desc: 'Organisation du planning de formation optimisé, préparation des environnements de travail (labs, plateformes), configuration des outils et licences nécessaires, coordination avec les managers pour libération des participants et préparation des ressources documentaires.'
+        },
+        { 
+          title: 'Déroulement de la Formation (Selon programme)', 
+          desc: 'Sessions théoriques avec démonstrations live, ateliers pratiques sur projets concrets, code reviews et pair programming, mentorat individualisé selon les besoins, évaluations intermédiaires avec feedback constructif et adaptation du rythme selon la progression du groupe.'
+        },
+        { 
+          title: 'Évaluation & Certification (2-3 jours)', 
+          desc: 'Évaluation pratique sur projet réel, tests de compétences techniques approfondis, préparation aux certifications officielles si applicable, remise des certificats de formation Zyntra et bilan individuel des acquis avec recommandations de progression.'
+        },
+        { 
+          title: 'Suivi Post-Formation & Support (3 mois)', 
+          desc: 'Accompagnement sur les premiers projets en autonomie, sessions de Q&A hebdomadaires avec les formateurs, accès aux ressources et mises à jour pédagogiques, évaluation de l\'impact sur les projets réels et recommandations pour la formation continue.'
+        }
+      ],
+      blog: [
+        { date: '24 Mai 2025', title: 'Upskilling tech : investir dans les équipes', excerpt: 'Pourquoi et comment former vos équipes aux nouvelles technologies pour rester compétitif.' },
+        { date: '20 Mai 2025', title: 'Certification cloud : laquelle choisir ?', excerpt: 'Guide pour choisir la certification cloud adaptée à votre profil et objectifs.' },
+        { date: '15 Mai 2025', title: 'Formation continue en tech', excerpt: 'L\'importance de la formation continue dans un secteur en évolution permanente.' }
+      ],
+      formations: [
+        {
+          title: 'Développement Web Full-Stack',
+          duration: '40 heures - 5 jours',
+          price: '1 890€',
+          features: ['HTML5, CSS3, JavaScript ES6+', 'React.js et Node.js', 'Base de données et API', 'Projet final', 'Certificat de réussite'],
+          description: "🚀 Transformez-vous en développeur recherché ! Cette formation intensive vous propulse de zéro à héros du développement. En seulement 5 jours, maîtrisez les technologies les plus demandées par les entreprises. Nos anciens stagiaires ont augmenté leur salaire de 35% en moyenne ! Ne laissez pas passer cette opportunité limitée."
+        },
+        {
+          title: 'Atelier Accéléré sur les Méthodes et Outils Agile',
+          duration: '16 heures - 2 jours',
+          price: '890€',
+          features: ['Scrum & Kanban maîtrisés', 'Jira & Azure DevOps', 'Retrospectives efficaces', 'Planning Poker', 'Certification Scrum Master'],
+          description: "⚡ Révolutionnez votre façon de travailler ! Rejoignez les 97% de nos participants qui ont transformé leur productivité en équipe. Apprenez les secrets des entreprises Tech les plus performantes. Formation intensive avec des coachs agile certifiés. Places limitées à 12 participants pour un accompagnement personnalisé !"
+        },
+        {
+          title: 'Initiation à Docker et Sécurité des Conteneurs',
+          duration: '24 heures - 3 jours',
+          price: '1 290€',
+          features: ['Docker de A à Z', 'Kubernetes basics', 'Sécurité conteneurs', 'CI/CD avec containers', 'Best practices DevOps'],
+          description: "🔐 Maîtrisez la technologie qui fait tourner Netflix, Google et Amazon ! Docker révolutionne le déploiement d'applications. Cette formation vous donne 3 ans d'avance sur la concurrence. 89% de nos participants sont promus dans les 6 mois. Investissement garanti rentable !"
+        },
+        {
+          title: 'Introduction à la Programmation R et Analyse de Données',
+          duration: '32 heures - 4 jours',
+          price: '1 590€',
+          features: ['R Programming complet', 'Visualisation avec ggplot2', 'Analyse statistique', 'Machine Learning basics', 'Projets data concrets'],
+          description: "📊 Devenez le Data Scientist que tout le monde s'arrache ! Le salaire moyen d'un expert R dépasse 65k€. Cette formation vous ouvre les portes des métiers les plus recherchés. Apprentissage pratique sur de vraies données d'entreprises. Résultats visibles dès le premier jour !"
+        },
+        {
+          title: 'Atelier Git, GitHub et GitHub Actions',
+          duration: '16 heures - 2 jours',
+          price: '690€',
+          features: ['Git avancé', 'GitHub collaboration', 'GitHub Actions CI/CD', 'Code review workflow', 'Open source contribution'],
+          description: "⭐ Arrêtez de perdre votre code ! Rejoignez les 100M+ de développeurs qui utilisent Git quotidiennement. Formation pratique qui vous évite les erreurs coûteuses. Nos participants économisent 2h/jour en moyenne. ROI immédiat garanti !"
+        },
+        {
+          title: 'Design Thinking',
+          duration: '16 heures - 2 jours',
+          price: '990€',
+          features: ['Méthodologie Design Thinking', 'Empathy mapping', 'Prototypage rapide', 'Tests utilisateurs', 'Innovation collaborative'],
+          description: "💡 Innovez comme Apple, Google et Tesla ! Le Design Thinking a généré +500M$ d'innovation chez nos clients. Méthode éprouvée pour créer des produits que vos clients adorent. Formation animée par des consultants ayant accompagné les licornes françaises. Changez votre approche, changez vos résultats !"
+        },
+        {
+          title: 'Automatisation n8n sur-mesure',
+          duration: '24 heures - 3 jours',
+          price: '1 190€',
+          features: ['Maîtrise complète n8n', '500+ intégrations', 'Workflows complexes', 'Monitoring & alerting', 'ROI automation'],
+          description: "🤖 Libérez 20h/semaine de tâches répétitives ! L'automatisation n8n fait économiser 50k€/an à nos clients. Connectez tous vos outils sans coder. Formation exclusive avec le créateur de n8n France. Places ultra-limitées : seulement 8 participants max !"
+        },
+        {
+          title: 'Intelligence Artificielle & Machine Learning',
+          duration: '32 heures - 4 jours',
+          price: '2 490€',
+          features: ['Python pour l\'IA', 'Scikit-learn, TensorFlow', 'Deep Learning', 'Projet ML concret', 'Cas d\'usage métier'],
+          description: "🤖 Surfez sur la vague IA avant qu'il ne soit trop tard ! L'IA va remplacer 40% des emplois... ou les transformer. Soyez du bon côté. Formation qui vous positionne sur les métiers d'avenir. Nos participants multiplient leur valeur par 3 sur le marché !"
+        },
+        {
+          title: 'Cybersécurité Avancée',
+          duration: '24 heures - 3 jours',
+          price: '1 690€',
+          features: ['Audit de sécurité', 'Tests d\'intrusion', 'Réponse aux incidents', 'Outils professionnels', 'Certification incluse'],
+          description: "🛡️ Protégez-vous des 4000 cyberattaques quotidiennes ! Le secteur cybersécurité recrute 3.5M de postes dans le monde. Salaires moyens : 70k€+. Formation par d'anciens hackers éthiques. Accès exclusif aux outils pros. Votre passeport pour l'emploi sécurisé !"
+        }
+      ]
+    }
+  }
+
+  const toggleTheme = () => {
+    setIsDarkTheme(!isDarkTheme)
+    document.body.setAttribute('data-theme', !isDarkTheme ? 'dark' : '')
+  }
+
+  const toggleFaq = (index) => {
+    setActiveFaq(activeFaq === index ? null : index)
+  }
+
+  const openServiceModal = (serviceKey) => {
+    setModalService(serviceKey)
+    setActiveTab('overview')
+  }
+
+  const closeModal = () => {
+    setModalService(null)
+  }
+
+  const selectDate = (date) => {
+    setSelectedDate(date)
+    setSelectedTime(null)
+  }
+
+  const selectTime = (time) => {
+    setSelectedTime(time)
+  }
+
+  const submitBooking = (e) => {
+    e.preventDefault()
+    alert('Rendez-vous confirmé ! Nous vous enverrons un email de confirmation.')
+  }
+
+  const submitContact = (e) => {
+    e.preventDefault()
+    alert('Merci pour votre message ! Nous vous répondrons dans les plus brefs délais.')
+  }
+
+  const scrollToTop = () => {
+    window.scrollTo({
+      top: 0,
+      behavior: 'smooth'
+    })
+  }
+
+  const handleScroll = () => {
+    const scrollTop = window.pageYOffset || document.documentElement.scrollTop
+    setShowBackToTop(scrollTop > 500)
+  }
+
+  useEffect(() => {
+    // Apply theme
+    if (isDarkTheme) {
+      document.body.setAttribute('data-theme', 'dark')
+    } else {
+      document.body.removeAttribute('data-theme')
+    }
+
+    // Intersection Observer for fade-in animations
+    const observerOptions = {
+      threshold: 0.1,
+      rootMargin: '0px 0px -50px 0px'
+    }
+
+    const observer = new IntersectionObserver((entries) => {
+      entries.forEach(entry => {
+        if (entry.isIntersecting) {
+          entry.target.classList.add('visible')
+        }
+      })
+    }, observerOptions)
+
+    // Observe all fade-in elements
+    const fadeElements = document.querySelectorAll('.fade-in')
+    fadeElements.forEach(el => observer.observe(el))
+
+    // Add scroll event listener for back-to-top button
+    window.addEventListener('scroll', handleScroll)
+
+    // Cleanup
+    return () => {
+      fadeElements.forEach(el => observer.unobserve(el))
+      window.removeEventListener('scroll', handleScroll)
+    }
+  }, [isDarkTheme])
+
+  return (
+    <div>
+      {/* Header */}
+      <header className="header">
+        <nav className="nav">
+          <div className="logo">Zyntra</div>
+          <ul className={`nav-links ${mobileMenuOpen ? 'mobile-active' : ''}`}>
+            <li><a href="#accueil">Accueil</a></li>
+            <li><a href="#services">Services</a></li>
+            <li><a href="#workflow">Processus</a></li>
+            <li><a href="#formations">Formations</a></li>
+            <li><a href="#faq">FAQ</a></li>
+            <li><a href="#contact">Contact</a></li>
+          </ul>
+          <button className="theme-toggle" onClick={toggleTheme}>
+            {isDarkTheme ? '☀️' : '🌙'}
+          </button>
+          <div 
+            className={`mobile-menu ${mobileMenuOpen ? 'active' : ''}`}
+            onClick={() => setMobileMenuOpen(!mobileMenuOpen)}
+          >
+            <span></span>
+            <span></span>
+            <span></span>
+          </div>
+        </nav>
+      </header>
+
+      {/* Hero Section */}
+      <section id="accueil" className="hero">
+        <div className="particles">
+          <div className="particle"></div>
+          <div className="particle"></div>
+          <div className="particle"></div>
+          <div className="particle"></div>
+          <div className="particle"></div>
+          <div className="particle"></div>
+        </div>
+        <div className="hero-content">
+          <div className="hero-text">
+            <h1>Solutions Tech <span className="highlight">Innovantes</span> pour votre Entreprise</h1>
+            <p>Nous transformons vos idées en solutions numériques performantes. Du développement web à l'IA, en passant par la cybersécurité et le cloud, nous maîtrisons toutes les technologies modernes.</p>
+            <div className="cta-buttons">
+              <a href="#booking" className="btn-primary">Réserver un appel</a>
+              <a href="#services" className="btn-secondary">Découvrir nos services</a>
+            </div>
+          </div>
+          <div className="hero-visual">
+            <div className="floating-elements">
+              <div className="floating-card">
+                <div className="service-icon">🌐</div>
+                <strong>Développement Web & Mobile</strong>
+              </div>
+              <div className="floating-card">
+                <div className="service-icon">🤖</div>
+                <strong>Intelligence Artificielle</strong>
+              </div>
+              <div className="floating-card">
+                <div className="service-icon">🔒</div>
+                <strong>Cybersécurité</strong>
+              </div>
+              <div className="floating-card">
+                <div className="service-icon">⛓️</div>
+                <strong>Blockchain</strong>
+              </div>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      {/* Services Section */}
+      <section id="services" className="services">
+        <div className="container">
+          <div className="section-title fade-in">
+            <h2>Nos Expertises Technologiques</h2>
+            <p>Une gamme complète de services pour accompagner votre transformation digitale</p>
+          </div>
+          <div className="services-grid">
+            <div className="service-card fade-in" onClick={() => openServiceModal('web-dev')}>
+              <div className="service-icon">🌐</div>
+              <h3>Développement Web, Desktop & Mobile</h3>
+              <p>Création d'applications web responsives, d'applications desktop multiplateformes et d'applications mobiles natives pour iOS et Android. Nous utilisons les dernières technologies pour garantir performance et user experience.</p>
+              <div className="card-arrow">→</div>
+            </div>
+            <div className="service-card fade-in" onClick={() => openServiceModal('websites')}>
+              <div className="service-icon">🎨</div>
+              <h3>Sites Vitrines</h3>
+              <p>Design et développement de sites web modernes et optimisés pour présenter votre entreprise. SEO intégré, performance optimisée et design adaptatif pour tous les appareils.</p>
+              <div className="card-arrow">→</div>
+            </div>
+            <div className="service-card fade-in" onClick={() => openServiceModal('ai-data')}>
+              <div className="service-icon">🤖</div>
+              <h3>Intelligence Artificielle & Data Science</h3>
+              <p>Solutions IA personnalisées et analyse avancée de données : machine learning, NLP, vision par ordinateur, modélisation prédictive et tableaux de bord interactifs pour optimiser vos processus.</p>
+              <div className="card-arrow">→</div>
+            </div>
+            <div className="service-card fade-in" onClick={() => openServiceModal('cybersecurity')}>
+              <div className="service-icon">🔒</div>
+              <h3>Cybersécurité</h3>
+              <p>Audit de sécurité, mise en place de solutions de protection, sensibilisation des équipes et monitoring continu pour protéger vos actifs numériques contre les menaces.</p>
+              <div className="card-arrow">→</div>
+            </div>
+            <div className="service-card fade-in" onClick={() => openServiceModal('blockchain')}>
+              <div className="service-icon">⛓️</div>
+              <h3>Blockchain</h3>
+              <p>Développement d'applications décentralisées (DApps), smart contracts, solutions NFT et intégration blockchain pour la traçabilité et la sécurisaton des transactions.</p>
+              <div className="card-arrow">→</div>
+            </div>
+            <div className="service-card fade-in" onClick={() => openServiceModal('cloud-devops')}>
+              <div className="service-icon">☁️</div>
+              <h3>Cloud & DevOps</h3>
+              <p>Migration cloud, infrastructure as code, CI/CD, containerisation avec Docker/Kubernetes et automatisation des déploiements pour une scalabilité optimale.</p>
+              <div className="card-arrow">→</div>
+            </div>
+
+            <div className="service-card fade-in" onClick={() => openServiceModal('exploitation-maintenance')}>
+              <div className="service-icon">🔧</div>
+              <h3>Exploitation et Maintenance</h3>
+              <p>Assurez la continuité et les performances optimales de vos systèmes informatiques avec nos services d'exploitation et de maintenance proactifs. Monitoring 24/7, support technique et optimisation continue.</p>
+              <div className="card-arrow">→</div>
+            </div>
+            <div className="service-card fade-in" onClick={() => openServiceModal('modelisation-decisionnelle')}>
+              <div className="service-icon">📊</div>
+              <h3>Modélisation Décisionnelle</h3>
+              <p>Transformez vos données en insights stratégiques avec nos solutions de Business Intelligence. Data warehouses, tableaux de bord interactifs et analyse prédictive pour optimiser vos décisions.</p>
+              <div className="card-arrow">→</div>
+            </div>
+            <div className="service-card fade-in" onClick={() => openServiceModal('marketing-digital')}>
+              <div className="service-icon">📈</div>
+              <h3>Marketing Digital</h3>
+              <p>Boostez votre présence digitale et optimisez vos conversions avec nos stratégies marketing data-driven. SEO/SEA, réseaux sociaux, email marketing et marketing automation.</p>
+              <div className="card-arrow">→</div>
+            </div>
+            <div className="service-card fade-in" onClick={() => openServiceModal('telephonie-ip')}>
+              <div className="service-icon">☎️</div>
+              <h3>Téléphonie IP</h3>
+              <p>Modernisez votre système de communication d'entreprise avec nos solutions de téléphonie IP flexibles et économiques. IPBX cloud, softphones et intégration CRM.</p>
+              <div className="card-arrow">→</div>
+            </div>
+            <div className="service-card fade-in" onClick={() => openServiceModal('automatisation-n8n')}>
+              <div className="service-icon">⚡</div>
+              <h3>Automatisation n8n sur-mesure</h3>
+              <p>Automatisez vos workflows métier avec n8n pour booster votre productivité et éliminer les tâches répétitives. Plus de 500 intégrations disponibles pour connecter tous vos outils.</p>
+              <div className="card-arrow">→</div>
+            </div>
+            <div className="service-card fade-in" onClick={() => openServiceModal('conseil-transformation')}>
+              <div className="service-icon">🎯</div>
+              <h3>Conseil et Transformation</h3>
+              <p>Accompagnement stratégique pour votre transformation digitale. Audit DSI, architecture d'entreprise, gouvernance de projets et stratégie sécuritaire pour optimiser votre système d'information.</p>
+              <div className="card-arrow">→</div>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      {/* Formations Section */}
+      <section id="formations" className="formations">
+        <div className="container">
+          <div className="section-title fade-in">
+            <h2>🎓 Formations Technologiques</h2>
+            <p>Développez les compétences de vos équipes avec nos formations expertes adaptées à tous les niveaux</p>
+          </div>
+          <div className="formation-grid">
+            {serviceData.formations.formations.map((formation, index) => (
+              <div key={index} className="formation-card fade-in">
+                <div className="formation-header">
+                  <h4>{formation.title}</h4>
+                  <span className="formation-price">{formation.price}</span>
+                </div>
+                <div className="formation-duration">{formation.duration}</div>
+                <div className="formation-description" style={{margin: '1rem 0', padding: '1rem', backgroundColor: 'var(--light-bg)', borderRadius: '8px', fontSize: '0.9rem', lineHeight: '1.4'}}>
+                  {formation.description}
+                </div>
+                <ul className="formation-features">
+                  {formation.features.map((feature, idx) => (
+                    <li key={idx}>{feature}</li>
+                  ))}
+                </ul>
+                <button 
+                  className="btn-primary" 
+                  onClick={() => {
+                    setSelectedFormation(formation)
+                    setShowContactModal(true)
+                  }}
+                >
+                  Réserver cette formation
+                </button>
+              </div>
+            ))}
+          </div>
+          <div className="formation-info fade-in">
+            <div className="info-grid">
+              <div className="info-item">
+                <h4>📍 Modalités</h4>
+                <p>Présentiel, distanciel ou hybride selon vos préférences</p>
+              </div>
+              <div className="info-item">
+                <h4>🎯 Sur-mesure</h4>
+                <p>Contenu adapté à votre niveau et vos objectifs</p>
+              </div>
+              <div className="info-item">
+                <h4>📜 Certification</h4>
+                <p>Certificats Zyntra et préparation aux certifications officielles</p>
+              </div>
+              <div className="info-item">
+                <h4>🤝 Support</h4>
+                <p>3 mois d'accompagnement post-formation inclus</p>
+              </div>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      {/* Why Choose Us Section */}
+      <section className="why-choose-us">
+        <div className="container">
+          <div className="section-title fade-in">
+            <h2>Pourquoi Nous Choisir ?</h2>
+            <p>Notre expertise et notre approche client nous distinguent dans l'univers tech</p>
+          </div>
+          <div className="features-grid">
+            <div className="feature-card fade-in">
+              <div className="feature-icon">🚀</div>
+              <h3>Innovation Constante</h3>
+              <p>Nous restons à la pointe des dernières technologies pour vous offrir des solutions d'avant-garde qui anticipent les besoins de demain.</p>
+            </div>
+            <div className="feature-card fade-in">
+              <div className="feature-icon">⚡</div>
+              <h3>Livraison Rapide</h3>
+              <p>Méthodologie agile et équipes dédiées pour des projets livrés dans les délais, sans compromis sur la qualité.</p>
+            </div>
+            <div className="feature-card fade-in">
+              <div className="feature-icon">🎯</div>
+              <h3>Approche Sur Mesure</h3>
+              <p>Chaque projet est unique. Nous adaptons nos solutions à vos besoins spécifiques et à votre secteur d'activité.</p>
+            </div>
+            <div className="feature-card fade-in">
+              <div className="feature-icon">🛡️</div>
+              <h3>Sécurité Maximale</h3>
+              <p>La cybersécurité est au cœur de nos développements. Vos données et systèmes sont protégés selon les plus hauts standards.</p>
+            </div>
+            <div className="feature-card fade-in">
+              <div className="feature-icon">💡</div>
+              <h3>Conseil Expert</h3>
+              <p>Notre équipe vous accompagne dans la définition de votre stratégie digitale pour maximiser votre retour sur investissement.</p>
+            </div>
+            <div className="feature-card fade-in">
+              <div className="feature-icon">🤝</div>
+              <h3>Support Premium</h3>
+              <p>Accompagnement continu, formation des équipes et support technique réactif pour garantir votre succès.</p>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      {/* Trust Section */}
+      <section className="trust-section">
+        <div className="container">
+          <div className="section-title fade-in">
+            <h2>Ils Nous Font Confiance</h2>
+            <p>Plus de 150 entreprises nous ont fait confiance pour leur transformation digitale</p>
+          </div>
+          
+          <div className="clients-grid fade-in">
+            <div className="client-logo">
+              <div style={{fontSize: '2rem', fontWeight: 'bold', color: 'var(--primary-blue)'}}>TechCorp</div>
+            </div>
+            <div className="client-logo">
+              <div style={{fontSize: '2rem', fontWeight: 'bold', color: 'var(--primary-blue)'}}>InnovLab</div>
+            </div>
+            <div className="client-logo">
+              <div style={{fontSize: '2rem', fontWeight: 'bold', color: 'var(--primary-blue)'}}>DataFlow</div>
+            </div>
+            <div className="client-logo">
+              <div style={{fontSize: '2rem', fontWeight: 'bold', color: 'var(--primary-blue)'}}>SmartSys</div>
+            </div>
+            <div className="client-logo">
+              <div style={{fontSize: '2rem', fontWeight: 'bold', color: 'var(--primary-blue)'}}>CloudTech</div>
+            </div>
+            <div className="client-logo">
+              <div style={{fontSize: '2rem', fontWeight: 'bold', color: 'var(--primary-blue)'}}>SecureNet</div>
+            </div>
+          </div>
+
+          <div className="testimonials">
+            <div className="testimonial-card fade-in">
+              <p className="testimonial-text">
+                "Zyntra a transformé notre infrastructure IT. Leur expertise en cloud et cybersécurité nous a permis de sécuriser notre croissance tout en optimisant nos coûts."
+              </p>
+              <div className="testimonial-author">
+                <div className="author-avatar">JD</div>
+                <div className="author-info">
+                  <h4>Jean Dupont</h4>
+                  <p>CTO, TechCorp</p>
+                </div>
+              </div>
+            </div>
+            <div className="testimonial-card fade-in">
+              <p className="testimonial-text">
+                "L'équipe Zyntra a développé notre plateforme IA en un temps record. Leur approche agile et leur expertise technique sont remarquables."
+              </p>
+              <div className="testimonial-author">
+                <div className="author-avatar">ML</div>
+                <div className="author-info">
+                  <h4>Marie Laurent</h4>
+                  <p>CEO, InnovLab</p>
+                </div>
+              </div>
+            </div>
+            <div className="testimonial-card fade-in">
+              <p className="testimonial-text">
+                "Grâce à Zyntra, nous avons modernisé toute notre stack technique. Leur accompagnement et leur support sont exceptionnels."
+              </p>
+              <div className="testimonial-author">
+                <div className="author-avatar">PR</div>
+                <div className="author-info">
+                  <h4>Pierre Rodriguez</h4>
+                  <p>Directeur Digital, DataFlow</p>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      {/* Workflow Section */}
+      <section id="workflow" className="workflow">
+        <div className="container">
+          <div className="section-title fade-in">
+            <h2>Notre Processus de Travail</h2>
+            <p>Une méthodologie éprouvée pour garantir le succès de vos projets</p>
+          </div>
+          <div className="workflow-steps">
+            <div className="workflow-step fade-in">
+              <div className="step-number">1</div>
+              <h3>Analyse & Découverte</h3>
+              <p>Nous analysons vos besoins, définis les objectifs et élaborons une stratégie personnalisée pour votre projet.</p>
+            </div>
+            <div className="workflow-step fade-in">
+              <div className="step-number">2</div>
+              <h3>Conception & Planification</h3>
+              <p>Création des maquettes, architecture technique et planification détaillée avec validation à chaque étape.</p>
+            </div>
+            <div className="workflow-step fade-in">
+              <div className="step-number">3</div>
+              <h3>Développement Agile</h3>
+              <p>Développement itératif avec des livraisons régulières et des tests continus pour assurer la qualité.</p>
+            </div>
+            <div className="workflow-step fade-in">
+              <div className="step-number">4</div>
+              <h3>Tests & Validation</h3>
+              <p>Tests complets, validation utilisateur et optimisation des performances avant la mise en production.</p>
+            </div>
+            <div className="workflow-step fade-in">
+              <div className="step-number">5</div>
+              <h3>Déploiement & Suivi</h3>
+              <p>Mise en production sécurisée, formation des utilisateurs et support continu pour garantir le succès.</p>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      
+
+      {/* Team Section */}
+      <section id="team" className="team">
+        <div className="container">
+          <div className="section-title fade-in">
+            <h2>L'équipe</h2>
+            <p>Une équipe d'experts passionnés au service de vos projets</p>
+          </div>
+          <div className="team-grid">
+            <div className="team-member fade-in">
+              <div className="member-avatar">
+                <img 
+                  src="https://via.placeholder.com/120x120/0066ff/ffffff?text=AS" 
+                  alt="Alexandre Souaré"
+                  className="member-photo"
+                />
+              </div>
+              <h3>Alexandre Souaré</h3>
+              <h4>Gérant & Responsable technique</h4>
+              <p>Vision stratégique et expertise technique pour piloter vos projets vers le succès</p>
+            </div>
+            <div className="team-member fade-in">
+              <div className="member-avatar">
+                <img 
+                  src="https://via.placeholder.com/120x120/4285f4/ffffff?text=MF" 
+                  alt="Marie Fontaine"
+                  className="member-photo"
+                />
+              </div>
+              <h3>Marie Fontaine</h3>
+              <h4>Product Owner & UI/UX Designer</h4>
+              <p>Conception centrée utilisateur et gestion produit pour des expériences optimales</p>
+            </div>
+            <div className="team-member fade-in">
+              <div className="member-avatar">
+                <img 
+                  src="https://via.placeholder.com/120x120/0066ff/ffffff?text=JM" 
+                  alt="Julien Martin"
+                  className="member-photo"
+                />
+              </div>
+              <h3>Julien Martin</h3>
+              <h4>Développeur Fullstack</h4>
+              <p>Maîtrise complète des technologies frontend et backend pour des solutions robustes</p>
+            </div>
+            <div className="team-member fade-in">
+              <div className="member-avatar">
+                <img 
+                  src="https://via.placeholder.com/120x120/4285f4/ffffff?text=SB" 
+                  alt="Sarah Bernard"
+                  className="member-photo"
+                />
+              </div>
+              <h3>Sarah Bernard</h3>
+              <h4>Ing. Réseaux & Sécurité</h4>
+              <p>Infrastructure sécurisée et optimisation réseau pour des performances maximales</p>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      {/* FAQ Section */}
+      <section id="faq" className="faq">
+        <div className="container">
+          <div className="section-title fade-in">
+            <h2>Questions Fréquentes</h2>
+            <p>Retrouvez les réponses aux questions les plus courantes</p>
+          </div>
+          <div className="faq-list">
+            {[
+              {
+                question: 'Quels sont vos tarifs pour un site web ?',
+                answer: 'Nos tarifs varient selon la complexité du projet. Un site vitrine commence à partir de 1500€, une application web à partir de 5000€. Nous proposons toujours un devis personnalisé après analyse de vos besoins.'
+              },
+              {
+                question: 'Combien de temps faut-il pour développer une application ?',
+                answer: 'Le délai dépend de la complexité : 2-4 semaines pour un site vitrine, 2-6 mois pour une application web complexe, 3-8 mois pour une application mobile native. Nous respectons scrupuleusement les délais convenus.'
+              },
+              {
+                question: 'Proposez-vous un support après livraison ?',
+                answer: 'Oui, nous offrons 3 mois de support gratuit après livraison, puis des contrats de maintenance adaptés. Nous assurons également la formation de vos équipes et la documentation complète.'
+              },
+              {
+                question: 'Travaillez-vous avec des entreprises de toutes tailles ?',
+                answer: 'Absolument ! Nous accompagnons aussi bien les startups que les grandes entreprises. Notre approche modulaire nous permet de nous adapter à tous les budgets et besoins.'
+              },
+              {
+                question: 'Vos formations sont-elles certifiantes ?',
+                answer: 'Nos formations délivrent des certificats de participation. Nous préparons également aux certifications officielles (AWS, Google Cloud, etc.) selon vos besoins professionnels.'
+              }
+            ].map((faq, index) => (
+              <div key={index} className={`faq-item fade-in ${activeFaq === index ? 'active' : ''}`}>
+                <div className="faq-question" onClick={() => toggleFaq(index)}>
+                  {faq.question}
+                </div>
+                <div className={`faq-answer ${activeFaq === index ? 'active' : ''}`}>
+                  <p>{faq.answer}</p>
+                </div>
+              </div>
+            ))}
+          </div>
+        </div>
+      </section>
+
+      {/* Contact Section */}
+      <section id="contact" className="contact">
+        <div className="container">
+          <div className="contact-content">
+            <div className="contact-info">
+              <h2>Contactez-nous</h2>
+              <p>Prêt à démarrer votre projet ? Parlons-en ensemble !</p>
+              <div style={{marginTop: '2rem'}}>
+                <p><strong>📧 Email:</strong> contact@zyntra.tech</p>
+                <p><strong>📱 Téléphone:</strong> +33 1 23 45 67 89</p>
+                <p><strong>📍 Adresse:</strong> Paris, France</p>
+                <p><strong>⏰ Horaires:</strong> Lun-Ven 9h-18h</p>
+              </div>
+            </div>
+            <div className="contact-form">
+              <form onSubmit={submitContact}>
+                <div className="form-group">
+                  <label>Nom</label>
+                  <input type="text" required />
+                </div>
+                <div className="form-group">
+                  <label>Email</label>
+                  <input type="email" required />
+                </div>
+                <div className="form-group">
+                  <label>Sujet</label>
+                  <input type="text" required />
+                </div>
+                <div className="form-group">
+                  <label>Message</label>
+                  <textarea required></textarea>
+                </div>
+                <button type="submit" className="btn-primary">Envoyer le message</button>
+              </form>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      {/* Footer */}
+      <footer className="footer">
+        <div className="container">
+          <div className="footer-content">
+            <div className="footer-section">
+              <h3>Zyntra</h3>
+              <p>Votre partenaire technologique pour l'innovation digitale. Nous transformons vos idées en solutions performantes.</p>
+            </div>
+            <div className="footer-section">
+              <h3>Services</h3>
+              <p><a href="#services">Développement Web</a></p>
+              <p><a href="#services">Applications Mobile</a></p>
+              <p><a href="#services">Intelligence Artificielle</a></p>
+              <p><a href="#services">Cybersécurité</a></p>
+            </div>
+            <div className="footer-section">
+              <h3>Contact</h3>
+              <p>contact@zyntra.tech</p>
+              <p>+33 1 23 45 67 89</p>
+              <p>Paris, France</p>
+            </div>
+            <div className="footer-section">
+              <h3>Suivez-nous</h3>
+              <p><a href="#">LinkedIn</a></p>
+              <p><a href="#">Twitter</a></p>
+              <p><a href="#">GitHub</a></p>
+            </div>
+          </div>
+          <div className="footer-bottom">
+            <p>&copy; 2025 Zyntra. Tous droits réservés.</p>
+          </div>
+        </div>
+      </footer>
+
+      {/* Contact Modal for Formation Booking */}
+      {showContactModal && (
+        <div className="modal" style={{display: 'block'}}>
+          <div className="modal-content">
+            <div className="modal-header">
+              <h2>🎓 Demande de réservation - {selectedFormation?.title}</h2>
+              <button className="modal-close" onClick={() => setShowContactModal(false)}>&times;</button>
+            </div>
+            <div className="modal-body">
+              <div className="formation-summary">
+                <h4>Détails de la formation :</h4>
+                <p><strong>Formation :</strong> {selectedFormation?.title}</p>
+                <p><strong>Durée :</strong> {selectedFormation?.duration}</p>
+                <p><strong>Prix :</strong> {selectedFormation?.price}</p>
+              </div>
+              <form onSubmit={(e) => {
+                e.preventDefault()
+                alert(`Demande de réservation pour "${selectedFormation?.title}" envoyée ! Nous vous contacterons sous 24h pour finaliser votre inscription.`)
+                setShowContactModal(false)
+              }}>
+                <div className="form-group">
+                  <label>Nom complet *</label>
+                  <input type="text" required />
+                </div>
+                <div className="form-group">
+                  <label>Email *</label>
+                  <input type="email" required />
+                </div>
+                <div className="form-group">
+                  <label>Téléphone *</label>
+                  <input type="tel" required />
+                </div>
+                <div className="form-group">
+                  <label>Entreprise</label>
+                  <input type="text" />
+                </div>
+                <div className="form-group">
+                  <label>Niveau actuel</label>
+                  <select>
+                    <option value="">Sélectionnez votre niveau</option>
+                    <option value="debutant">Débutant</option>
+                    <option value="intermediaire">Intermédiaire</option>
+                    <option value="avance">Avancé</option>
+                  </select>
+                </div>
+                <div className="form-group">
+                  <label>Modalité préférée</label>
+                  <select>
+                    <option value="">Sélectionnez la modalité</option>
+                    <option value="presentiel">Présentiel</option>
+                    <option value="distanciel">Distanciel</option>
+                    <option value="hybride">Hybride</option>
+                  </select>
+                </div>
+                <div className="form-group">
+                  <label>Message / Besoins spécifiques</label>
+                  <textarea placeholder="Décrivez vos objectifs, contraintes ou questions..."></textarea>
+                </div>
+                <div className="form-actions">
+                  <button type="button" className="btn-secondary" onClick={() => setShowContactModal(false)}>Annuler</button>
+                  <button type="submit" className="btn-primary">Envoyer la demande</button>
+                </div>
+              </form>
+            </div>
+          </div>
+        </div>
+      )}
+
+      {/* Modal for Service Details */}
+      {modalService && (
+        <div className="modal" style={{display: 'block'}}>
+          <div className="modal-content">
+            <div className="modal-header">
+              <h2>{serviceData[modalService]?.icon} {serviceData[modalService]?.title}</h2>
+              <button className="modal-close" onClick={closeModal}>&times;</button>
+            </div>
+            <div className="modal-body">
+              <div className="modal-tabs">
+                <button 
+                  className={`modal-tab ${activeTab === 'overview' ? 'active' : ''}`} 
+                  onClick={() => setActiveTab('overview')}
+                >
+                  Vue d'ensemble
+                </button>
+                <button 
+                  className={`modal-tab ${activeTab === 'workflow' ? 'active' : ''}`} 
+                  onClick={() => setActiveTab('workflow')}
+                >
+                  Workflow
+                </button>
+                {modalService === 'formations' && (
+                  <button 
+                    className={`modal-tab ${activeTab === 'formations' ? 'active' : ''}`} 
+                    onClick={() => setActiveTab('formations')}
+                  >
+                    Formations
+                  </button>
+                )}
+              </div>
+              
+              <div className={`tab-content ${activeTab === 'overview' ? 'active' : ''}`}>
+                <div dangerouslySetInnerHTML={{__html: serviceData[modalService]?.overview}}></div>
+              </div>
+              
+              <div className={`tab-content ${activeTab === 'workflow' ? 'active' : ''}`}>
+                <h3>Processus de développement</h3>
+                <div className="workflow-detail">
+                  {serviceData[modalService]?.workflow?.map((item, index) => (
+                    <div key={index} className="workflow-item">
+                      <h4>{item.title}</h4>
+                      <p>{item.desc}</p>
+                    </div>
+                  ))}
+                </div>
+              </div>
+              
+
+              
+              {modalService === 'formations' && (
+                <div className={`tab-content ${activeTab === 'formations' ? 'active' : ''}`}>
+                  <h3>Formations disponibles</h3>
+                  <div className="formation-grid">
+                    {serviceData[modalService]?.formations?.map((formation, index) => (
+                      <div key={index} className="formation-card">
+                        <div className="formation-header">
+                          <h4>{formation.title}</h4>
+                          <span className="formation-price">{formation.price}</span>
+                        </div>
+                        <div className="formation-duration">{formation.duration}</div>
+                        <ul className="formation-features">
+                          {formation.features.map((feature, idx) => (
+                            <li key={idx}>{feature}</li>
+                          ))}
+                        </ul>
+                        <button 
+                          className="btn-primary" 
+                          onClick={() => alert(`Demande de réservation pour la formation "${formation.title}" envoyée ! Nous vous contacterons sous 24h pour finaliser votre inscription.`)}
+                        >
+                          Réserver cette formation
+                        </button>
+                      </div>
+                    ))}
+                  </div>
+                </div>
+              )}
+            </div>
+          </div>
+        </div>
+      )}
+
+      {/* Back to Top Button */}
+      <button 
+        className={`back-to-top ${showBackToTop ? 'visible' : ''}`}
+        onClick={scrollToTop}
+        aria-label="Remonter en haut de la page"
+      >
+        ↑
+      </button>
+    </div>
+  )
+}
+
+export default App
