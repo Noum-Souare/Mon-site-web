@@ -2747,3 +2747,124 @@ body {
     max-width: calc(45vw - 1rem) !important;
   }
 }
+
+/* Styles pour le contenu des modales en mode sombre */
+[data-theme="dark"] .modal-body div[style*="background: white"] {
+  background: var(--card-light) !important;
+  color: var(--text-dark) !important;
+}
+
+[data-theme="dark"] .modal-body div[style*="background: linear-gradient(135deg, #f8f9ff"] {
+  background: linear-gradient(135deg, var(--card-light) 0%, var(--dark-blue) 100%) !important;
+}
+
+[data-theme="dark"] .modal-body div[style*="background: linear-gradient(135deg, #f0f8ff"] {
+  background: linear-gradient(135deg, var(--card-light) 0%, var(--dark-blue) 100%) !important;
+}
+
+[data-theme="dark"] .modal-body div[style*="background: linear-gradient(135deg, #fff8f0"] {
+  background: linear-gradient(135deg, var(--card-light) 0%, var(--dark-blue) 100%) !important;
+}
+
+[data-theme="dark"] .modal-body div[style*="background: linear-gradient(135deg, #f0fff0"] {
+  background: linear-gradient(135deg, var(--card-light) 0%, var(--dark-blue) 100%) !important;
+}
+
+[data-theme="dark"] .modal-body div[style*="background: linear-gradient(135deg, #faf5ff"] {
+  background: linear-gradient(135deg, var(--card-light) 0%, var(--dark-blue) 100%) !important;
+}
+
+/* Corrections spécifiques pour les cartes de solutions en mode sombre */
+[data-theme="dark"] .modal-body div[style*="text-align: center; padding: 1.5rem; background: white"] {
+  background: var(--card-light) !important;
+  color: var(--text-dark) !important;
+  border-color: var(--border-light) !important;
+}
+
+[data-theme="dark"] .modal-body div[style*="text-align: center; padding: 1rem; background: white"] {
+  background: var(--card-light) !important;
+  color: var(--text-dark) !important;
+}
+
+[data-theme="dark"] .modal-body div[style*="border-radius: 12px; box-shadow: 0 4px 12px"] {
+  background: var(--card-light) !important;
+  color: var(--text-dark) !important;
+  border-color: var(--border-light) !important;
+}
+
+/* Correctifs pour toutes les cartes avec fond blanc dans les modales */
+[data-theme="dark"] .modal-body div[style*="background: white"],
+[data-theme="dark"] .modal-body div[style*="background:white"] {
+  background: var(--card-light) !important;
+  color: var(--text-dark) !important;
+}
+
+/* Couleurs de texte en mode sombre pour le contenu des modales */
+[data-theme="dark"] .modal-body div[style*="color: #666"] {
+  color: var(--text-gray) !important;
+}
+
+[data-theme="dark"] .modal-body div[style*="color: #9c27b0"] {
+  color: #ba68c8 !important;
+}
+
+[data-theme="dark"] .modal-body div[style*="color: var(--primary-blue)"] {
+  color: #64b5f6 !important;
+}
+
+[data-theme="dark"] .modal-body div[style*="color: #4285f4"] {
+  color: #64b5f6 !important;
+}
+
+[data-theme="dark"] .modal-body div[style*="color: #ff9800"] {
+  color: #ffb74d !important;
+}
+
+[data-theme="dark"] .modal-body div[style*="color: #4caf50"] {
+  color: #81c784 !important;
+}
+
+/* Bordures et ombres en mode sombre */
+[data-theme="dark"] .modal-body div[style*="border: 1px solid #e8d5f2"] {
+  border-color: var(--border-light) !important;
+}
+
+[data-theme="dark"] .modal-body div[style*="box-shadow: 0 4px 12px rgba(156, 39, 176, 0.1)"] {
+  box-shadow: 0 4px 12px rgba(186, 104, 200, 0.2) !important;
+}
+
+[data-theme="dark"] .modal-body div[style*="box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1)"] {
+  box-shadow: 0 4px 12px rgba(255, 255, 255, 0.05) !important;
+}
+
+/* Couleurs spécifiques pour les statistiques et métriques */
+[data-theme="dark"] .modal-body div[style*="font-size: 2rem; font-weight: bold; color: var(--primary-blue)"] {
+  color: #64b5f6 !important;
+}
+
+[data-theme="dark"] .modal-body div[style*="font-size: 2rem; font-weight: bold; color: #4caf50"] {
+  color: #81c784 !important;
+}
+
+[data-theme="dark"] .modal-body div[style*="font-size: 2rem; font-weight: bold; color: #ff9800"] {
+  color: #ffb74d !important;
+}
+
+[data-theme="dark"] .modal-body div[style*="font-size: 2rem; font-weight: bold; color: #9c27b0"] {
+  color: #ba68c8 !important;
+}
+
+/* Règle globale pour tous les éléments avec background white dans les modales */
+[data-theme="dark"] .modal-body * {
+  border-color: var(--border-light) !important;
+}
+
+[data-theme="dark"] .modal-body [style*="background: white"] {
+  background: var(--card-light) !important;
+  color: var(--text-dark) !important;
+}
+
+[data-theme="dark"] .modal-body [style*="background:white"] {
+  background: var(--card-light) !important;
+  color: var(--text-dark) !important;
+}
