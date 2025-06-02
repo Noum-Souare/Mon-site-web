@@ -1450,6 +1450,7 @@ function App() {
             <li><a href="#services">Services</a></li>
             <li><a href="#workflow">Processus</a></li>
             <li><a href="#formations">Formations</a></li>
+            <li><a href="#about">À propos</a></li>
             <li><a href="#faq">FAQ</a></li>
             <li><a href="#contact">Contact</a></li>
           </ul>
@@ -1768,7 +1769,7 @@ function App() {
       <section id="workflow" className="workflow">
         <div className="container">
           <div className="section-title fade-in">
-            <h2>Notre Processus de Travail</h2>
+            <h2>Notre Méthode de Travail</h2>
             <p>Une méthodologie éprouvée pour garantir le succès de vos projets</p>
           </div>
           <div className="workflow-steps">
@@ -1801,6 +1802,83 @@ function App() {
         </div>
       </section>
 
+
+
+      {/* About Section */}
+      <section id="about" className="about">
+        <div className="container">
+          <div className="section-title fade-in">
+            <h2>À propos de Zyntra</h2>
+            <p>Votre partenaire technologique de confiance pour l'innovation digitale.</p>
+          </div>
+          <div className="about-content">
+            <div className="about-text fade-in">
+              <div className="about-story">
+                <h3>🚀 Notre Mission</h3>
+                <p>
+                  Chez Zyntra, nous croyons que la technologie doit être au service de l'humain et des entreprises. 
+                  Notre mission est de démocratiser l'accès aux technologies de pointe en proposant des solutions 
+                  sur-mesure qui répondent aux défis spécifiques de chaque client.
+                </p>
+              </div>
+              
+              <div className="about-story">
+                <h3>💡 Notre Vision</h3>
+                <p>
+                  Nous aspirons à devenir le partenaire technologique de référence qui transforme les idées 
+                  en solutions innovantes. Nous accompagnons nos clients dans leur transformation digitale 
+                  en alliant expertise technique, créativité et approche humaine.
+                </p>
+              </div>
+              
+              <div className="about-story">
+                <h3>🌟 Nos Valeurs</h3>
+                <div className="values-grid">
+                  <div className="value-item">
+                    <h4>Excellence</h4>
+                    <p>Nous visons l'excellence dans chaque projet, en utilisant les meilleures pratiques et technologies.</p>
+                  </div>
+                  <div className="value-item">
+                    <h4>Innovation</h4>
+                    <p>Nous restons à la pointe des innovations pour offrir des solutions d'avant-garde.</p>
+                  </div>
+                  <div className="value-item">
+                    <h4>Transparence</h4>
+                    <p>Communication claire, processus transparents et collaboration étroite avec nos clients.</p>
+                  </div>
+                  <div className="value-item">
+                    <h4>Agilité</h4>
+                    <p>Adaptabilité et réactivité pour répondre rapidement aux besoins changeants du marché.</p>
+                  </div>
+                </div>
+              </div>
+            </div>
+            
+            <div className="about-stats fade-in">
+              <div className="stats-grid">
+                <div className="stat-item">
+                  <div className="stat-number">20+</div>
+                  <div className="stat-label">Projets réalisés</div>
+                </div>
+                <div className="stat-item">
+                  <div className="stat-number">10+</div>
+                  <div className="stat-label">Années d'expérience</div>
+                </div>
+                <div className="stat-item">
+                  <div className="stat-number">98%</div>
+                  <div className="stat-label">Clients satisfaits</div>
+                </div>
+                <div className="stat-item">
+                  <div className="stat-number">24/7</div>
+                  <div className="stat-label">Support disponible</div>
+                </div>
+              </div>
+            </div>
+          </div>
+          
+
+        </div>
+      </section>
       
 
       {/* Team Section */}
