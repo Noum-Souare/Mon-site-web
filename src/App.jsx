@@ -1480,7 +1480,7 @@ function App() {
         <div className="hero-content">
           <div className="hero-text">
             <h1>Solutions Tech <span className="highlight">Innovantes</span> pour votre Entreprise</h1>
-            <p>Nous transformons vos idées en solutions numériques performantes. Du développement web à l'IA, en passant par la cybersécurité et le cloud, nous maîtrisons toutes les technologies modernes.</p>
+            <p>Ensemble, donnons vie à vos ambitions numériques. Nous co-créons des solutions sur mesure et innovantes, alliant expertise en développement web/mobile, IA, cybersécurité, cloud, la valorisation de vos données et conseil stratégique pour concrétiser vos projets les plus ambitieux.</p>
             <div className="cta-buttons">
               <a href="#booking" className="btn-primary">Réserver un appel</a>
               <a href="#services" className="btn-secondary">Découvrir nos services</a>
@@ -1819,7 +1819,7 @@ function App() {
                   className="member-photo"
                 />
               </div>
-              <h3>Alexandre Souaré</h3>
+              <h3>Noumouké Souaré</h3>
               <h4>Gérant & Responsable technique</h4>
               <p>Vision stratégique et expertise technique pour piloter vos projets vers le succès</p>
             </div>
@@ -1831,7 +1831,7 @@ function App() {
                   className="member-photo"
                 />
               </div>
-              <h3>Marie Fontaine</h3>
+              <h3>Fatoumata Souaré</h3>
               <h4>Product Owner & UI/UX Designer</h4>
               <p>Conception centrée utilisateur et gestion produit pour des expériences optimales</p>
             </div>
@@ -1843,7 +1843,7 @@ function App() {
                   className="member-photo"
                 />
               </div>
-              <h3>Julien Martin</h3>
+              <h3>Fodé Sylla</h3>
               <h4>Développeur Fullstack</h4>
               <p>Maîtrise complète des technologies frontend et backend pour des solutions robustes</p>
             </div>
@@ -1855,7 +1855,7 @@ function App() {
                   className="member-photo"
                 />
               </div>
-              <h3>Sarah Bernard</h3>
+              <h3>Abdoulaye Bademba DIALLO</h3>
               <h4>Ing. Réseaux & Sécurité</h4>
               <p>Infrastructure sécurisée et optimisation réseau pour des performances maximales</p>
             </div>
