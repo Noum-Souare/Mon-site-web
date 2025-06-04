@@ -173,7 +173,7 @@ function App() {
           <h4 style="color: var(--primary-blue); font-weight: bold; font-size: 1.3rem; margin-bottom: 1.5rem; text-align: center;">📊 Résultats exceptionnels</h4>
           <div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(250px, 1fr)); gap: 1.5rem; margin-top: 1.5rem;">
             <div style="text-align: center; padding: 1rem; background: white; border-radius: 12px; box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);">
-              <div style="font-size: 2rem; font-weight: bold; color: var(--primary-blue); margin-bottom: 0.5rem;">15+</div>
+              <div style="font-size: 2rem; font-weight: bold; color: var(--primary-blue); margin-bottom: 0.5rem;">10+</div>
               <div style="font-size: 0.9rem; color: #666;">Projets livrés avec succès</div>
             </div>
             <div style="text-align: center; padding: 1rem; background: white; border-radius: 12px; box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);">
@@ -2262,7 +2262,7 @@ function App() {
             <div className="about-stats fade-in">
               <div className="stats-grid">
                 <div className="stat-item">
-                  <div className="stat-number">20+</div>
+                  <div className="stat-number">10+</div>
                   <div className="stat-label">Projets réalisés</div>
                 </div>
                 <div className="stat-item">
@@ -2297,50 +2297,113 @@ function App() {
             <div className="team-member fade-in">
               <div className="member-avatar">
                 <img 
-                  src="https://via.placeholder.com/120x120/0066ff/ffffff?text=AS" 
+                  src="/images/elodie.jpg" 
+                  alt="Elodie BANTOS"
+                  className="member-photo"
+                />
+              </div>
+              <h3>Elodie BANTOS</h3>
+              <h4>Machine Learning Engineer & Product Owner</h4>
+              <p>Je développe des modèles d’intelligence artificielle performants tout en assurant la gestion stratégique du produit, de l’idée à la livraison.</p>
+            </div>
+            <div className="team-member fade-in">
+              <div className="member-avatar">
+                <img 
+                  src="/images/noumouke.jpg" 
                   alt="Noumouké SOUARE"
                   className="member-photo"
                 />
               </div>
               <h3>Noumouké SOUARE</h3>
-              <h4>Gérant & Responsable technique</h4>
-              <p>Vision stratégique et expertise technique pour piloter vos projets vers le succès</p>
+              <h4>Gérant & Ingénieur Logiciel</h4>
+              <p>Je mets en œuvre un management d'équipe structuré et une ingénierie logicielle rigoureuse pour garantir le succès de vos projets digitaux.</p>
             </div>
             <div className="team-member fade-in">
               <div className="member-avatar">
                 <img 
-                  src="https://via.placeholder.com/120x120/4285f4/ffffff?text=MF" 
-                  alt="Fatoumata SOUARE"
+                  src="/images/aime.jpg" 
+                  alt="Aimé BERTRAND"
                   className="member-photo"
                 />
               </div>
-              <h3>Fatoumata SOUARE</h3>
-              <h4>Product Owner & UI/UX Designer</h4>
-              <p>Conception centrée utilisateur et gestion produit pour des expériences optimales</p>
+              <h3>Aimé BERTRAND</h3>
+              <h4>Ing. Sécurité & Développeur Blockchain</h4>
+              <p>Je sécurise les systèmes d’information tout en développant des applications blockchain robustes et innovantes.</p>
             </div>
             <div className="team-member fade-in">
               <div className="member-avatar">
                 <img 
-                  src="https://via.placeholder.com/120x120/0066ff/ffffff?text=JM" 
-                  alt="Fodé SYLLA"
+                  src="/images/alassane.jpg" 
+                  alt="Alassane MARIKO"
                   className="member-photo"
                 />
               </div>
-              <h3>Fodé SYLLA</h3>
-              <h4>Développeur Fullstack</h4>
-              <p>Maîtrise complète des technologies frontend et backend pour des solutions robustes</p>
+              <h3>Alassane MARIKO</h3>
+              <h4>Ingénieur Logiciel & Business Analyst</h4>
+              <p>Je conçois des solutions logicielles efficaces en m’appuyant sur une compréhension fine des besoins métiers et des enjeux fonctionnels.</p>
             </div>
             <div className="team-member fade-in">
               <div className="member-avatar">
                 <img 
-                  src="https://via.placeholder.com/120x120/4285f4/ffffff?text=SB" 
+                  src="/images/bademba.jpg" 
                   alt="Abdoulaye Bademba DIALLO"
                   className="member-photo"
                 />
               </div>
               <h3>Abdoulaye Bademba DIALLO</h3>
               <h4>Ing. Réseaux & Sécurité</h4>
-              <p>Infrastructure sécurisée et optimisation réseau pour des performances maximales</p>
+              <p>Spécialiste des infrastructures et de la cybersécurité, j’assure la mise en place de réseaux performants et le déploiement de solutions de défense proactive.</p>
+            </div>
+            <div className="team-member fade-in">
+              <div className="member-avatar">
+                <img 
+                  src="/images/mohamed.jpg" 
+                  alt="Mohamed NABE"
+                  className="member-photo"
+                />
+              </div>
+              <h3>Mohamed NABE</h3>
+              <h4>Ing. DevOps & Administrateur Systèmes</h4>
+              <p>J’automatise les processus de déploiement et j’administre des infrastructures systèmes stables, sécurisées et performantes.</p>
+            </div>
+            
+            <div className="team-member fade-in">
+              <div className="member-avatar">
+                <img 
+                  src="https://via.placeholder.com/120x120/0066ff/ffffff?text=JM" 
+                  alt="Souleymane DIALLO"
+                  className="member-photo"
+                />
+              </div>
+              <h3>Souleymane DIALLO</h3>
+              <h4>Développeur Fullstack</h4>
+              <p>Je conçois des applications web complètes, du backend à l’interface utilisateur, en alliant performance, sécurité et expérience fluide.</p>
+
+            </div>
+            <div className="team-member fade-in">
+              <div className="member-avatar">
+                <img 
+                  src="https://via.placeholder.com/120x120/0066ff/ffffff?text=JM" 
+                  alt="Ibrahima BAH"
+                  className="member-photo"
+                />
+              </div>
+              <h3>Ibrahima BAH</h3>
+              <h4>Développeur Fullstack</h4>
+              <p>Spécialisé dans les architectures modernes, je développe des solutions web robustes en intégrant API, bases de données, et interfaces réactives.</p>
+            </div>
+
+            <div className="team-member fade-in">
+              <div className="member-avatar">
+                <img 
+                  src="/images/fatoumata.jpg" 
+                  alt="Fatoumata SOUARE"
+                  className="member-photo"
+                />
+              </div>
+              <h3>Fatoumata SOUARE</h3>
+              <h4>Community Manager & UI/UX Designer</h4>
+               <p>Je crée des expériences digitales engageantes, en combinant stratégie communautaire et design centré utilisateur. </p>
             </div>
           </div>
         </div>
