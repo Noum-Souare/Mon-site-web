@@ -1706,63 +1706,63 @@ function App() {
       formations: [
         {
           title: 'Développement Web Full-Stack',
-          duration: '40 heures - 5 jours',
-          price: '890€',
+          duration: '30 heures - 8 jours',
+          price: '399€',
           features: ['HTML5, CSS3, JavaScript ES6+', 'React.js et Node.js', 'Base de données et API', 'Projet final', 'Certificat de réussite'],
           description: "🚀 Transformez-vous en développeur recherché ! Cette formation intensive vous propulse de zéro à héros du développement. En seulement 5 jours, maîtrisez les technologies les plus demandées par les entreprises. Nos anciens stagiaires ont augmenté leur salaire de 35% en moyenne ! Ne laissez pas passer cette opportunité limitée."
         },
         {
           title: 'Intelligence Artificielle & Machine Learning',
-          duration: '45 heures - 6 jours',
-          price: '1 490€',
+          duration: '35 heures - 10 jours',
+          price: '499€',
           features: ['Python pour l\'IA', 'Scikit-learn, TensorFlow', 'Deep Learning', 'Projet ML concret', 'Cas d\'usage métier'],
           description: "🤖 Surfez sur la vague IA avant qu'il ne soit trop tard ! L'IA va remplacer 40% des emplois... ou les transformer. Soyez du bon côté. Formation qui vous positionne sur les métiers d'avenir. Nos participants multiplient leur valeur par 3 sur le marché !"
         },
         {
           title: 'Cybersécurité',
-          duration: '40 heures - 5 jours',
-          price: '690€',
+          duration: '45 heures - 12 jours',
+          price: '699€',
           features: ['Audit de sécurité', 'Tests d\'intrusion', 'Réponse aux incidents', 'Outils professionnels', 'Certification incluse'],
           description: "🛡️ Protégez-vous des 4000 cyberattaques quotidiennes ! Le secteur cybersécurité recrute 3.5M de postes dans le monde. Salaires moyens : 70k€+. Formation par d'anciens hackers éthiques. Accès exclusif aux outils pros. Votre passeport pour l'emploi sécurisé !"
         },
         {
           title: 'Atelier Accéléré sur les Méthodes et Outils Agile',
-          duration: '18 heures - 3 jours',
-          price: '490€',
+          duration: '12 heures - 4 jours',
+          price: '299€',
           features: ['Scrum & Kanban maîtrisés', 'Jira & Azure DevOps', 'Retrospectives efficaces', 'Planning Poker', 'Certification Scrum Master'],
           description: "⚡ Révolutionnez votre façon de travailler ! Rejoignez les 97% de nos participants qui ont transformé leur productivité en équipe. Apprenez les secrets des entreprises Tech les plus performantes. Formation intensive avec des coachs agile certifiés. Places limitées à 12 participants pour un accompagnement personnalisé !"
         },
         {
           title: 'Automatisation n8n sur-mesure',
-          duration: '20 heures - 2 jours',
-          price: '490€',
+          duration: '12 heures - 4 jours',
+          price: '350€',
           features: ['Maîtrise complète n8n', '500+ intégrations', 'Workflows complexes', 'Monitoring & alerting', 'ROI automation'],
           description: "🤖 Libérez 20h/semaine de tâches répétitives ! L'automatisation n8n fait économiser 50k€/an à nos clients. Connectez tous vos outils sans coder. Formation exclusive avec le créateur de n8n France. Places ultra-limitées : seulement 8 participants max !"
         },
         {
           title: 'Initiation à Docker et Sécurité des Conteneurs',
-          duration: '25 heures - 3 jours',
-          price: '390€',
+          duration: '15 heures - 5 jours',
+          price: '299€',
           features: ['Docker de A à Z', 'Kubernetes basics', 'Sécurité conteneurs', 'CI/CD avec containers', 'Best practices DevOps'],
           description: "🔐 Maîtrisez la technologie qui fait tourner Netflix, Google et Amazon ! Docker révolutionne le déploiement d'applications. Cette formation vous donne 3 ans d'avance sur la concurrence. 89% de nos participants sont promus dans les 6 mois. Investissement garanti rentable !"
         },
         {
           title: 'Introduction à la Programmation R et Analyse de Données',
-          duration: '35 heures - 5 jours',
-          price: '590€',
+          duration: '20 heures - 5 jours',
+          price: '399€',
           features: ['R Programming complet', 'Visualisation avec ggplot2', 'Analyse statistique', 'Machine Learning basics', 'Projets data concrets'],
           description: "📊 Devenez le Data Scientist que tout le monde s'arrache ! Le salaire moyen d'un expert R dépasse 65k€. Cette formation vous ouvre les portes des métiers les plus recherchés. Apprentissage pratique sur de vraies données d'entreprises. Résultats visibles dès le premier jour !"
         },
         {
           title: 'Atelier Git, GitHub et GitHub Actions',
           duration: '12 heures - 3 jours',
-          price: '590€',
+          price: '250€',
           features: ['Git avancé', 'GitHub collaboration', 'GitHub Actions CI/CD', 'Code review workflow', 'Open source contribution'],
           description: "⭐ Arrêtez de perdre votre code ! Rejoignez les 100M+ de développeurs qui utilisent Git quotidiennement. Formation pratique qui vous évite les erreurs coûteuses. Nos participants économisent 2h/jour en moyenne. ROI immédiat garanti !"
         },
         {
           title: 'Design Thinking',
-          duration: '16 heures - 3 jours',
+          duration: '12 heures - 3 jours',
           price: '330€',
           features: ['Méthodologie Design Thinking', 'Empathy mapping', 'Prototypage rapide', 'Tests utilisateurs', 'Innovation collaborative'],
           description: "💡 Innovez comme Apple, Google et Tesla ! Le Design Thinking a généré +500M$ d'innovation chez nos clients. Méthode éprouvée pour créer des produits que vos clients adorent. Formation animée par des consultants ayant accompagné les licornes françaises. Changez votre approche, changez vos résultats !"
