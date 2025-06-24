@@ -1,4 +1,4 @@
----
+# This file is used by cPanel to manage deployment tasks.
 deployment:
   tasks:
     - export DEPLOYPATH=/home/username/public_html/
