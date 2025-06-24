@@ -1691,7 +1691,7 @@ function App() {
         },
         { 
           title: 'Évaluation & Certification (2-3 jours)', 
-          desc: 'Évaluation pratique sur projet réel, tests de compétences techniques approfondis, préparation aux certifications officielles si applicable, remise des certificats de formation Catina et bilan individuel des acquis avec recommandations de progression.'
+          desc: 'Évaluation pratique sur projet réel, tests de compétences techniques approfondis, préparation aux certifications officielles si applicable, remise des certificats de formation weenov et bilan individuel des acquis avec recommandations de progression.'
         },
         { 
           title: 'Suivi Post-Formation & Support (3 mois)', 
@@ -1849,7 +1849,7 @@ function App() {
       {/* Header */}
       <header className="header">
         <nav className="nav">
-          <div className="logo">Catina</div>
+          <div className="logo">weeNov</div>
           <ul className={`nav-links ${mobileMenuOpen ? 'mobile-active' : ''}`}>
             <li><a href="#accueil">Accueil</a></li>
             <li><a href="#services">Services</a></li>
@@ -2047,7 +2047,7 @@ function App() {
               </div>
               <div className="info-item">
                 <h4>📜 Certification</h4>
-                <p>Certificats Catina et préparation aux certifications officielles</p>
+                <p>Certificats weenov et préparation aux certifications officielles</p>
               </div>
               <div className="info-item">
                 <h4>🤝 Support</h4>
@@ -2132,7 +2132,7 @@ function App() {
           <div className="testimonials">
             <div className="testimonial-card fade-in">
               <p className="testimonial-text">
-                "Catina a transformé notre infrastructure IT. Leur expertise en cloud et cybersécurité nous a permis de sécuriser notre croissance tout en optimisant nos coûts."
+                "weenov a transformé notre infrastructure IT. Leur expertise en cloud et cybersécurité nous a permis de sécuriser notre croissance tout en optimisant nos coûts."
               </p>
               <div className="testimonial-author">
                 <div className="author-avatar">JD</div>
@@ -2144,7 +2144,7 @@ function App() {
             </div>
             <div className="testimonial-card fade-in">
               <p className="testimonial-text">
-                "L'équipe Catina a développé notre plateforme IA en un temps record. Leur approche agile et leur expertise technique sont remarquables."
+                "L'équipe weenov a développé notre plateforme IA en un temps record. Leur approche agile et leur expertise technique sont remarquables."
               </p>
               <div className="testimonial-author">
                 <div className="author-avatar">ML</div>
@@ -2156,7 +2156,7 @@ function App() {
             </div>
             <div className="testimonial-card fade-in">
               <p className="testimonial-text">
-                "Grâce à Catina, nous avons modernisé toute notre stack technique. Leur accompagnement et leur support sont exceptionnels."
+                "Grâce à weenov, nous avons modernisé toute notre stack technique. Leur accompagnement et leur support sont exceptionnels."
               </p>
               <div className="testimonial-author">
                 <div className="author-avatar">PR</div>
@@ -2213,7 +2213,7 @@ function App() {
       <section id="about" className="about">
         <div className="container">
           <div className="section-title fade-in">
-            <h2>À propos de Catina</h2>
+            <h2>À propos de weenov</h2>
             <p>Votre partenaire technologique de confiance pour l'innovation digitale.</p>
           </div>
           <div className="about-content">
@@ -2221,7 +2221,7 @@ function App() {
               <div className="about-story">
                 <h3>🚀 Notre Mission</h3>
                 <p>
-                  Chez Catina, nous croyons que la technologie doit être au service de l'humain et des entreprises. 
+                  Chez weenov, nous croyons que la technologie doit être au service de l'humain et des entreprises. 
                   Notre mission est de démocratiser l'accès aux technologies de pointe en proposant des solutions 
                   sur-mesure qui répondent aux défis spécifiques de chaque client.
                 </p>
@@ -2460,7 +2460,7 @@ function App() {
               <h2>Contactez-nous</h2>
               <p>Prêt à démarrer votre projet ? Parlons-en ensemble !</p>
               <div style={{marginTop: '2rem'}}>
-                <p><strong>📧 Email:</strong> contact@catina.tech</p>
+                <p><strong>📧 Email:</strong> hello@weenov.tech</p>
                 <p><strong>📱 Téléphone:</strong> +224 620 24 26 12 / +336 16 90 87 42</p>
                 <p><strong>📍 Adresse:</strong> Conakry, ManquePas, Immeuble Kébé au 3ème étage, Guinée (En cours de rénovation)</p>
                 <p><strong>⏰ Horaires:</strong> Lun-Ven 9h-18h</p>
@@ -2496,7 +2496,7 @@ function App() {
         <div className="container">
           <div className="footer-content">
             <div className="footer-section">
-              <h3>Catina</h3>
+              <h3>weenov</h3>
               <p>Votre partenaire technologique pour l'innovation digitale. Nous transformons vos idées en solutions performantes.</p>
             </div>
             <div className="footer-section">
@@ -2508,7 +2508,7 @@ function App() {
             </div>
             <div className="footer-section">
               <h3>Contact</h3>
-              <p>contact@catina.tech</p>
+              <p>contact@weenov.tech</p>
               <p>+224 620 24 26 12 / +336 16 90 87 42</p>
               <p>Conakry, ManquePas, Immeuble Kébé au 3ème étage, Guinée</p>
             </div>
@@ -2520,7 +2520,7 @@ function App() {
             </div>
           </div>
           <div className="footer-bottom">
-            <p>&copy; 2025 Catina. Tous droits réservés.</p>
+            <p>&copy; 2025 weenov. Tous droits réservés.</p>
           </div>
         </div>
       </footer>
