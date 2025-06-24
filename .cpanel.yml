@@ -1,9 +1,5 @@
-# This file is used by cPanel to manage deployment tasks.
+---
 deployment:
   tasks:
-    - export DEPLOYPATH=/home/username/public_html/
-    - /bin/rm -rf $DEPLOYPATH*
-    - /bin/cp -R dist/* $DEPLOYPATH
-    - /bin/find $DEPLOYPATH -type f -name "*.html" -exec chmod 644 {} \;
-    - /bin/find $DEPLOYPATH -type f -name "*.css" -exec chmod 644 {} \;
-    - /bin/find $DEPLOYPATH -type f -name "*.js" -exec chmod 644 {} \;
+    - export DEPLOYPATH=/home/example/public_html/
+    - /bin/cp -R images $DEPLOYPATH
