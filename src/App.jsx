@@ -1,23 +1,38 @@
-import React, { useState, useEffect } from 'react'
-import './App.css'
+import React, { useState, useEffect } from "react";
+import emailjs from "@emailjs/browser";
+import "./App.css";
 
 // Composants réutilisables
-const FeatureBlock = ({ color, gradient, icon, title, children, borderColor }) => (
-  <div className={`feature-block feature-block--${color}`} style={{
-    background: gradient,
-    borderLeftColor: borderColor
-  }}>
-    <h5 style={{ color: borderColor }}>{icon} {title}</h5>
+const FeatureBlock = ({
+  color,
+  gradient,
+  icon,
+  title,
+  children,
+  borderColor,
+}) => (
+  <div
+    className={`feature-block feature-block--${color}`}
+    style={{
+      background: gradient,
+      borderLeftColor: borderColor,
+    }}
+  >
+    <h5 style={{ color: borderColor }}>
+      {icon} {title}
+    </h5>
     {children}
   </div>
-)
+);
 
-const StatCard = ({ value, label, color = 'var(--primary-blue)' }) => (
+const StatCard = ({ value, label, color = "var(--primary-blue)" }) => (
   <div className="stat-card">
-    <div className="stat-value" style={{ color }}>{value}</div>
+    <div className="stat-value" style={{ color }}>
+      {value}
+    </div>
     <div className="stat-label">{label}</div>
   </div>
-)
+);
 
 const ServiceCard = ({ icon, title, description }) => (
   <div className="service-card-grid">
@@ -25,7 +40,7 @@ const ServiceCard = ({ icon, title, description }) => (
     <div className="service-card-title">{title}</div>
     <div className="service-card-description">{description}</div>
   </div>
-)
+);
 
 const StatsGrid = ({ title, stats }) => (
   <div className="stats-section">
@@ -36,55 +51,64 @@ const StatsGrid = ({ title, stats }) => (
       ))}
     </div>
   </div>
-)
+);
 
 // Constantes pour les thèmes de couleurs
 const THEME_COLORS = {
   blue: {
-    color: 'var(--primary-blue)',
-    gradient: 'linear-gradient(135deg, #f8f9ff 0%, #e8f2ff 100%)'
+    color: "var(--primary-blue)",
+    gradient: "linear-gradient(135deg, #f8f9ff 0%, #e8f2ff 100%)",
   },
   lightBlue: {
-    color: '#4285f4',
-    gradient: 'linear-gradient(135deg, #f0f8ff 0%, #e0f0ff 100%)'
+    color: "#4285f4",
+    gradient: "linear-gradient(135deg, #f0f8ff 0%, #e0f0ff 100%)",
   },
   orange: {
-    color: '#ff9800',
-    gradient: 'linear-gradient(135deg, #fff8f0 0%, #ffe8d0 100%)'
+    color: "#ff9800",
+    gradient: "linear-gradient(135deg, #fff8f0 0%, #ffe8d0 100%)",
   },
   green: {
-    color: '#4caf50',
-    gradient: 'linear-gradient(135deg, #f0fff0 0%, #e0ffe0 100%)'
-  }
-}
+    color: "#4caf50",
+    gradient: "linear-gradient(135deg, #f0fff0 0%, #e0ffe0 100%)",
+  },
+};
 
 function App() {
-  const [selectedDate, setSelectedDate] = useState(null)
-  const [selectedTime, setSelectedTime] = useState(null)
-  const [modalService, setModalService] = useState(null)
-  const [activeTab, setActiveTab] = useState('overview')
-  const [isDarkTheme, setIsDarkTheme] = useState(false)
-  const [activeFaq, setActiveFaq] = useState(null)
-  const [mobileMenuOpen, setMobileMenuOpen] = useState(false)
-  const [showContactModal, setShowContactModal] = useState(false)
-  const [selectedFormation, setSelectedFormation] = useState(null)
-  const [showBackToTop, setShowBackToTop] = useState(false)
-  const [showBookingModal, setShowBookingModal] = useState(false)
-  const [bookingStep, setBookingStep] = useState(1)
+  const [selectedDate, setSelectedDate] = useState(null);
+  const [selectedTime, setSelectedTime] = useState(null);
+  const [modalService, setModalService] = useState(null);
+  const [activeTab, setActiveTab] = useState("overview");
+  const [isDarkTheme, setIsDarkTheme] = useState(false);
+  const [activeFaq, setActiveFaq] = useState(null);
+  const [mobileMenuOpen, setMobileMenuOpen] = useState(false);
+  const [showContactModal, setShowContactModal] = useState(false);
+  const [selectedFormation, setSelectedFormation] = useState(null);
+  const [showBackToTop, setShowBackToTop] = useState(false);
+  const [showBookingModal, setShowBookingModal] = useState(false);
+  const [bookingStep, setBookingStep] = useState(1);
   const [bookingData, setBookingData] = useState({
     date: null,
     time: null,
-    name: '',
-    email: '',
-    guestEmails: '',
-    meetingType: 'google-meet',
-    notes: ''
-  })
+    name: "",
+    email: "",
+    guestEmails: "",
+    meetingType: "google-meet",
+    notes: "",
+  });
+
+  // States pour le formulaire de contact
+  const [contactForm, setContactForm] = useState({
+    name: "",
+    email: "",
+    subject: "",
+    message: "",
+  });
+  const [isSubmitting, setIsSubmitting] = useState(false);
 
   const serviceData = {
-    'web-dev': {
-      title: 'Développement Web, Desktop & Mobile',
-      icon: '🌐',
+    "web-dev": {
+      title: "Développement Web, Desktop & Mobile",
+      icon: "🌐",
       overview: `
         <div class="persuasive-intro">
           <p><strong>🌐 Créez les applications de demain dès aujourd'hui !</strong></p>
@@ -192,40 +216,55 @@ function App() {
         </div>
       `,
       workflow: [
-        { 
-          title: 'Analyse & Cadrage (1-2 semaines)', 
-          desc: 'Audit technique existant, définition du périmètre fonctionnel, analyse des besoins utilisateurs, étude de faisabilité technique, benchmark concurrentiel et définition des KPIs de succès.'
+        {
+          title: "Analyse & Cadrage (1-2 semaines)",
+          desc: "Audit technique existant, définition du périmètre fonctionnel, analyse des besoins utilisateurs, étude de faisabilité technique, benchmark concurrentiel et définition des KPIs de succès.",
         },
-        { 
-          title: 'Architecture & Conception (2-3 semaines)', 
-          desc: 'Modélisation de la base de données, conception de l\'architecture microservices/monolithique, définition des APIs REST/GraphQL, choix de la stack technique optimale et planification des sprints de développement.'
+        {
+          title: "Architecture & Conception (2-3 semaines)",
+          desc: "Modélisation de la base de données, conception de l'architecture microservices/monolithique, définition des APIs REST/GraphQL, choix de la stack technique optimale et planification des sprints de développement.",
         },
-        { 
-          title: 'Design System & UX/UI (2-4 semaines)', 
-          desc: 'Création du design system, wireframing et prototypage interactif, tests utilisateurs, optimisation de l\'expérience mobile-first, validation de l\'accessibilité WCAG et finalisation des maquettes haute-fidélité.'
+        {
+          title: "Design System & UX/UI (2-4 semaines)",
+          desc: "Création du design system, wireframing et prototypage interactif, tests utilisateurs, optimisation de l'expérience mobile-first, validation de l'accessibilité WCAG et finalisation des maquettes haute-fidélité.",
         },
-        { 
-          title: 'Développement MVP (4-8 semaines)', 
-          desc: 'Développement du backend avec APIs sécurisées, intégration frontend responsive, implémentation des fonctionnalités core, tests unitaires et d\'intégration continus, code review systématique et documentation technique.'
+        {
+          title: "Développement MVP (4-8 semaines)",
+          desc: "Développement du backend avec APIs sécurisées, intégration frontend responsive, implémentation des fonctionnalités core, tests unitaires et d'intégration continus, code review systématique et documentation technique.",
         },
-        { 
-          title: 'Tests & Optimisation (2-3 semaines)', 
-          desc: 'Tests fonctionnels automatisés (Cypress/Jest), tests de charge et performance (Lighthouse), audit de sécurité (OWASP), tests cross-browser/device, optimisation SEO technique et validation finale avec le client.'
+        {
+          title: "Tests & Optimisation (2-3 semaines)",
+          desc: "Tests fonctionnels automatisés (Cypress/Jest), tests de charge et performance (Lighthouse), audit de sécurité (OWASP), tests cross-browser/device, optimisation SEO technique et validation finale avec le client.",
         },
-        { 
-          title: 'Déploiement & Support (1-2 semaines puis continu)', 
-          desc: 'Déploiement sur infrastructure cloud (AWS/Azure/GCP), mise en place du monitoring (Grafana/New Relic), formation des équipes client, documentation utilisateur complète et support technique 24/7 pendant 3 mois.'
-        }
+        {
+          title: "Déploiement & Support (1-2 semaines puis continu)",
+          desc: "Déploiement sur infrastructure cloud (AWS/Azure/GCP), mise en place du monitoring (Grafana/New Relic), formation des équipes client, documentation utilisateur complète et support technique 24/7 pendant 3 mois.",
+        },
       ],
       blog: [
-        { date: '15 Mai 2025', title: 'Les tendances du développement web en 2025', excerpt: 'Découvrez les technologies émergentes qui façonnent l\'avenir du web : WebAssembly, Web3, et l\'intégration native de l\'IA.' },
-        { date: '10 Mai 2025', title: 'React vs Vue.js : Guide de choix pour 2025', excerpt: 'Comparatif détaillé des deux frameworks les plus populaires avec des exemples concrets et recommandations.' },
-        { date: '5 Mai 2025', title: 'Optimisation des performances mobiles', excerpt: 'Techniques avancées pour créer des applications mobiles ultra-performantes avec React Native et Flutter.' }
-      ]
+        {
+          date: "15 Mai 2025",
+          title: "Les tendances du développement web en 2025",
+          excerpt:
+            "Découvrez les technologies émergentes qui façonnent l'avenir du web : WebAssembly, Web3, et l'intégration native de l'IA.",
+        },
+        {
+          date: "10 Mai 2025",
+          title: "React vs Vue.js : Guide de choix pour 2025",
+          excerpt:
+            "Comparatif détaillé des deux frameworks les plus populaires avec des exemples concrets et recommandations.",
+        },
+        {
+          date: "5 Mai 2025",
+          title: "Optimisation des performances mobiles",
+          excerpt:
+            "Techniques avancées pour créer des applications mobiles ultra-performantes avec React Native et Flutter.",
+        },
+      ],
     },
-    'websites': {
-      title: 'Sites Vitrines',
-      icon: '🎨',
+    websites: {
+      title: "Sites Vitrines",
+      icon: "🎨",
       overview: `
         <div class="persuasive-intro">
           <p><strong>🎯 Transformez votre présence web en machine à conversions !</strong></p>
@@ -331,40 +370,55 @@ function App() {
         </div>
       `,
       workflow: [
-        { 
-          title: 'Brief Stratégique & Analyse (3-5 jours)', 
-          desc: 'Audit de l\'identité visuelle existante, analyse de la concurrence digitale, définition des objectifs business et conversion, persona mapping des visiteurs cibles et benchmark des best practices sectorielles.'
+        {
+          title: "Brief Stratégique & Analyse (3-5 jours)",
+          desc: "Audit de l'identité visuelle existante, analyse de la concurrence digitale, définition des objectifs business et conversion, persona mapping des visiteurs cibles et benchmark des best practices sectorielles.",
         },
-        { 
-          title: 'Architecture de l\'Information (1 semaine)', 
-          desc: 'Structuration de l\'arborescence du site, définition du parcours utilisateur optimal, création de la stratégie de contenu SEO, planification des call-to-actions et optimisation du tunnel de conversion.'
+        {
+          title: "Architecture de l'Information (1 semaine)",
+          desc: "Structuration de l'arborescence du site, définition du parcours utilisateur optimal, création de la stratégie de contenu SEO, planification des call-to-actions et optimisation du tunnel de conversion.",
         },
-        { 
-          title: 'Design & Prototypage (2-3 semaines)', 
-          desc: 'Création de wireframes détaillés, conception du design system responsive, prototypage interactif avec micro-animations, tests A/B des variantes design et validation client avec itérations.'
+        {
+          title: "Design & Prototypage (2-3 semaines)",
+          desc: "Création de wireframes détaillés, conception du design system responsive, prototypage interactif avec micro-animations, tests A/B des variantes design et validation client avec itérations.",
         },
-        { 
-          title: 'Développement Frontend (2-4 semaines)', 
-          desc: 'Intégration HTML5/CSS3 sémantique, développement responsive mobile-first, optimisation des performances (Core Web Vitals), intégration CMS headless et mise en place des analytics/tracking.'
+        {
+          title: "Développement Frontend (2-4 semaines)",
+          desc: "Intégration HTML5/CSS3 sémantique, développement responsive mobile-first, optimisation des performances (Core Web Vitals), intégration CMS headless et mise en place des analytics/tracking.",
         },
-        { 
-          title: 'Optimisation SEO & Performance (1-2 semaines)', 
-          desc: 'Optimisation technique SEO (meta tags, schema markup), compression d\'images et lazy loading, configuration CDN et cache browser, audit Lighthouse et PageSpeed, tests de compatibilité navigateurs.'
+        {
+          title: "Optimisation SEO & Performance (1-2 semaines)",
+          desc: "Optimisation technique SEO (meta tags, schema markup), compression d'images et lazy loading, configuration CDN et cache browser, audit Lighthouse et PageSpeed, tests de compatibilité navigateurs.",
         },
-        { 
-          title: 'Lancement & Formation (1 semaine)', 
-          desc: 'Configuration domaine et certificat SSL, déploiement sur hébergement optimisé, formation à la gestion de contenu CMS, mise en place des outils de monitoring et support technique post-lancement.'
-        }
+        {
+          title: "Lancement & Formation (1 semaine)",
+          desc: "Configuration domaine et certificat SSL, déploiement sur hébergement optimisé, formation à la gestion de contenu CMS, mise en place des outils de monitoring et support technique post-lancement.",
+        },
       ],
       blog: [
-        { date: '12 Mai 2025', title: 'Design web 2025 : les nouvelles tendances', excerpt: 'Explorez les tendances design qui marquent 2025 : glassmorphisme, micro-interactions et design inclusif.' },
-        { date: '8 Mai 2025', title: 'SEO technique : guide complet 2025', excerpt: 'Maîtrisez les aspects techniques du référencement pour propulser votre site en première page.' },
-        { date: '3 Mai 2025', title: 'Accessibilité web : bonnes pratiques', excerpt: 'Comment créer des sites web accessibles à tous et conformes aux standards WCAG 2.1.' }
-      ]
+        {
+          date: "12 Mai 2025",
+          title: "Design web 2025 : les nouvelles tendances",
+          excerpt:
+            "Explorez les tendances design qui marquent 2025 : glassmorphisme, micro-interactions et design inclusif.",
+        },
+        {
+          date: "8 Mai 2025",
+          title: "SEO technique : guide complet 2025",
+          excerpt:
+            "Maîtrisez les aspects techniques du référencement pour propulser votre site en première page.",
+        },
+        {
+          date: "3 Mai 2025",
+          title: "Accessibilité web : bonnes pratiques",
+          excerpt:
+            "Comment créer des sites web accessibles à tous et conformes aux standards WCAG 2.1.",
+        },
+      ],
     },
-    'ai-data': {
-      title: 'Intelligence Artificielle & Data Science',
-      icon: '🤖',
+    "ai-data": {
+      title: "Intelligence Artificielle & Data Science",
+      icon: "🤖",
       overview: `
         <div class="persuasive-intro">
           <p><strong>🤖 Révolutionnez votre business avec l'IA !</strong></p>
@@ -470,40 +524,55 @@ function App() {
         </div>
       `,
       workflow: [
-        { 
-          title: 'Audit Data & Stratégie IA (2-3 semaines)', 
-          desc: 'Cartographie complète des sources de données, évaluation de la qualité et volumétrie, identification des cas d\'usage IA à fort ROI, définition de la roadmap IA/ML et estimation des bénéfices métier quantifiés.'
+        {
+          title: "Audit Data & Stratégie IA (2-3 semaines)",
+          desc: "Cartographie complète des sources de données, évaluation de la qualité et volumétrie, identification des cas d'usage IA à fort ROI, définition de la roadmap IA/ML et estimation des bénéfices métier quantifiés.",
         },
-        { 
-          title: 'Architecture Data & MLOps (2-4 semaines)', 
-          desc: 'Conception du data lake/warehouse, mise en place des pipelines ETL/ELT, architecture MLOps avec CI/CD, sélection des technologies (TensorFlow, PyTorch, Spark) et définition des métriques de performance des modèles.'
+        {
+          title: "Architecture Data & MLOps (2-4 semaines)",
+          desc: "Conception du data lake/warehouse, mise en place des pipelines ETL/ELT, architecture MLOps avec CI/CD, sélection des technologies (TensorFlow, PyTorch, Spark) et définition des métriques de performance des modèles.",
         },
-        { 
-          title: 'Exploration & Préparation des Données (3-4 semaines)', 
-          desc: 'Analyse exploratoire approfondie (EDA), nettoyage et enrichissement des datasets, feature engineering avancé, gestion des données manquantes/aberrantes et création des jeux de données d\'entraînement/validation/test.'
+        {
+          title: "Exploration & Préparation des Données (3-4 semaines)",
+          desc: "Analyse exploratoire approfondie (EDA), nettoyage et enrichissement des datasets, feature engineering avancé, gestion des données manquantes/aberrantes et création des jeux de données d'entraînement/validation/test.",
         },
-        { 
-          title: 'Développement & Entraînement des Modèles (4-6 semaines)', 
-          desc: 'Sélection et comparaison d\'algorithmes ML/DL, hyperparameter tuning avec cross-validation, entraînement distribué si nécessaire, validation rigoureuse des performances et documentation technique complète des modèles.'
+        {
+          title: "Développement & Entraînement des Modèles (4-6 semaines)",
+          desc: "Sélection et comparaison d'algorithmes ML/DL, hyperparameter tuning avec cross-validation, entraînement distribué si nécessaire, validation rigoureuse des performances et documentation technique complète des modèles.",
         },
-        { 
-          title: 'Validation & Tests Métier (2-3 semaines)', 
-          desc: 'Tests A/B en environnement contrôlé, validation des prédictions avec experts métier, analyse de biais et équité des modèles, stress testing sur données réelles et optimisation des performances en production.'
+        {
+          title: "Validation & Tests Métier (2-3 semaines)",
+          desc: "Tests A/B en environnement contrôlé, validation des prédictions avec experts métier, analyse de biais et équité des modèles, stress testing sur données réelles et optimisation des performances en production.",
         },
-        { 
-          title: 'Déploiement & Monitoring (2-3 semaines puis continu)', 
-          desc: 'Déploiement via APIs REST/gRPC, mise en place du monitoring de drift des modèles, alerting automatique sur dégradation performances, re-entraînement automatisé et formation des équipes à l\'utilisation des insights IA.'
-        }
+        {
+          title: "Déploiement & Monitoring (2-3 semaines puis continu)",
+          desc: "Déploiement via APIs REST/gRPC, mise en place du monitoring de drift des modèles, alerting automatique sur dégradation performances, re-entraînement automatisé et formation des équipes à l'utilisation des insights IA.",
+        },
       ],
       blog: [
-        { date: '18 Mai 2025', title: 'IA générative en entreprise : guide pratique', excerpt: 'Comment intégrer efficacement l\'IA générative dans vos processus métier avec des exemples concrets.' },
-        { date: '14 Mai 2025', title: 'Machine Learning explicable (XAI)', excerpt: 'Comprendre et expliquer les décisions de vos modèles IA pour une adoption en confiance.' },
-        { date: '9 Mai 2025', title: 'Éthique et IA : enjeux et bonnes pratiques', excerpt: 'Les considérations éthiques essentielles pour un déploiement responsable de l\'IA.' }
-      ]
+        {
+          date: "18 Mai 2025",
+          title: "IA générative en entreprise : guide pratique",
+          excerpt:
+            "Comment intégrer efficacement l'IA générative dans vos processus métier avec des exemples concrets.",
+        },
+        {
+          date: "14 Mai 2025",
+          title: "Machine Learning explicable (XAI)",
+          excerpt:
+            "Comprendre et expliquer les décisions de vos modèles IA pour une adoption en confiance.",
+        },
+        {
+          date: "9 Mai 2025",
+          title: "Éthique et IA : enjeux et bonnes pratiques",
+          excerpt:
+            "Les considérations éthiques essentielles pour un déploiement responsable de l'IA.",
+        },
+      ],
     },
-    'cybersecurity': {
-      title: 'Cybersécurité',
-      icon: '🔒',
+    cybersecurity: {
+      title: "Cybersécurité",
+      icon: "🔒",
       overview: `
         <div class="persuasive-intro">
           <p><strong>🛡️ Sécurisez votre avenir numérique !</strong></p>
@@ -664,44 +733,61 @@ function App() {
         </div>
       `,
       workflow: [
-        { 
-          title: 'Audit de Sécurité Global & Cartographie des Risques (2-3 semaines)', 
-          desc: 'Cartographie complète de l\'infrastructure IT, inventaire des actifs critiques, évaluation des vulnérabilités techniques (scan automatisé + manuel), audit des configurations et des politiques de sécurité existantes, compliance check (RGPD, ISO 27001, SOC2), analyse des risques méthodologie EBIOS RM.'
+        {
+          title:
+            "Audit de Sécurité Global & Cartographie des Risques (2-3 semaines)",
+          desc: "Cartographie complète de l'infrastructure IT, inventaire des actifs critiques, évaluation des vulnérabilités techniques (scan automatisé + manuel), audit des configurations et des politiques de sécurité existantes, compliance check (RGPD, ISO 27001, SOC2), analyse des risques méthodologie EBIOS RM.",
         },
-        { 
-          title: 'Sécurisation Infrastructure SI & Durcissement (3-4 semaines)', 
-          desc: 'Audit complet infrastructure réseau et serveurs, déploiement firewalls NGFW et segmentation réseau avancée, durcissement systèmes (Windows, Linux, VMware), configuration VPN sécurisés, déploiement solutions EDR/XDR, sécurisation équipements actifs (switches, routeurs).'
+        {
+          title: "Sécurisation Infrastructure SI & Durcissement (3-4 semaines)",
+          desc: "Audit complet infrastructure réseau et serveurs, déploiement firewalls NGFW et segmentation réseau avancée, durcissement systèmes (Windows, Linux, VMware), configuration VPN sécurisés, déploiement solutions EDR/XDR, sécurisation équipements actifs (switches, routeurs).",
         },
-        { 
-          title: 'Sécurisation Applications SI & Tests Intrusion (3-4 semaines)', 
-          desc: 'Audit sécurité applicative (SAST/DAST/IAST), tests d\'intrusion spécialisés applications web/mobiles, analyse code source et revue sécurité, implémentation WAF, sécurisation APIs REST/GraphQL, chiffrement données transit/repos, authentification forte (MFA/2FA).'
+        {
+          title:
+            "Sécurisation Applications SI & Tests Intrusion (3-4 semaines)",
+          desc: "Audit sécurité applicative (SAST/DAST/IAST), tests d'intrusion spécialisés applications web/mobiles, analyse code source et revue sécurité, implémentation WAF, sécurisation APIs REST/GraphQL, chiffrement données transit/repos, authentification forte (MFA/2FA).",
         },
-        { 
-          title: 'Architecture Zero Trust & Gouvernance (2-3 semaines)', 
-          desc: 'Définition de l\'architecture de sécurité Zero Trust, sélection des solutions techniques (SIEM, EDR, PAM), planification de la segmentation réseau et micro-segmentation, conception des politiques de sécurité (PSSI), définition processus incident response et gouvernance SI.'
+        {
+          title: "Architecture Zero Trust & Gouvernance (2-3 semaines)",
+          desc: "Définition de l'architecture de sécurité Zero Trust, sélection des solutions techniques (SIEM, EDR, PAM), planification de la segmentation réseau et micro-segmentation, conception des politiques de sécurité (PSSI), définition processus incident response et gouvernance SI.",
         },
-        { 
-          title: 'Déploiement SOC 24/7 & Monitoring Avancé (2-3 semaines)', 
-          desc: 'Mise en place centre opérationnel sécurité 24/7, déploiement SIEM dernière génération avec IA, configuration monitoring et alerting proactif, mise en place threat hunting, intégration solutions IAM/PAM, configuration sauvegarde ultra-sécurisée et disaster recovery.'
+        {
+          title: "Déploiement SOC 24/7 & Monitoring Avancé (2-3 semaines)",
+          desc: "Mise en place centre opérationnel sécurité 24/7, déploiement SIEM dernière génération avec IA, configuration monitoring et alerting proactif, mise en place threat hunting, intégration solutions IAM/PAM, configuration sauvegarde ultra-sécurisée et disaster recovery.",
         },
-        { 
-          title: 'Investigation Forensique & Formation Équipes (2-3 semaines)', 
-          desc: 'Mise en place capacités forensic numérique et analyse post-incident, formation équipes cybersécurité et sensibilisation anti-phishing, simulations d\'attaques et exercices pratiques, documentation procédures incident response, tests de résilience et récupération.'
+        {
+          title: "Investigation Forensique & Formation Équipes (2-3 semaines)",
+          desc: "Mise en place capacités forensic numérique et analyse post-incident, formation équipes cybersécurité et sensibilisation anti-phishing, simulations d'attaques et exercices pratiques, documentation procédures incident response, tests de résilience et récupération.",
         },
-        { 
-          title: 'Plan Continuité Activité & Amélioration Continue (Continu)', 
-          desc: 'Élaboration Plans de Continuité (PCA) et Reprise d\'Activité (PRA), surveillance 24/7 via SOC, threat hunting proactif, mise à jour signatures et règles détection, audits sécurité trimestriels, formation continue équipes, optimisation processus et gouvernance risques SI.'
-        }
+        {
+          title: "Plan Continuité Activité & Amélioration Continue (Continu)",
+          desc: "Élaboration Plans de Continuité (PCA) et Reprise d'Activité (PRA), surveillance 24/7 via SOC, threat hunting proactif, mise à jour signatures et règles détection, audits sécurité trimestriels, formation continue équipes, optimisation processus et gouvernance risques SI.",
+        },
       ],
       blog: [
-        { date: '20 Mai 2025', title: 'Zero Trust : révolution de la sécurité IT', excerpt: 'Découvrez comment l\'approche Zero Trust transforme la cybersécurité d\'entreprise.' },
-        { date: '16 Mai 2025', title: 'Ransomware : prévention et réponse', excerpt: 'Guide complet pour se protéger contre les ransomwares et réagir en cas d\'attaque.' },
-        { date: '11 Mai 2025', title: 'RGPD en 2025 : nouveautés et sanctions', excerpt: 'Mise à jour des exigences RGPD et bonnes pratiques pour rester conforme.' }
-      ]
+        {
+          date: "20 Mai 2025",
+          title: "Zero Trust : révolution de la sécurité IT",
+          excerpt:
+            "Découvrez comment l'approche Zero Trust transforme la cybersécurité d'entreprise.",
+        },
+        {
+          date: "16 Mai 2025",
+          title: "Ransomware : prévention et réponse",
+          excerpt:
+            "Guide complet pour se protéger contre les ransomwares et réagir en cas d'attaque.",
+        },
+        {
+          date: "11 Mai 2025",
+          title: "RGPD en 2025 : nouveautés et sanctions",
+          excerpt:
+            "Mise à jour des exigences RGPD et bonnes pratiques pour rester conforme.",
+        },
+      ],
     },
-    'blockchain': {
-      title: 'Blockchain',
-      icon: '⛓️',
+    blockchain: {
+      title: "Blockchain",
+      icon: "⛓️",
       overview: `
         <div class="persuasive-intro">
           <p><strong>⛓️ Révolutionnez votre business avec la Blockchain !</strong></p>
@@ -807,40 +893,56 @@ function App() {
         </div>
       `,
       workflow: [
-        { 
-          title: 'Analyse de Faisabilité Blockchain (1-2 semaines)', 
-          desc: 'Évaluation de la pertinence blockchain pour votre cas d\'usage, analyse coût/bénéfice vs solutions traditionnelles, sélection de la blockchain optimale (publique/privée/consortium), étude de la tokenomics si applicable et validation de la viabilité technique et économique.'
+        {
+          title: "Analyse de Faisabilité Blockchain (1-2 semaines)",
+          desc: "Évaluation de la pertinence blockchain pour votre cas d'usage, analyse coût/bénéfice vs solutions traditionnelles, sélection de la blockchain optimale (publique/privée/consortium), étude de la tokenomics si applicable et validation de la viabilité technique et économique.",
         },
-        { 
-          title: 'Architecture Décentralisée (2-3 semaines)', 
-          desc: 'Conception de l\'architecture on-chain/off-chain, modélisation des smart contracts et interactions, définition des mécanismes de consensus et gouvernance, planification de l\'interopérabilité multi-chaînes et conception des bridges si nécessaires.'
+        {
+          title: "Architecture Décentralisée (2-3 semaines)",
+          desc: "Conception de l'architecture on-chain/off-chain, modélisation des smart contracts et interactions, définition des mécanismes de consensus et gouvernance, planification de l'interopérabilité multi-chaînes et conception des bridges si nécessaires.",
         },
-        { 
-          title: 'Développement Smart Contracts (3-5 semaines)', 
-          desc: 'Développement en Solidity/Rust selon la blockchain, implémentation des standards (ERC-20, ERC-721, ERC-1155), optimisation du gas et des performances, tests unitaires exhaustifs avec frameworks dédiés (Hardhat, Foundry) et documentation technique complète.'
+        {
+          title: "Développement Smart Contracts (3-5 semaines)",
+          desc: "Développement en Solidity/Rust selon la blockchain, implémentation des standards (ERC-20, ERC-721, ERC-1155), optimisation du gas et des performances, tests unitaires exhaustifs avec frameworks dédiés (Hardhat, Foundry) et documentation technique complète.",
         },
-        { 
-          title: 'Interface DApp & Intégration Web3 (3-4 semaines)', 
-          desc: 'Développement de l\'interface utilisateur Web3, intégration avec wallets (MetaMask, WalletConnect), implémentation des interactions blockchain (lecture/écriture), gestion des états de transaction et UX optimisée pour l\'écosystème décentralisé.'
+        {
+          title: "Interface DApp & Intégration Web3 (3-4 semaines)",
+          desc: "Développement de l'interface utilisateur Web3, intégration avec wallets (MetaMask, WalletConnect), implémentation des interactions blockchain (lecture/écriture), gestion des états de transaction et UX optimisée pour l'écosystème décentralisé.",
         },
-        { 
-          title: 'Audit de Sécurité & Tests (2-3 semaines)', 
-          desc: 'Audit de sécurité des smart contracts par experts tiers, tests de pénétration spécifiques blockchain, validation des mécanismes économiques, tests de stress sur testnets publics et correction des vulnérabilités identifiées.'
+        {
+          title: "Audit de Sécurité & Tests (2-3 semaines)",
+          desc: "Audit de sécurité des smart contracts par experts tiers, tests de pénétration spécifiques blockchain, validation des mécanismes économiques, tests de stress sur testnets publics et correction des vulnérabilités identifiées.",
         },
-        { 
-          title: 'Déploiement Mainnet & Gouvernance (1-2 semaines puis continu)', 
-          desc: 'Déploiement progressif sur mainnet avec monitoring, mise en place de la gouvernance décentralisée, configuration des oracles si nécessaires, formation des utilisateurs aux wallets et interfaces Web3, support technique spécialisé blockchain.'
-        }
+        {
+          title:
+            "Déploiement Mainnet & Gouvernance (1-2 semaines puis continu)",
+          desc: "Déploiement progressif sur mainnet avec monitoring, mise en place de la gouvernance décentralisée, configuration des oracles si nécessaires, formation des utilisateurs aux wallets et interfaces Web3, support technique spécialisé blockchain.",
+        },
       ],
       blog: [
-        { date: '22 Mai 2025', title: 'Web3 et entreprises : cas d\'usage concrets', excerpt: 'Comment les entreprises utilisent la blockchain pour transformer leurs activités.' },
-        { date: '17 Mai 2025', title: 'Sécurité des Smart Contracts', excerpt: 'Bonnes pratiques pour développer des contrats intelligents sécurisés.' },
-        { date: '13 Mai 2025', title: 'NFT B2B : au-delà de l\'art numérique', excerpt: 'Applications professionnelles des NFT : certification, authentification, propriété.' }
-      ]
+        {
+          date: "22 Mai 2025",
+          title: "Web3 et entreprises : cas d'usage concrets",
+          excerpt:
+            "Comment les entreprises utilisent la blockchain pour transformer leurs activités.",
+        },
+        {
+          date: "17 Mai 2025",
+          title: "Sécurité des Smart Contracts",
+          excerpt:
+            "Bonnes pratiques pour développer des contrats intelligents sécurisés.",
+        },
+        {
+          date: "13 Mai 2025",
+          title: "NFT B2B : au-delà de l'art numérique",
+          excerpt:
+            "Applications professionnelles des NFT : certification, authentification, propriété.",
+        },
+      ],
     },
-    'cloud-devops': {
-      title: 'Cloud & DevOps',
-      icon: '☁️',
+    "cloud-devops": {
+      title: "Cloud & DevOps",
+      icon: "☁️",
       overview: `
         <div class="persuasive-intro">
           <p><strong>☁️ Propulsez votre business dans le cloud !</strong></p>
@@ -946,175 +1048,55 @@ function App() {
         </div>
       `,
       workflow: [
-        { 
-          title: 'Assessment & Stratégie Cloud (2-3 semaines)', 
-          desc: 'Audit complet de l\'infrastructure existante (serveurs, applications, données), évaluation des coûts actuels vs cloud, analyse des dépendances et contraintes techniques, définition de la stratégie multi-cloud/hybride et roadmap de migration priorisée par criticité business.'
+        {
+          title: "Assessment & Stratégie Cloud (2-3 semaines)",
+          desc: "Audit complet de l'infrastructure existante (serveurs, applications, données), évaluation des coûts actuels vs cloud, analyse des dépendances et contraintes techniques, définition de la stratégie multi-cloud/hybride et roadmap de migration priorisée par criticité business.",
         },
-        { 
-          title: 'Architecture Cloud-Native (2-4 semaines)', 
-          desc: 'Conception de l\'architecture microservices/serverless, définition des VPC et segmentation réseau, planification de la haute disponibilité et disaster recovery, sélection des services managés optimaux, design des patterns de sécurité et compliance cloud.'
+        {
+          title: "Architecture Cloud-Native (2-4 semaines)",
+          desc: "Conception de l'architecture microservices/serverless, définition des VPC et segmentation réseau, planification de la haute disponibilité et disaster recovery, sélection des services managés optimaux, design des patterns de sécurité et compliance cloud.",
         },
-        { 
-          title: 'Infrastructure as Code & Automatisation (3-4 semaines)', 
-          desc: 'Développement des templates Terraform/CloudFormation, mise en place des pipelines CI/CD (GitLab/GitHub Actions), automatisation des déploiements avec blue/green ou canary, configuration du monitoring et alerting (Prometheus/Grafana), implémentation des politiques de backup automatisées.'
+        {
+          title: "Infrastructure as Code & Automatisation (3-4 semaines)",
+          desc: "Développement des templates Terraform/CloudFormation, mise en place des pipelines CI/CD (GitLab/GitHub Actions), automatisation des déploiements avec blue/green ou canary, configuration du monitoring et alerting (Prometheus/Grafana), implémentation des politiques de backup automatisées.",
         },
-        { 
-          title: 'Migration & Containerisation (4-8 semaines)', 
-          desc: 'Migration des applications selon stratégie 6R (Rehost/Refactor/Rebuild), containerisation avec Docker et orchestration Kubernetes, migration des bases de données avec minimal downtime, tests de charge et validation des performances, migration des données avec synchronisation.'
+        {
+          title: "Migration & Containerisation (4-8 semaines)",
+          desc: "Migration des applications selon stratégie 6R (Rehost/Refactor/Rebuild), containerisation avec Docker et orchestration Kubernetes, migration des bases de données avec minimal downtime, tests de charge et validation des performances, migration des données avec synchronisation.",
         },
-        { 
-          title: 'DevSecOps & Optimisation (2-3 semaines)', 
-          desc: 'Intégration de la sécurité dans les pipelines (SAST/DAST), mise en place de la gestion des secrets (Vault/AWS Secrets), configuration du scanning de vulnérabilités automatisé, optimisation des coûts cloud (right-sizing, reserved instances), tuning des performances applicatives.'
+        {
+          title: "DevSecOps & Optimisation (2-3 semaines)",
+          desc: "Intégration de la sécurité dans les pipelines (SAST/DAST), mise en place de la gestion des secrets (Vault/AWS Secrets), configuration du scanning de vulnérabilités automatisé, optimisation des coûts cloud (right-sizing, reserved instances), tuning des performances applicatives.",
         },
-        { 
-          title: 'Gouvernance & FinOps (1-2 semaines puis continu)', 
-          desc: 'Mise en place de la gouvernance cloud (policies, budgets, tagging), formation des équipes aux bonnes pratiques DevOps, établissement des SLA et métriques de performance, monitoring continu des coûts avec optimisation automatisée, support et amélioration continue.'
-        }
+        {
+          title: "Gouvernance & FinOps (1-2 semaines puis continu)",
+          desc: "Mise en place de la gouvernance cloud (policies, budgets, tagging), formation des équipes aux bonnes pratiques DevOps, établissement des SLA et métriques de performance, monitoring continu des coûts avec optimisation automatisée, support et amélioration continue.",
+        },
       ],
       blog: [
-        { date: '25 Mai 2025', title: 'FinOps : optimiser les coûts cloud', excerpt: 'Stratégies pour maîtriser et optimiser vos dépenses cloud avec les bonnes pratiques FinOps.' },
-        { date: '21 Mai 2025', title: 'Kubernetes en production : guide complet', excerpt: 'Déployer et gérer Kubernetes en production avec sécurité et performance.' },
-        { date: '19 Mai 2025', title: 'GitOps : révolution du déploiement', excerpt: 'Comment GitOps transforme la façon de déployer et gérer les applications.' }
-      ]
-    },
-    'exploitation-maintenance': {
-      title: 'Exploitation et Maintenance',
-      icon: '🔧',
-      overview: `
-        <div class="persuasive-intro">
-          <p><strong>🔧 Zéro panne, performance maximale !</strong></p>
-          <p>⚡ <em>Nos clients évitent 99.7% des pannes grâce à notre maintenance préventive.</em> Plus jamais de stress lié aux plantages système ! Nos experts veillent 24/7 sur vos infrastructures pour garantir une disponibilité parfaite et des performances optimales qui boostent votre productivité.</p>
-        </div>
-        
-        <div style="margin: 2rem 0;">
-          <h4 style="color: var(--primary-blue); margin-bottom: 1.5rem; font-size: 1.3rem;">🛠️ Services d'exploitation niveau entreprise :</h4>
-        </div>
-        
-        <div style="margin-bottom: 2.5rem; padding: 1.5rem; background: linear-gradient(135deg, #f8f9ff 0%, #e8f2ff 100%); border-radius: 12px; border-left: 4px solid var(--primary-blue);">
-          <h5 style="color: var(--primary-blue); font-weight: bold; font-size: 1.1rem; margin-bottom: 1rem;">📊 Monitoring & Surveillance 24/7</h5>
-          <ul style="line-height: 1.8; margin-left: 1rem;">
-            <li>Surveillance continue de vos infrastructures critiques</li>
-            <li>Alertes proactives avant les incidents</li>
-            <li>Tableaux de bord temps réel des performances</li>
-          </ul>
-        </div>
-        
-        <div style="margin-bottom: 2.5rem; padding: 1.5rem; background: linear-gradient(135deg, #f0f8ff 0%, #e0f0ff 100%); border-radius: 12px; border-left: 4px solid #4285f4;">
-          <h5 style="color: #4285f4; font-weight: bold; font-size: 1.1rem; margin-bottom: 1rem;">🔧 Maintenance Préventive</h5>
-          <ul style="line-height: 1.8; margin-left: 1rem;">
-            <li>Interventions planifiées pour éviter les pannes</li>
-            <li>Mises à jour et patches de sécurité automatisés</li>
-            <li>Optimisation continue des performances système</li>
-          </ul>
-        </div>
-        
-        <div style="margin-bottom: 2.5rem; padding: 1.5rem; background: linear-gradient(135deg, #fff8f0 0%, #ffe8d0 100%); border-radius: 12px; border-left: 4px solid #ff9800;">
-          <h5 style="color: #ff9800; font-weight: bold; font-size: 1.1rem; margin-bottom: 1rem;">🆘 Support & Assistance</h5>
-          <ul style="line-height: 1.8; margin-left: 1rem;">
-            <li>Assistance réactive en cas d'incident critique</li>
-            <li>Support technique multicanal (téléphone, email, ticket)</li>
-            <li>Escalade automatique selon les SLA définis</li>
-          </ul>
-        </div>
-        
-        <div style="margin-bottom: 2.5rem; padding: 1.5rem; background: linear-gradient(135deg, #f0fff0 0%, #e0ffe0 100%); border-radius: 12px; border-left: 4px solid #4caf50;">
-          <h5 style="color: #4caf50; font-weight: bold; font-size: 1.1rem; margin-bottom: 1rem;">💾 Sauvegarde & Recovery</h5>
-          <ul style="line-height: 1.8; margin-left: 1rem;">
-            <li>Stratégies de backup automatisées et sécurisées</li>
-            <li>Tests réguliers de restauration des données</li>
-            <li>Plan de reprise d'activité (PRA) personnalisé</li>
-          </ul>
-        </div>
-        
-        <div style="margin-bottom: 2.5rem; padding: 2rem; background: linear-gradient(135deg, #faf5ff 0%, #f3e8ff 100%); border-radius: 16px; border: 2px solid #9c27b0;">
-          <h4 style="color: #9c27b0; font-weight: bold; font-size: 1.3rem; margin-bottom: 1.5rem; text-align: center;">🔧 Services d'exploitation que nous fournissons</h4>
-          <div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(280px, 1fr)); gap: 1.5rem; margin-top: 1.5rem;">
-            <div style="text-align: center; padding: 1.5rem; background: white; border-radius: 12px; box-shadow: 0 4px 12px rgba(156, 39, 176, 0.1); border: 1px solid #e8d5f2;">
-              <div style="font-size: 2.5rem; margin-bottom: 1rem;">📊</div>
-              <div style="font-size: 1.1rem; font-weight: bold; color: #9c27b0; margin-bottom: 0.5rem;">Monitoring 24/7</div>
-              <div style="font-size: 0.9rem; color: #666;">Surveillance continue et alertes proactives</div>
-            </div>
-            <div style="text-align: center; padding: 1.5rem; background: white; border-radius: 12px; box-shadow: 0 4px 12px rgba(156, 39, 176, 0.1); border: 1px solid #e8d5f2;">
-              <div style="font-size: 2.5rem; margin-bottom: 1rem;">🔧</div>
-              <div style="font-size: 1.1rem; font-weight: bold; color: #9c27b0; margin-bottom: 0.5rem;">Maintenance préventive</div>
-              <div style="font-size: 0.9rem; color: #666;">Interventions planifiées et patches</div>
-            </div>
-            <div style="text-align: center; padding: 1.5rem; background: white; border-radius: 12px; box-shadow: 0 4px 12px rgba(156, 39, 176, 0.1); border: 1px solid #e8d5f2;">
-              <div style="font-size: 2.5rem; margin-bottom: 1rem;">🆘</div>
-              <div style="font-size: 1.1rem; font-weight: bold; color: #9c27b0; margin-bottom: 0.5rem;">Support réactif</div>
-              <div style="font-size: 0.9rem; color: #666;">Assistance technique multicanal</div>
-            </div>
-            <div style="text-align: center; padding: 1.5rem; background: white; border-radius: 12px; box-shadow: 0 4px 12px rgba(156, 39, 176, 0.1); border: 1px solid #e8d5f2;">
-              <div style="font-size: 2.5rem; margin-bottom: 1rem;">💾</div>
-              <div style="font-size: 1.1rem; font-weight: bold; color: #9c27b0; margin-bottom: 0.5rem;">Sauvegarde & Recovery</div>
-              <div style="font-size: 0.9rem; color: #666;">Plans de reprise d'activité</div>
-            </div>
-            <div style="text-align: center; padding: 1.5rem; background: white; border-radius: 12px; box-shadow: 0 4px 12px rgba(156, 39, 176, 0.1); border: 1px solid #e8d5f2;">
-              <div style="font-size: 2.5rem; margin-bottom: 1rem;">⚡</div>
-              <div style="font-size: 1.1rem; font-weight: bold; color: #9c27b0; margin-bottom: 0.5rem;">Optimisation</div>
-              <div style="font-size: 0.9rem; color: #666;">Amélioration continue des performances</div>
-            </div>
-            <div style="text-align: center; padding: 1.5rem; background: white; border-radius: 12px; box-shadow: 0 4px 12px rgba(156, 39, 176, 0.1); border: 1px solid #e8d5f2;">
-              <div style="font-size: 2.5rem; margin-bottom: 1rem;">📋</div>
-              <div style="font-size: 1.1rem; font-weight: bold; color: #9c27b0; margin-bottom: 0.5rem;">Gestion des incidents</div>
-              <div style="font-size: 0.9rem; color: #666;">Résolution rapide et documentation</div>
-            </div>
-          </div>
-        </div>
-        
-        <div style="margin-top: 3rem; padding: 2rem; background: linear-gradient(135deg, #f5f8ff 0%, #e8f2ff 100%); border-radius: 16px; border: 2px solid var(--primary-blue); box-shadow: 0 8px 24px rgba(0, 102, 255, 0.1);">
-          <h4 style="color: var(--primary-blue); font-weight: bold; font-size: 1.3rem; margin-bottom: 1.5rem; text-align: center;">🎯 Performance garantie</h4>
-          <div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(250px, 1fr)); gap: 1.5rem; margin-top: 1.5rem;">
-            <div style="text-align: center; padding: 1rem; background: white; border-radius: 12px; box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);">
-              <div style="font-size: 2rem; font-weight: bold; color: var(--primary-blue); margin-bottom: 0.5rem;">99.7%</div>
-              <div style="font-size: 0.9rem; color: #666;">Pannes évitées (maintenance préventive)</div>
-            </div>
-            <div style="text-align: center; padding: 1rem; background: white; border-radius: 12px; box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);">
-              <div style="font-size: 2rem; font-weight: bold; color: #4caf50; margin-bottom: 0.5rem;">24/7</div>
-              <div style="font-size: 0.9rem; color: #666;">Surveillance continue des systèmes</div>
-            </div>
-            <div style="text-align: center; padding: 1rem; background: white; border-radius: 12px; box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);">
-              <div style="font-size: 2rem; font-weight: bold; color: #ff9800; margin-bottom: 0.5rem;">99.99%</div>
-              <div style="font-size: 0.9rem; color: #666;">Disponibilité des services garantie</div>
-            </div>
-            <div style="text-align: center; padding: 1rem; background: white; border-radius: 12px; box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);">
-              <div style="font-size: 2rem; font-weight: bold; color: #9c27b0; margin-bottom: 0.5rem;">< 2h</div>
-              <div style="font-size: 0.9rem; color: #666;">Temps de réponse en cas d'incident</div>
-            </div>
-          </div>
-        </div>
-      `,
-      workflow: [
-        { 
-          title: 'Audit Infrastructure Existante (1-2 semaines)', 
-          desc: 'Inventaire complet des équipements et logiciels, évaluation de l\'état de santé des systèmes, identification des risques et vulnérabilités, analyse des performances actuelles et documentation de l\'architecture existante.'
+        {
+          date: "25 Mai 2025",
+          title: "FinOps : optimiser les coûts cloud",
+          excerpt:
+            "Stratégies pour maîtriser et optimiser vos dépenses cloud avec les bonnes pratiques FinOps.",
         },
-        { 
-          title: 'Mise en Place du Monitoring (1-2 semaines)', 
-          desc: 'Installation des outils de surveillance (Nagios, Zabbix, PRTG), configuration des alertes et seuils personnalisés, mise en place des tableaux de bord temps réel, intégration avec les systèmes existants et formation des équipes.'
+        {
+          date: "21 Mai 2025",
+          title: "Kubernetes en production : guide complet",
+          excerpt:
+            "Déployer et gérer Kubernetes en production avec sécurité et performance.",
         },
-        { 
-          title: 'Plan de Maintenance Préventive (1 semaine)', 
-          desc: 'Définition du calendrier des interventions planifiées, création des procédures de maintenance standardisées, planification des mises à jour et patches de sécurité, organisation des fenêtres de maintenance et validation avec les équipes métier.'
+        {
+          date: "19 Mai 2025",
+          title: "GitOps : révolution du déploiement",
+          excerpt:
+            "Comment GitOps transforme la façon de déployer et gérer les applications.",
         },
-        { 
-          title: 'Mise en Production du Support (1 semaine)', 
-          desc: 'Activation du support technique multicanal (téléphone, email, ticket), mise en place des astreintes et escalades, configuration des outils de ticketing, définition des SLA par criticité et formation du support utilisateur.'
-        },
-        { 
-          title: 'Optimisation Continue (Continu)', 
-          desc: 'Analyse régulière des performances et logs, identification des goulots d\'étranglement, optimisation des configurations, mise à jour technologique progressive, reporting mensuel des KPI et recommandations d\'amélioration.'
-        }
       ],
-      blog: [
-        { date: '26 Mai 2025', title: 'ITIL v4 : révolution de la gestion des services IT', excerpt: 'Découvrez comment ITIL v4 transforme l\'approche de l\'exploitation et de la maintenance IT.' },
-        { date: '23 Mai 2025', title: 'Monitoring proactif : prévenir plutôt que guérir', excerpt: 'Les bonnes pratiques pour mettre en place un monitoring efficace de votre infrastructure.' },
-        { date: '21 Mai 2025', title: 'Maintenance prédictive avec l\'IA', excerpt: 'Comment l\'intelligence artificielle révolutionne la maintenance des systèmes informatiques.' }
-      ]
     },
-    'modelisation-decisionnelle': {
-      title: 'Modélisation Décisionnelle',
-      icon: '📊',
+    "modelisation-decisionnelle": {
+      title: "Modélisation Décisionnelle",
+      icon: "📊",
       overview: `
         <div class="persuasive-intro">
           <p><strong>📊 Transformez vos données en or numérique !</strong></p>
@@ -1220,36 +1202,51 @@ function App() {
         </div>
       `,
       workflow: [
-        { 
-          title: 'Analyse des Besoins Décisionnels (2-3 semaines)', 
-          desc: 'Cartographie des processus décisionnels existants, identification des KPI critiques métier, analyse des sources de données disponibles, définition des profils utilisateurs et de leurs besoins spécifiques en reporting et analyse.'
+        {
+          title: "Analyse des Besoins Décisionnels (2-3 semaines)",
+          desc: "Cartographie des processus décisionnels existants, identification des KPI critiques métier, analyse des sources de données disponibles, définition des profils utilisateurs et de leurs besoins spécifiques en reporting et analyse.",
         },
-        { 
-          title: 'Architecture Data Warehouse (2-4 semaines)', 
-          desc: 'Conception du modèle dimensionnel (étoile/flocon), définition des ETL et processus d\'intégration, architecture du data warehouse avec historisation, mise en place de la gouvernance des données et définition des méta-données.'
+        {
+          title: "Architecture Data Warehouse (2-4 semaines)",
+          desc: "Conception du modèle dimensionnel (étoile/flocon), définition des ETL et processus d'intégration, architecture du data warehouse avec historisation, mise en place de la gouvernance des données et définition des méta-données.",
         },
-        { 
-          title: 'Développement ETL et Intégration (3-5 semaines)', 
-          desc: 'Développement des processus d\'extraction et transformation, intégration des sources hétérogènes (ERP, CRM, fichiers), mise en place de la qualité des données, automatisation des flux de données et tests de cohérence et performance.'
+        {
+          title: "Développement ETL et Intégration (3-5 semaines)",
+          desc: "Développement des processus d'extraction et transformation, intégration des sources hétérogènes (ERP, CRM, fichiers), mise en place de la qualité des données, automatisation des flux de données et tests de cohérence et performance.",
         },
-        { 
-          title: 'Création des Cubes et Dashboards (3-4 semaines)', 
-          desc: 'Modélisation des cubes OLAP pour l\'analyse multidimensionnelle, développement des tableaux de bord interactifs, création des rapports automatisés, mise en place des alertes métier et optimisation des performances d\'affichage.'
+        {
+          title: "Création des Cubes et Dashboards (3-4 semaines)",
+          desc: "Modélisation des cubes OLAP pour l'analyse multidimensionnelle, développement des tableaux de bord interactifs, création des rapports automatisés, mise en place des alertes métier et optimisation des performances d'affichage.",
         },
-        { 
-          title: 'Déploiement et Formation (2-3 semaines)', 
-          desc: 'Déploiement en production avec migration des données historiques, formation des utilisateurs finaux aux outils BI, mise en place de la gouvernance et des rôles d\'accès, documentation utilisateur complète et support post-déploiement.'
-        }
+        {
+          title: "Déploiement et Formation (2-3 semaines)",
+          desc: "Déploiement en production avec migration des données historiques, formation des utilisateurs finaux aux outils BI, mise en place de la gouvernance et des rôles d'accès, documentation utilisateur complète et support post-déploiement.",
+        },
       ],
       blog: [
-        { date: '28 Mai 2025', title: 'Power BI vs Tableau : comparatif 2025', excerpt: 'Guide détaillé pour choisir la meilleure solution de Business Intelligence selon vos besoins.' },
-        { date: '25 Mai 2025', title: 'Data Warehouse moderne : cloud-first approach', excerpt: 'Les architectures cloud-native révolutionnent la conception des entrepôts de données.' },
-        { date: '22 Mai 2025', title: 'Self-Service BI : démocratiser l\'analyse', excerpt: 'Comment permettre aux métiers de créer leurs propres analyses sans dépendre de l\'IT.' }
-      ]
+        {
+          date: "28 Mai 2025",
+          title: "Power BI vs Tableau : comparatif 2025",
+          excerpt:
+            "Guide détaillé pour choisir la meilleure solution de Business Intelligence selon vos besoins.",
+        },
+        {
+          date: "25 Mai 2025",
+          title: "Data Warehouse moderne : cloud-first approach",
+          excerpt:
+            "Les architectures cloud-native révolutionnent la conception des entrepôts de données.",
+        },
+        {
+          date: "22 Mai 2025",
+          title: "Self-Service BI : démocratiser l'analyse",
+          excerpt:
+            "Comment permettre aux métiers de créer leurs propres analyses sans dépendre de l'IT.",
+        },
+      ],
     },
-    'marketing-digital': {
-      title: 'Marketing Digital',
-      icon: '📈',
+    "marketing-digital": {
+      title: "Marketing Digital",
+      icon: "📈",
       overview: `
         <div class="persuasive-intro">
           <p><strong>📈 Explosez vos ventes avec le marketing digital !</strong></p>
@@ -1319,36 +1316,51 @@ function App() {
         </div>
       `,
       workflow: [
-        { 
-          title: 'Audit Digital et Stratégie (2-3 semaines)', 
-          desc: 'Analyse de la présence digitale actuelle (site, réseaux sociaux, SEO), étude de la concurrence et benchmark, définition des buyer personas et parcours client, audit des outils marketing existants et élaboration de la stratégie digitale globale.'
+        {
+          title: "Audit Digital et Stratégie (2-3 semaines)",
+          desc: "Analyse de la présence digitale actuelle (site, réseaux sociaux, SEO), étude de la concurrence et benchmark, définition des buyer personas et parcours client, audit des outils marketing existants et élaboration de la stratégie digitale globale.",
         },
-        { 
-          title: 'Optimisation SEO et Site Web (3-4 semaines)', 
-          desc: 'Audit technique SEO complet du site web, optimisation on-page et structure des contenus, recherche de mots-clés et stratégie de contenu, amélioration de l\'expérience utilisateur et des conversions, mise en place du tracking analytics avancé.'
+        {
+          title: "Optimisation SEO et Site Web (3-4 semaines)",
+          desc: "Audit technique SEO complet du site web, optimisation on-page et structure des contenus, recherche de mots-clés et stratégie de contenu, amélioration de l'expérience utilisateur et des conversions, mise en place du tracking analytics avancé.",
         },
-        { 
-          title: 'Campagnes Publicitaires Digitales (2-3 semaines)', 
-          desc: 'Création des campagnes Google Ads et réseaux sociaux, définition des audiences et ciblages avancés, création des visuels et copies publicitaires, mise en place du tracking des conversions et optimisation continue des performances ROI.'
+        {
+          title: "Campagnes Publicitaires Digitales (2-3 semaines)",
+          desc: "Création des campagnes Google Ads et réseaux sociaux, définition des audiences et ciblages avancés, création des visuels et copies publicitaires, mise en place du tracking des conversions et optimisation continue des performances ROI.",
         },
-        { 
-          title: 'Marketing Automation et Email (2-3 semaines)', 
-          desc: 'Mise en place des workflows d\'automation marketing, création des séquences d\'emails nurturing, segmentation avancée des bases de données, personnalisation des contenus selon les profils, intégration CRM et scoring des leads.'
+        {
+          title: "Marketing Automation et Email (2-3 semaines)",
+          desc: "Mise en place des workflows d'automation marketing, création des séquences d'emails nurturing, segmentation avancée des bases de données, personnalisation des contenus selon les profils, intégration CRM et scoring des leads.",
         },
-        { 
-          title: 'Analytics et Optimisation Continue (Continu)', 
-          desc: 'Configuration des tableaux de bord marketing KPI, analyse des performances et ROI par canal, tests A/B réguliers sur les campagnes et contenus, optimisation des tunnels de conversion, reporting mensuel avec recommandations stratégiques.'
-        }
+        {
+          title: "Analytics et Optimisation Continue (Continu)",
+          desc: "Configuration des tableaux de bord marketing KPI, analyse des performances et ROI par canal, tests A/B réguliers sur les campagnes et contenus, optimisation des tunnels de conversion, reporting mensuel avec recommandations stratégiques.",
+        },
       ],
       blog: [
-        { date: '30 Mai 2025', title: 'Marketing automation : booster ses conversions', excerpt: 'Stratégies avancées pour automatiser vos campagnes marketing et maximiser le ROI.' },
-        { date: '27 Mai 2025', title: 'SEO 2025 : les nouvelles tendances', excerpt: 'Les évolutions du référencement naturel et les stratégies gagnantes pour 2025.' },
-        { date: '24 Mai 2025', title: 'Social media B2B : guide complet', excerpt: 'Comment développer efficacement votre présence sur les réseaux sociaux en B2B.' }
-      ]
+        {
+          date: "30 Mai 2025",
+          title: "Marketing automation : booster ses conversions",
+          excerpt:
+            "Stratégies avancées pour automatiser vos campagnes marketing et maximiser le ROI.",
+        },
+        {
+          date: "27 Mai 2025",
+          title: "SEO 2025 : les nouvelles tendances",
+          excerpt:
+            "Les évolutions du référencement naturel et les stratégies gagnantes pour 2025.",
+        },
+        {
+          date: "24 Mai 2025",
+          title: "Social media B2B : guide complet",
+          excerpt:
+            "Comment développer efficacement votre présence sur les réseaux sociaux en B2B.",
+        },
+      ],
     },
-    'telephonie-ip': {
-      title: 'Téléphonie IP',
-      icon: '☎️',
+    "telephonie-ip": {
+      title: "Téléphonie IP",
+      icon: "☎️",
       overview: `
         <div class="persuasive-intro">
           <p><strong>☎️ Révolutionnez vos communications d'entreprise !</strong></p>
@@ -1418,36 +1430,51 @@ function App() {
         </div>
       `,
       workflow: [
-        { 
-          title: 'Audit Téléphonique Existant (1-2 semaines)', 
-          desc: 'Analyse de l\'infrastructure téléphonique actuelle, évaluation des coûts de communication, étude des besoins utilisateurs par service, audit de la qualité réseau et bande passante, identification des contraintes techniques et réglementaires.'
+        {
+          title: "Audit Téléphonique Existant (1-2 semaines)",
+          desc: "Analyse de l'infrastructure téléphonique actuelle, évaluation des coûts de communication, étude des besoins utilisateurs par service, audit de la qualité réseau et bande passante, identification des contraintes techniques et réglementaires.",
         },
-        { 
-          title: 'Conception Solution IP (2-3 semaines)', 
-          desc: 'Dimensionnement de la solution IPBX selon les besoins, choix de l\'architecture (on-premise/cloud/hybride), définition du plan de numérotation et routage, conception de la redondance et haute disponibilité, validation de la conformité réglementaire.'
+        {
+          title: "Conception Solution IP (2-3 semaines)",
+          desc: "Dimensionnement de la solution IPBX selon les besoins, choix de l'architecture (on-premise/cloud/hybride), définition du plan de numérotation et routage, conception de la redondance et haute disponibilité, validation de la conformité réglementaire.",
         },
-        { 
-          title: 'Déploiement Infrastructure (2-4 semaines)', 
-          desc: 'Installation et configuration des serveurs IPBX, paramétrage des passerelles et trunks SIP, configuration des postes et softphones, mise en place de la sécurité (firewall, VPN), tests de qualité et latence réseau.'
+        {
+          title: "Déploiement Infrastructure (2-4 semaines)",
+          desc: "Installation et configuration des serveurs IPBX, paramétrage des passerelles et trunks SIP, configuration des postes et softphones, mise en place de la sécurité (firewall, VPN), tests de qualité et latence réseau.",
         },
-        { 
-          title: 'Migration et Formation (2-3 semaines)', 
-          desc: 'Migration progressive des numéros et services, portabilité des numéros existants, formation des utilisateurs aux nouvelles fonctionnalités, configuration des groupes d\'appels et messagerie, mise en place des procédures d\'urgence.'
+        {
+          title: "Migration et Formation (2-3 semaines)",
+          desc: "Migration progressive des numéros et services, portabilité des numéros existants, formation des utilisateurs aux nouvelles fonctionnalités, configuration des groupes d'appels et messagerie, mise en place des procédures d'urgence.",
         },
-        { 
-          title: 'Support et Optimisation (Continu)', 
-          desc: 'Monitoring de la qualité des appels (QoS), support technique et maintenance préventive, optimisation des flux et routage d\'appels, mise à jour sécuritaire et fonctionnelle, formation continue et évolution des besoins.'
-        }
+        {
+          title: "Support et Optimisation (Continu)",
+          desc: "Monitoring de la qualité des appels (QoS), support technique et maintenance préventive, optimisation des flux et routage d'appels, mise à jour sécuritaire et fonctionnelle, formation continue et évolution des besoins.",
+        },
       ],
       blog: [
-        { date: '31 Mai 2025', title: 'Teams Phone : la téléphonie Microsoft', excerpt: 'Découvrez les avantages de la solution de téléphonie intégrée à Microsoft Teams.' },
-        { date: '29 Mai 2025', title: 'Sécurité en téléphonie IP', excerpt: 'Bonnes pratiques pour sécuriser votre infrastructure de téléphonie sur IP.' },
-        { date: '26 Mai 2025', title: 'Migration vers la téléphonie IP', excerpt: 'Guide complet pour réussir sa migration de la téléphonie traditionnelle vers l\'IP.' }
-      ]
+        {
+          date: "31 Mai 2025",
+          title: "Teams Phone : la téléphonie Microsoft",
+          excerpt:
+            "Découvrez les avantages de la solution de téléphonie intégrée à Microsoft Teams.",
+        },
+        {
+          date: "29 Mai 2025",
+          title: "Sécurité en téléphonie IP",
+          excerpt:
+            "Bonnes pratiques pour sécuriser votre infrastructure de téléphonie sur IP.",
+        },
+        {
+          date: "26 Mai 2025",
+          title: "Migration vers la téléphonie IP",
+          excerpt:
+            "Guide complet pour réussir sa migration de la téléphonie traditionnelle vers l'IP.",
+        },
+      ],
     },
-    'automatisation-n8n': {
-      title: 'Automatisation n8n',
-      icon: '⚡',
+    "automatisation-n8n": {
+      title: "Automatisation n8n",
+      icon: "⚡",
       overview: `
         <div class="persuasive-intro">
           <p><strong>⚡ Libérez le potentiel caché de votre équipe !</strong></p>
@@ -1517,40 +1544,55 @@ function App() {
         </div>
       `,
       workflow: [
-        { 
-          title: 'Analyse des Processus Métier (1-2 semaines)', 
-          desc: 'Cartographie des workflows existants et identification des tâches répétitives, analyse des outils et applications utilisés par les équipes, évaluation du potentiel d\'automatisation et ROI estimé, priorisation des cas d\'usage selon l\'impact business.'
+        {
+          title: "Analyse des Processus Métier (1-2 semaines)",
+          desc: "Cartographie des workflows existants et identification des tâches répétitives, analyse des outils et applications utilisés par les équipes, évaluation du potentiel d'automatisation et ROI estimé, priorisation des cas d'usage selon l'impact business.",
         },
-        { 
-          title: 'Conception des Workflows (1-2 semaines)', 
-          desc: 'Modélisation des flux automatisés avec n8n, définition des triggers et conditions d\'exécution, conception de la logique métier et des transformations de données, validation des workflows avec les utilisateurs finaux, documentation technique des processus.'
+        {
+          title: "Conception des Workflows (1-2 semaines)",
+          desc: "Modélisation des flux automatisés avec n8n, définition des triggers et conditions d'exécution, conception de la logique métier et des transformations de données, validation des workflows avec les utilisateurs finaux, documentation technique des processus.",
         },
-        { 
-          title: 'Développement et Configuration (2-4 semaines)', 
-          desc: 'Installation et configuration de l\'instance n8n (cloud/self-hosted), développement des workflows avec les nœuds appropriés, configuration des authentifications et connexions API, mise en place de la gestion d\'erreurs et retry logic, tests unitaires et d\'intégration.'
+        {
+          title: "Développement et Configuration (2-4 semaines)",
+          desc: "Installation et configuration de l'instance n8n (cloud/self-hosted), développement des workflows avec les nœuds appropriés, configuration des authentifications et connexions API, mise en place de la gestion d'erreurs et retry logic, tests unitaires et d'intégration.",
         },
-        { 
-          title: 'Tests et Validation Métier (1-2 semaines)', 
-          desc: 'Tests en environnement de pré-production avec données réelles, validation fonctionnelle avec les équipes métier, tests de charge et performance des workflows, correction des bugs et optimisation, validation de la conformité sécuritaire.'
+        {
+          title: "Tests et Validation Métier (1-2 semaines)",
+          desc: "Tests en environnement de pré-production avec données réelles, validation fonctionnelle avec les équipes métier, tests de charge et performance des workflows, correction des bugs et optimisation, validation de la conformité sécuritaire.",
         },
-        { 
-          title: 'Déploiement et Formation (1 semaine)', 
-          desc: 'Mise en production des workflows avec migration progressive, formation des équipes à l\'utilisation et monitoring, documentation utilisateur et procédures de maintenance, mise en place des alertes et monitoring automatique.'
+        {
+          title: "Déploiement et Formation (1 semaine)",
+          desc: "Mise en production des workflows avec migration progressive, formation des équipes à l'utilisation et monitoring, documentation utilisateur et procédures de maintenance, mise en place des alertes et monitoring automatique.",
         },
-        { 
-          title: 'Support et Évolution (Continu)', 
-          desc: 'Monitoring des performances et erreurs des workflows, support technique réactif, optimisation continue selon les retours utilisateurs, développement de nouveaux workflows selon les besoins, maintenance et mises à jour de n8n.'
-        }
+        {
+          title: "Support et Évolution (Continu)",
+          desc: "Monitoring des performances et erreurs des workflows, support technique réactif, optimisation continue selon les retours utilisateurs, développement de nouveaux workflows selon les besoins, maintenance et mises à jour de n8n.",
+        },
       ],
       blog: [
-        { date: '2 Juin 2025', title: 'n8n vs Zapier : comparatif des outils d\'automatisation', excerpt: 'Analyse détaillée pour choisir la meilleure solution d\'automatisation pour votre entreprise.' },
-        { date: '1 Juin 2025', title: 'ROI de l\'automatisation : mesurer les gains', excerpt: 'Comment calculer et maximiser le retour sur investissement de vos projets d\'automatisation.' },
-        { date: '28 Mai 2025', title: 'Workflows n8n avancés : bonnes pratiques', excerpt: 'Techniques avancées pour créer des workflows robustes et maintenables avec n8n.' }
-      ]
+        {
+          date: "2 Juin 2025",
+          title: "n8n vs Zapier : comparatif des outils d'automatisation",
+          excerpt:
+            "Analyse détaillée pour choisir la meilleure solution d'automatisation pour votre entreprise.",
+        },
+        {
+          date: "1 Juin 2025",
+          title: "ROI de l'automatisation : mesurer les gains",
+          excerpt:
+            "Comment calculer et maximiser le retour sur investissement de vos projets d'automatisation.",
+        },
+        {
+          date: "28 Mai 2025",
+          title: "Workflows n8n avancés : bonnes pratiques",
+          excerpt:
+            "Techniques avancées pour créer des workflows robustes et maintenables avec n8n.",
+        },
+      ],
     },
-    'conseil-transformation': {
-      title: 'Conseil et Transformation',
-      icon: '🎯',
+    "conseil-transformation": {
+      title: "Conseil et Transformation",
+      icon: "🎯",
       overview: `
         <div class="persuasive-intro">
           <p><strong>🎯 Révolutionnez votre approche IT avec notre expertise conseil !</strong></p>
@@ -1626,40 +1668,55 @@ function App() {
         </div>
       `,
       workflow: [
-        { 
-          title: 'Audit et Diagnostic SI (3-4 semaines)', 
-          desc: 'Audit complet de l\'architecture existante, évaluation de la maturité des processus SI, analyse des coûts et performance, cartographie des applications et infrastructures, identification des points de friction et opportunités d\'amélioration.'
+        {
+          title: "Audit et Diagnostic SI (3-4 semaines)",
+          desc: "Audit complet de l'architecture existante, évaluation de la maturité des processus SI, analyse des coûts et performance, cartographie des applications et infrastructures, identification des points de friction et opportunités d'amélioration.",
         },
-        { 
-          title: 'Stratégie et Roadmap (2-3 semaines)', 
-          desc: 'Définition de la stratégie SI alignée sur les objectifs business, élaboration du schéma directeur et de la roadmap de transformation, priorisation des initiatives selon l\'impact et la complexité, budgétisation détaillée et calcul du ROI.'
+        {
+          title: "Stratégie et Roadmap (2-3 semaines)",
+          desc: "Définition de la stratégie SI alignée sur les objectifs business, élaboration du schéma directeur et de la roadmap de transformation, priorisation des initiatives selon l'impact et la complexité, budgétisation détaillée et calcul du ROI.",
         },
-        { 
-          title: 'Architecture et Gouvernance (3-4 semaines)', 
-          desc: 'Conception de l\'architecture cible, mise en place de la gouvernance des projets et du PMO, définition des référentiels et standards, création des processus de pilotage et de contrôle, formation des équipes aux nouvelles pratiques.'
+        {
+          title: "Architecture et Gouvernance (3-4 semaines)",
+          desc: "Conception de l'architecture cible, mise en place de la gouvernance des projets et du PMO, définition des référentiels et standards, création des processus de pilotage et de contrôle, formation des équipes aux nouvelles pratiques.",
         },
-        { 
-          title: 'Plan de Transformation (4-6 semaines)', 
-          desc: 'Déploiement du plan de transformation par phases, accompagnement du changement organisationnel, mise en place des outils de pilotage et reporting, migration progressive vers l\'architecture cible, conduite du changement utilisateur.'
+        {
+          title: "Plan de Transformation (4-6 semaines)",
+          desc: "Déploiement du plan de transformation par phases, accompagnement du changement organisationnel, mise en place des outils de pilotage et reporting, migration progressive vers l'architecture cible, conduite du changement utilisateur.",
         },
-        { 
-          title: 'Sécurité et Conformité (2-3 semaines)', 
-          desc: 'Audit de sécurité et mise en conformité réglementaire, déploiement des politiques de sécurité (PSSI), mise en place des outils IAM, SIEM, DLP, formation à la cybersécurité, tests et validation des mesures de protection.'
+        {
+          title: "Sécurité et Conformité (2-3 semaines)",
+          desc: "Audit de sécurité et mise en conformité réglementaire, déploiement des politiques de sécurité (PSSI), mise en place des outils IAM, SIEM, DLP, formation à la cybersécurité, tests et validation des mesures de protection.",
         },
-        { 
-          title: 'Optimisation Continue (Continu)', 
-          desc: 'Monitoring des KPIs de performance SI, optimisation continue des processus, évolution de l\'architecture selon les besoins, support et accompagnement des équipes, reporting régulier et recommandations d\'amélioration.'
-        }
+        {
+          title: "Optimisation Continue (Continu)",
+          desc: "Monitoring des KPIs de performance SI, optimisation continue des processus, évolution de l'architecture selon les besoins, support et accompagnement des équipes, reporting régulier et recommandations d'amélioration.",
+        },
       ],
       blog: [
-        { date: '5 Juin 2025', title: 'Transformation digitale : par où commencer ?', excerpt: 'Méthodologie éprouvée pour réussir sa transformation digitale en 6 étapes clés.' },
-        { date: '3 Juin 2025', title: 'Architecture d\'entreprise : enjeux et bénéfices', excerpt: 'Comment l\'urbanisation du SI optimise la performance et réduit les coûts IT.' },
-        { date: '1 Juin 2025', title: 'PMO : accélérateur de projets', excerpt: 'Les bonnes pratiques pour mettre en place un PMO efficace et performant.' }
-      ]
+        {
+          date: "5 Juin 2025",
+          title: "Transformation digitale : par où commencer ?",
+          excerpt:
+            "Méthodologie éprouvée pour réussir sa transformation digitale en 6 étapes clés.",
+        },
+        {
+          date: "3 Juin 2025",
+          title: "Architecture d'entreprise : enjeux et bénéfices",
+          excerpt:
+            "Comment l'urbanisation du SI optimise la performance et réduit les coûts IT.",
+        },
+        {
+          date: "1 Juin 2025",
+          title: "PMO : accélérateur de projets",
+          excerpt:
+            "Les bonnes pratiques pour mettre en place un PMO efficace et performant.",
+        },
+      ],
     },
-    'formations': {
-      title: 'Formations Technologiques',
-      icon: '🎓',
+    formations: {
+      title: "Formations Technologiques",
+      icon: "🎓",
       overview: `
         <p>Développez les compétences de vos équipes avec nos formations expertes adaptées à tous les niveaux.</p>
         <h4>Modalités de formation :</h4>
@@ -1673,176 +1730,281 @@ function App() {
         <p>Préparation aux certifications AWS, Google Cloud, Microsoft Azure, Kubernetes, Scrum Master</p>
       `,
       workflow: [
-        { 
-          title: 'Évaluation des Compétences & Besoins (3-5 jours)', 
-          desc: 'Assessment technique individuel et collectif, analyse des gaps de compétences par rapport aux objectifs métier, identification des profils d\'apprentissage, définition des KPIs de formation et validation des prérequis techniques par participant.'
+        {
+          title: "Évaluation des Compétences & Besoins (3-5 jours)",
+          desc: "Assessment technique individuel et collectif, analyse des gaps de compétences par rapport aux objectifs métier, identification des profils d'apprentissage, définition des KPIs de formation et validation des prérequis techniques par participant.",
         },
-        { 
-          title: 'Conception Pédagogique Sur Mesure (1-2 semaines)', 
-          desc: 'Création du parcours de formation adapté aux niveaux détectés, développement des supports pédagogiques interactifs, conception des exercices pratiques et projets fil rouge, adaptation du contenu au secteur d\'activité et définition des modalités d\'évaluation.'
+        {
+          title: "Conception Pédagogique Sur Mesure (1-2 semaines)",
+          desc: "Création du parcours de formation adapté aux niveaux détectés, développement des supports pédagogiques interactifs, conception des exercices pratiques et projets fil rouge, adaptation du contenu au secteur d'activité et définition des modalités d'évaluation.",
         },
-        { 
-          title: 'Planification & Préparation (1 semaine)', 
-          desc: 'Organisation du planning de formation optimisé, préparation des environnements de travail (labs, plateformes), configuration des outils et licences nécessaires, coordination avec les managers pour libération des participants et préparation des ressources documentaires.'
+        {
+          title: "Planification & Préparation (1 semaine)",
+          desc: "Organisation du planning de formation optimisé, préparation des environnements de travail (labs, plateformes), configuration des outils et licences nécessaires, coordination avec les managers pour libération des participants et préparation des ressources documentaires.",
         },
-        { 
-          title: 'Déroulement de la Formation (Selon programme)', 
-          desc: 'Sessions théoriques avec démonstrations live, ateliers pratiques sur projets concrets, code reviews et pair programming, mentorat individualisé selon les besoins, évaluations intermédiaires avec feedback constructif et adaptation du rythme selon la progression du groupe.'
+        {
+          title: "Déroulement de la Formation (Selon programme)",
+          desc: "Sessions théoriques avec démonstrations live, ateliers pratiques sur projets concrets, code reviews et pair programming, mentorat individualisé selon les besoins, évaluations intermédiaires avec feedback constructif et adaptation du rythme selon la progression du groupe.",
         },
-        { 
-          title: 'Évaluation & Certification (2-3 jours)', 
-          desc: 'Évaluation pratique sur projet réel, tests de compétences techniques approfondis, préparation aux certifications officielles si applicable, remise des certificats de formation weenov et bilan individuel des acquis avec recommandations de progression.'
+        {
+          title: "Évaluation & Certification (2-3 jours)",
+          desc: "Évaluation pratique sur projet réel, tests de compétences techniques approfondis, préparation aux certifications officielles si applicable, remise des certificats de formation weenov et bilan individuel des acquis avec recommandations de progression.",
         },
-        { 
-          title: 'Suivi Post-Formation & Support (3 mois)', 
-          desc: 'Accompagnement sur les premiers projets en autonomie, sessions de Q&A hebdomadaires avec les formateurs, accès aux ressources et mises à jour pédagogiques, évaluation de l\'impact sur les projets réels et recommandations pour la formation continue.'
-        }
+        {
+          title: "Suivi Post-Formation & Support (3 mois)",
+          desc: "Accompagnement sur les premiers projets en autonomie, sessions de Q&A hebdomadaires avec les formateurs, accès aux ressources et mises à jour pédagogiques, évaluation de l'impact sur les projets réels et recommandations pour la formation continue.",
+        },
       ],
       blog: [
-        { date: '24 Mai 2025', title: 'Upskilling tech : investir dans les équipes', excerpt: 'Pourquoi et comment former vos équipes aux nouvelles technologies pour rester compétitif.' },
-        { date: '20 Mai 2025', title: 'Certification cloud : laquelle choisir ?', excerpt: 'Guide pour choisir la certification cloud adaptée à votre profil et objectifs.' },
-        { date: '15 Mai 2025', title: 'Formation continue en tech', excerpt: 'L\'importance de la formation continue dans un secteur en évolution permanente.' }
+        {
+          date: "24 Mai 2025",
+          title: "Upskilling tech : investir dans les équipes",
+          excerpt:
+            "Pourquoi et comment former vos équipes aux nouvelles technologies pour rester compétitif.",
+        },
+        {
+          date: "20 Mai 2025",
+          title: "Certification cloud : laquelle choisir ?",
+          excerpt:
+            "Guide pour choisir la certification cloud adaptée à votre profil et objectifs.",
+        },
+        {
+          date: "15 Mai 2025",
+          title: "Formation continue en tech",
+          excerpt:
+            "L'importance de la formation continue dans un secteur en évolution permanente.",
+        },
       ],
       formations: [
         {
-          title: 'Développement Web Full-Stack',
-          duration: '30 heures - 8 jours',
-          price: '399€',
-          features: ['HTML5, CSS3, JavaScript ES6+', 'React.js et Node.js', 'Base de données et API', 'Projet final', 'Certificat de réussite'],
-          description: "🚀 Transformez-vous en développeur recherché ! Cette formation intensive vous propulse de zéro à héros du développement. En seulement 5 jours, maîtrisez les technologies les plus demandées par les entreprises. Nos anciens stagiaires ont augmenté leur salaire de 35% en moyenne ! Ne laissez pas passer cette opportunité limitée."
+          title: "Développement Web Full-Stack",
+          duration: "30 heures - 8 jours",
+          price: "399€",
+          features: [
+            "HTML5, CSS3, JavaScript ES6+",
+            "React.js et Node.js",
+            "Base de données et API",
+            "Projet final",
+            "Certificat de réussite",
+          ],
+          description:
+            "🚀 Transformez-vous en développeur recherché ! Cette formation intensive vous propulse de zéro à héros du développement. En seulement 5 jours, maîtrisez les technologies les plus demandées par les entreprises. Nos anciens stagiaires ont augmenté leur salaire de 35% en moyenne ! Ne laissez pas passer cette opportunité limitée.",
         },
         {
-          title: 'Intelligence Artificielle & Machine Learning',
-          duration: '35 heures - 10 jours',
-          price: '499€',
-          features: ['Python pour l\'IA', 'Scikit-learn, TensorFlow', 'Deep Learning', 'Projet ML concret', 'Cas d\'usage métier'],
-          description: "🤖 Surfez sur la vague IA avant qu'il ne soit trop tard ! L'IA va remplacer 40% des emplois... ou les transformer. Soyez du bon côté. Formation qui vous positionne sur les métiers d'avenir. Nos participants multiplient leur valeur par 3 sur le marché !"
+          title: "Intelligence Artificielle & Machine Learning",
+          duration: "35 heures - 10 jours",
+          price: "499€",
+          features: [
+            "Python pour l'IA",
+            "Scikit-learn, TensorFlow",
+            "Deep Learning",
+            "Projet ML concret",
+            "Cas d'usage métier",
+          ],
+          description:
+            "🤖 Surfez sur la vague IA avant qu'il ne soit trop tard ! L'IA va remplacer 40% des emplois... ou les transformer. Soyez du bon côté. Formation qui vous positionne sur les métiers d'avenir. Nos participants multiplient leur valeur par 3 sur le marché !",
         },
         {
-          title: 'Cybersécurité',
-          duration: '45 heures - 12 jours',
-          price: '699€',
-          features: ['Audit de sécurité', 'Tests d\'intrusion', 'Réponse aux incidents', 'Outils professionnels', 'Certification incluse'],
-          description: "🛡️ Protégez-vous des 4000 cyberattaques quotidiennes ! Le secteur cybersécurité recrute 3.5M de postes dans le monde. Salaires moyens : 70k€+. Formation par d'anciens hackers éthiques. Accès exclusif aux outils pros. Votre passeport pour l'emploi sécurisé !"
+          title: "Cybersécurité",
+          duration: "45 heures - 12 jours",
+          price: "699€",
+          features: [
+            "Audit de sécurité",
+            "Tests d'intrusion",
+            "Réponse aux incidents",
+            "Outils professionnels",
+            "Certification incluse",
+          ],
+          description:
+            "🛡️ Protégez-vous des 4000 cyberattaques quotidiennes ! Le secteur cybersécurité recrute 3.5M de postes dans le monde. Salaires moyens : 70k€+. Formation par d'anciens hackers éthiques. Accès exclusif aux outils pros. Votre passeport pour l'emploi sécurisé !",
         },
         {
-          title: 'Atelier Accéléré sur les Méthodes et Outils Agile',
-          duration: '12 heures - 4 jours',
-          price: '299€',
-          features: ['Scrum & Kanban maîtrisés', 'Jira & Azure DevOps', 'Retrospectives efficaces', 'Planning Poker', 'Certification Scrum Master'],
-          description: "⚡ Révolutionnez votre façon de travailler ! Rejoignez les 97% de nos participants qui ont transformé leur productivité en équipe. Apprenez les secrets des entreprises Tech les plus performantes. Formation intensive avec des coachs agile certifiés. Places limitées à 12 participants pour un accompagnement personnalisé !"
+          title: "Atelier Accéléré sur les Méthodes et Outils Agile",
+          duration: "12 heures - 4 jours",
+          price: "299€",
+          features: [
+            "Scrum & Kanban maîtrisés",
+            "Jira & Azure DevOps",
+            "Retrospectives efficaces",
+            "Planning Poker",
+            "Certification Scrum Master",
+          ],
+          description:
+            "⚡ Révolutionnez votre façon de travailler ! Rejoignez les 97% de nos participants qui ont transformé leur productivité en équipe. Apprenez les secrets des entreprises Tech les plus performantes. Formation intensive avec des coachs agile certifiés. Places limitées à 12 participants pour un accompagnement personnalisé !",
         },
         {
-          title: 'Automatisation n8n sur-mesure',
-          duration: '12 heures - 4 jours',
-          price: '350€',
-          features: ['Maîtrise complète n8n', '500+ intégrations', 'Workflows complexes', 'Monitoring & alerting', 'ROI automation'],
-          description: "🤖 Libérez 20h/semaine de tâches répétitives ! L'automatisation n8n fait économiser 50k€/an à nos clients. Connectez tous vos outils sans coder. Formation exclusive avec le créateur de n8n France. Places ultra-limitées : seulement 8 participants max !"
+          title: "Automatisation n8n sur-mesure",
+          duration: "12 heures - 4 jours",
+          price: "350€",
+          features: [
+            "Maîtrise complète n8n",
+            "500+ intégrations",
+            "Workflows complexes",
+            "Monitoring & alerting",
+            "ROI automation",
+          ],
+          description:
+            "🤖 Libérez 20h/semaine de tâches répétitives ! L'automatisation n8n fait économiser 50k€/an à nos clients. Connectez tous vos outils sans coder. Formation exclusive avec le créateur de n8n France. Places ultra-limitées : seulement 8 participants max !",
         },
         {
-          title: 'Initiation à Docker et Sécurité des Conteneurs',
-          duration: '15 heures - 5 jours',
-          price: '299€',
-          features: ['Docker de A à Z', 'Kubernetes basics', 'Sécurité conteneurs', 'CI/CD avec containers', 'Best practices DevOps'],
-          description: "🔐 Maîtrisez la technologie qui fait tourner Netflix, Google et Amazon ! Docker révolutionne le déploiement d'applications. Cette formation vous donne 3 ans d'avance sur la concurrence. 89% de nos participants sont promus dans les 6 mois. Investissement garanti rentable !"
+          title: "Initiation à Docker et Sécurité des Conteneurs",
+          duration: "15 heures - 5 jours",
+          price: "299€",
+          features: [
+            "Docker de A à Z",
+            "Kubernetes basics",
+            "Sécurité conteneurs",
+            "CI/CD avec containers",
+            "Best practices DevOps",
+          ],
+          description:
+            "🔐 Maîtrisez la technologie qui fait tourner Netflix, Google et Amazon ! Docker révolutionne le déploiement d'applications. Cette formation vous donne 3 ans d'avance sur la concurrence. 89% de nos participants sont promus dans les 6 mois. Investissement garanti rentable !",
         },
         {
-          title: 'Introduction à la Programmation R et Analyse de Données',
-          duration: '20 heures - 5 jours',
-          price: '399€',
-          features: ['R Programming complet', 'Visualisation avec ggplot2', 'Analyse statistique', 'Machine Learning basics', 'Projets data concrets'],
-          description: "📊 Devenez le Data Scientist que tout le monde s'arrache ! Le salaire moyen d'un expert R dépasse 65k€. Cette formation vous ouvre les portes des métiers les plus recherchés. Apprentissage pratique sur de vraies données d'entreprises. Résultats visibles dès le premier jour !"
+          title: "Introduction à la Programmation R et Analyse de Données",
+          duration: "20 heures - 5 jours",
+          price: "399€",
+          features: [
+            "R Programming complet",
+            "Visualisation avec ggplot2",
+            "Analyse statistique",
+            "Machine Learning basics",
+            "Projets data concrets",
+          ],
+          description:
+            "📊 Devenez le Data Scientist que tout le monde s'arrache ! Le salaire moyen d'un expert R dépasse 65k€. Cette formation vous ouvre les portes des métiers les plus recherchés. Apprentissage pratique sur de vraies données d'entreprises. Résultats visibles dès le premier jour !",
         },
         {
-          title: 'Atelier Git, GitHub et GitHub Actions',
-          duration: '12 heures - 3 jours',
-          price: '250€',
-          features: ['Git avancé', 'GitHub collaboration', 'GitHub Actions CI/CD', 'Code review workflow', 'Open source contribution'],
-          description: "⭐ Arrêtez de perdre votre code ! Rejoignez les 100M+ de développeurs qui utilisent Git quotidiennement. Formation pratique qui vous évite les erreurs coûteuses. Nos participants économisent 2h/jour en moyenne. ROI immédiat garanti !"
+          title: "Atelier Git, GitHub et GitHub Actions",
+          duration: "12 heures - 3 jours",
+          price: "250€",
+          features: [
+            "Git avancé",
+            "GitHub collaboration",
+            "GitHub Actions CI/CD",
+            "Code review workflow",
+            "Open source contribution",
+          ],
+          description:
+            "⭐ Arrêtez de perdre votre code ! Rejoignez les 100M+ de développeurs qui utilisent Git quotidiennement. Formation pratique qui vous évite les erreurs coûteuses. Nos participants économisent 2h/jour en moyenne. ROI immédiat garanti !",
         },
         {
-          title: 'Design Thinking',
-          duration: '12 heures - 3 jours',
-          price: '330€',
-          features: ['Méthodologie Design Thinking', 'Empathy mapping', 'Prototypage rapide', 'Tests utilisateurs', 'Innovation collaborative'],
-          description: "💡 Innovez comme Apple, Google et Tesla ! Le Design Thinking a généré +500M$ d'innovation chez nos clients. Méthode éprouvée pour créer des produits que vos clients adorent. Formation animée par des consultants ayant accompagné les licornes françaises. Changez votre approche, changez vos résultats !"
+          title: "Design Thinking",
+          duration: "12 heures - 3 jours",
+          price: "330€",
+          features: [
+            "Méthodologie Design Thinking",
+            "Empathy mapping",
+            "Prototypage rapide",
+            "Tests utilisateurs",
+            "Innovation collaborative",
+          ],
+          description:
+            "💡 Innovez comme Apple, Google et Tesla ! Le Design Thinking a généré +500M$ d'innovation chez nos clients. Méthode éprouvée pour créer des produits que vos clients adorent. Formation animée par des consultants ayant accompagné les licornes françaises. Changez votre approche, changez vos résultats !",
         },
-      ]
-    }
-  }
+      ],
+    },
+  };
 
   const toggleTheme = () => {
-    setIsDarkTheme(!isDarkTheme)
-    document.body.setAttribute('data-theme', !isDarkTheme ? 'dark' : '')
-  }
+    setIsDarkTheme(!isDarkTheme);
+    document.body.setAttribute("data-theme", !isDarkTheme ? "dark" : "");
+  };
 
   const toggleFaq = (index) => {
-    setActiveFaq(activeFaq === index ? null : index)
-  }
+    setActiveFaq(activeFaq === index ? null : index);
+  };
 
   const openServiceModal = (serviceKey) => {
-    setModalService(serviceKey)
-    setActiveTab('overview')
-  }
+    setModalService(serviceKey);
+    setActiveTab("overview");
+  };
 
   const closeModal = () => {
-    setModalService(null)
-  }
+    setModalService(null);
+  };
 
+  const submitContact = async (e) => {
+    e.preventDefault();
+    setIsSubmitting(true);
 
+    const SERVICE_ID = "service_l6x582k";
+    const TEMPLATE_ID = "template_eb980yr";
+    const PUBLIC_KEY = "caqi7DPV7R5W3N4e8";
 
-  const submitContact = (e) => {
-    e.preventDefault()
-    alert('Merci pour votre message ! Nous vous répondrons dans les plus brefs délais.')
-  }
+    try {
+      const result = await emailjs.send(
+        SERVICE_ID,
+        TEMPLATE_ID,
+        {
+          from_name: contactForm.name,
+          from_email: contactForm.email,
+          subject: contactForm.subject,
+          message: contactForm.message,
+          to_name: "Équipe weenov",
+        },
+        PUBLIC_KEY
+      );
+
+      console.log("Email envoyé !", result.text);
+      alert("✅ Message envoyé avec succès !");
+
+      setContactForm({ name: "", email: "", subject: "", message: "" });
+    } catch (error) {
+      console.error("Erreur:", error);
+      alert("❌ Erreur lors de l'envoi");
+    } finally {
+      setIsSubmitting(false);
+    }
+  };
 
   const scrollToTop = () => {
     window.scrollTo({
       top: 0,
-      behavior: 'smooth'
-    })
-  }
+      behavior: "smooth",
+    });
+  };
 
   const handleScroll = () => {
-    const scrollTop = window.pageYOffset || document.documentElement.scrollTop
-    setShowBackToTop(scrollTop > 500)
-  }
+    const scrollTop = window.pageYOffset || document.documentElement.scrollTop;
+    setShowBackToTop(scrollTop > 500);
+  };
 
   useEffect(() => {
     // Apply theme
     if (isDarkTheme) {
-      document.body.setAttribute('data-theme', 'dark')
+      document.body.setAttribute("data-theme", "dark");
     } else {
-      document.body.removeAttribute('data-theme')
+      document.body.removeAttribute("data-theme");
     }
 
     // Intersection Observer for fade-in animations
     const observerOptions = {
       threshold: 0.1,
-      rootMargin: '0px 0px -50px 0px'
-    }
+      rootMargin: "0px 0px -50px 0px",
+    };
 
     const observer = new IntersectionObserver((entries) => {
-      entries.forEach(entry => {
+      entries.forEach((entry) => {
         if (entry.isIntersecting) {
-          entry.target.classList.add('visible')
+          entry.target.classList.add("visible");
         }
-      })
-    }, observerOptions)
+      });
+    }, observerOptions);
 
     // Observe all fade-in elements
-    const fadeElements = document.querySelectorAll('.fade-in')
-    fadeElements.forEach(el => observer.observe(el))
+    const fadeElements = document.querySelectorAll(".fade-in");
+    fadeElements.forEach((el) => observer.observe(el));
 
     // Add scroll event listener for back-to-top button
-    window.addEventListener('scroll', handleScroll)
+    window.addEventListener("scroll", handleScroll);
 
     // Cleanup
     return () => {
-      fadeElements.forEach(el => observer.unobserve(el))
-      window.removeEventListener('scroll', handleScroll)
-    }
-  }, [isDarkTheme])
+      fadeElements.forEach((el) => observer.unobserve(el));
+      window.removeEventListener("scroll", handleScroll);
+    };
+  }, [isDarkTheme]);
 
   return (
     <div>
@@ -1850,20 +2012,34 @@ function App() {
       <header className="header">
         <nav className="nav">
           <div className="logo">weeNov</div>
-          <ul className={`nav-links ${mobileMenuOpen ? 'mobile-active' : ''}`}>
-            <li><a href="#accueil">Accueil</a></li>
-            <li><a href="#services">Services</a></li>
-            <li><a href="#workflow">Processus</a></li>
-            <li><a href="#formations">Formations</a></li>
-            <li><a href="#about">À propos</a></li>
-            <li><a href="#faq">FAQ</a></li>
-            <li><a href="#contact">Contact</a></li>
+          <ul className={`nav-links ${mobileMenuOpen ? "mobile-active" : ""}`}>
+            <li>
+              <a href="#accueil">Accueil</a>
+            </li>
+            <li>
+              <a href="#services">Services</a>
+            </li>
+            <li>
+              <a href="#workflow">Processus</a>
+            </li>
+            <li>
+              <a href="#formations">Formations</a>
+            </li>
+            <li>
+              <a href="#about">À propos</a>
+            </li>
+            <li>
+              <a href="#faq">FAQ</a>
+            </li>
+            <li>
+              <a href="#contact">Contact</a>
+            </li>
           </ul>
           <button className="theme-toggle" onClick={toggleTheme}>
-            {isDarkTheme ? '☀️' : '🌙'}
+            {isDarkTheme ? "☀️" : "🌙"}
           </button>
-          <div 
-            className={`mobile-menu ${mobileMenuOpen ? 'active' : ''}`}
+          <div
+            className={`mobile-menu ${mobileMenuOpen ? "active" : ""}`}
             onClick={() => setMobileMenuOpen(!mobileMenuOpen)}
           >
             <span></span>
@@ -1885,11 +2061,27 @@ function App() {
         </div>
         <div className="hero-content">
           <div className="hero-text">
-            <h1>Solutions Tech <span className="highlight">Innovantes</span> pour votre Entreprise</h1>
-            <p>Ensemble, donnons vie à vos ambitions numériques. Nous co-créons des solutions sur mesure et innovantes, alliant expertise en développement web/mobile, IA, cybersécurité, cloud, la valorisation de vos données et conseil stratégique pour concrétiser vos projets les plus ambitieux.</p>
+            <h1>
+              Solutions Tech <span className="highlight">Innovantes</span> pour
+              votre Entreprise
+            </h1>
+            <p>
+              Ensemble, donnons vie à vos ambitions numériques. Nous co-créons
+              des solutions sur mesure et innovantes, alliant expertise en
+              développement web/mobile, IA, cybersécurité, cloud, la
+              valorisation de vos données et conseil stratégique pour
+              concrétiser vos projets les plus ambitieux.
+            </p>
             <div className="cta-buttons">
-              <button className="btn-primary" onClick={() => setShowBookingModal(true)}>Prenez rendez-vous</button>
-              <a href="#services" className="btn-secondary">Découvrir nos services</a>
+              <button
+                className="btn-primary"
+                onClick={() => setShowBookingModal(true)}
+              >
+                Prenez rendez-vous
+              </button>
+              <a href="#services" className="btn-secondary">
+                Découvrir nos services
+              </a>
             </div>
           </div>
           <div className="hero-visual">
@@ -1920,80 +2112,158 @@ function App() {
         <div className="container">
           <div className="section-title fade-in">
             <h2>Nos Expertises Technologiques</h2>
-            <p>Une gamme complète de services pour accompagner votre transformation digitale</p>
+            <p>
+              Une gamme complète de services pour accompagner votre
+              transformation digitale
+            </p>
           </div>
           <div className="services-grid">
-            <div className="service-card fade-in" onClick={() => openServiceModal('web-dev')}>
+            <div
+              className="service-card fade-in"
+              onClick={() => openServiceModal("web-dev")}
+            >
               <div className="service-icon">🌐</div>
               <h3>Développement Web, Desktop & Mobile</h3>
-              <p>Création d'applications web responsives, d'applications desktop multiplateformes et d'applications mobiles natives pour iOS et Android. Nous utilisons les dernières technologies pour garantir performance et user experience.</p>
+              <p>
+                Création d'applications web responsives, d'applications desktop
+                multiplateformes et d'applications mobiles natives pour iOS et
+                Android. Nous utilisons les dernières technologies pour garantir
+                performance et user experience.
+              </p>
               <div className="card-arrow">→</div>
             </div>
-            <div className="service-card fade-in" onClick={() => openServiceModal('websites')}>
+            <div
+              className="service-card fade-in"
+              onClick={() => openServiceModal("websites")}
+            >
               <div className="service-icon">🎨</div>
               <h3>Sites Vitrines</h3>
-              <p>Design et développement de sites web modernes et optimisés pour présenter votre entreprise. SEO intégré, performance optimisée et design adaptatif pour tous les appareils.</p>
+              <p>
+                Design et développement de sites web modernes et optimisés pour
+                présenter votre entreprise. SEO intégré, performance optimisée
+                et design adaptatif pour tous les appareils.
+              </p>
               <div className="card-arrow">→</div>
             </div>
-            <div className="service-card fade-in" onClick={() => openServiceModal('ai-data')}>
+            <div
+              className="service-card fade-in"
+              onClick={() => openServiceModal("ai-data")}
+            >
               <div className="service-icon">🤖</div>
               <h3>Intelligence Artificielle & Data Science</h3>
-              <p>Solutions IA personnalisées et analyse avancée de données : machine learning, NLP, vision par ordinateur, modélisation prédictive et tableaux de bord interactifs pour optimiser vos processus.</p>
+              <p>
+                Solutions IA personnalisées et analyse avancée de données :
+                machine learning, NLP, vision par ordinateur, modélisation
+                prédictive et tableaux de bord interactifs pour optimiser vos
+                processus.
+              </p>
               <div className="card-arrow">→</div>
             </div>
-            <div className="service-card fade-in" onClick={() => openServiceModal('cybersecurity')}>
+            <div
+              className="service-card fade-in"
+              onClick={() => openServiceModal("cybersecurity")}
+            >
               <div className="service-icon">🔒</div>
               <h3>Cybersécurité</h3>
-              <p>Audit de sécurité, mise en place de solutions de protection, sensibilisation des équipes et monitoring continu pour protéger vos actifs numériques contre les menaces.</p>
+              <p>
+                Audit de sécurité, mise en place de solutions de protection,
+                sensibilisation des équipes et monitoring continu pour protéger
+                vos actifs numériques contre les menaces.
+              </p>
               <div className="card-arrow">→</div>
             </div>
-            <div className="service-card fade-in" onClick={() => openServiceModal('blockchain')}>
+            <div
+              className="service-card fade-in"
+              onClick={() => openServiceModal("blockchain")}
+            >
               <div className="service-icon">⛓️</div>
               <h3>Blockchain</h3>
-              <p>Développement d'applications décentralisées (DApps), smart contracts, solutions NFT et intégration blockchain pour la traçabilité et la sécurisaton des transactions.</p>
+              <p>
+                Développement d'applications décentralisées (DApps), smart
+                contracts, solutions NFT et intégration blockchain pour la
+                traçabilité et la sécurisaton des transactions.
+              </p>
               <div className="card-arrow">→</div>
             </div>
-            <div className="service-card fade-in" onClick={() => openServiceModal('cloud-devops')}>
+            <div
+              className="service-card fade-in"
+              onClick={() => openServiceModal("cloud-devops")}
+            >
               <div className="service-icon">☁️</div>
               <h3>Cloud & DevOps</h3>
-              <p>Migration cloud, infrastructure as code, CI/CD, containerisation avec Docker/Kubernetes et automatisation des déploiements pour une scalabilité optimale.</p>
+              <p>
+                Migration cloud, infrastructure as code, CI/CD, containerisation
+                avec Docker/Kubernetes et automatisation des déploiements pour
+                une scalabilité optimale.
+              </p>
               <div className="card-arrow">→</div>
             </div>
 
-            <div className="service-card fade-in" onClick={() => openServiceModal('exploitation-maintenance')}>
-              <div className="service-icon">🔧</div>
-              <h3>Exploitation et Maintenance</h3>
-              <p>Assurez la continuité et les performances optimales de vos systèmes informatiques avec nos services d'exploitation et de maintenance proactifs. Monitoring 24/7, support technique et optimisation continue.</p>
-              <div className="card-arrow">→</div>
-            </div>
-            <div className="service-card fade-in" onClick={() => openServiceModal('modelisation-decisionnelle')}>
+            <div
+              className="service-card fade-in"
+              onClick={() => openServiceModal("modelisation-decisionnelle")}
+            >
               <div className="service-icon">📊</div>
               <h3>Modélisation Décisionnelle</h3>
-              <p>Transformez vos données en insights stratégiques avec nos solutions de Business Intelligence. Data warehouses, tableaux de bord interactifs et analyse prédictive pour optimiser vos décisions.</p>
+              <p>
+                Transformez vos données en insights stratégiques avec nos
+                solutions de Business Intelligence. Data warehouses, tableaux de
+                bord interactifs et analyse prédictive pour optimiser vos
+                décisions.
+              </p>
               <div className="card-arrow">→</div>
             </div>
-            <div className="service-card fade-in" onClick={() => openServiceModal('marketing-digital')}>
+            <div
+              className="service-card fade-in"
+              onClick={() => openServiceModal("marketing-digital")}
+            >
               <div className="service-icon">📈</div>
               <h3>Marketing Digital</h3>
-              <p>Boostez votre présence digitale et optimisez vos conversions avec nos stratégies marketing data-driven. SEO/SEA, réseaux sociaux, email marketing et marketing automation.</p>
+              <p>
+                Boostez votre présence digitale et optimisez vos conversions
+                avec nos stratégies marketing data-driven. SEO/SEA, réseaux
+                sociaux, email marketing et marketing automation.
+              </p>
               <div className="card-arrow">→</div>
             </div>
-            <div className="service-card fade-in" onClick={() => openServiceModal('telephonie-ip')}>
+            <div
+              className="service-card fade-in"
+              onClick={() => openServiceModal("telephonie-ip")}
+            >
               <div className="service-icon">☎️</div>
               <h3>Téléphonie IP</h3>
-              <p>Modernisez votre système de communication d'entreprise avec nos solutions de téléphonie IP flexibles et économiques. IPBX cloud, softphones et intégration CRM.</p>
+              <p>
+                Modernisez votre système de communication d'entreprise avec nos
+                solutions de téléphonie IP flexibles et économiques. IPBX cloud,
+                softphones et intégration CRM.
+              </p>
               <div className="card-arrow">→</div>
             </div>
-            <div className="service-card fade-in" onClick={() => openServiceModal('automatisation-n8n')}>
+            <div
+              className="service-card fade-in"
+              onClick={() => openServiceModal("automatisation-n8n")}
+            >
               <div className="service-icon">⚡</div>
               <h3>Automatisation n8n sur-mesure</h3>
-              <p>Automatisez vos workflows métier avec n8n pour booster votre productivité et éliminer les tâches répétitives. Plus de 500 intégrations disponibles pour connecter tous vos outils.</p>
+              <p>
+                Automatisez vos workflows métier avec n8n pour booster votre
+                productivité et éliminer les tâches répétitives. Plus de 500
+                intégrations disponibles pour connecter tous vos outils.
+              </p>
               <div className="card-arrow">→</div>
             </div>
-            <div className="service-card fade-in" onClick={() => openServiceModal('conseil-transformation')}>
+            <div
+              className="service-card fade-in"
+              onClick={() => openServiceModal("conseil-transformation")}
+            >
               <div className="service-icon">🎯</div>
               <h3>Conseil et Transformation</h3>
-              <p>Accompagnement stratégique pour votre transformation digitale. Audit DSI, architecture d'entreprise, gouvernance de projets et stratégie sécuritaire pour optimiser votre système d'information.</p>
+              <p>
+                Accompagnement stratégique pour votre transformation digitale.
+                Audit DSI, architecture d'entreprise, gouvernance de projets et
+                stratégie sécuritaire pour optimiser votre système
+                d'information.
+              </p>
               <div className="card-arrow">→</div>
             </div>
           </div>
@@ -2005,7 +2275,10 @@ function App() {
         <div className="container">
           <div className="section-title fade-in">
             <h2>🎓 Formations Technologiques</h2>
-            <p>Développez les compétences de vos équipes avec nos formations expertes adaptées à tous les niveaux</p>
+            <p>
+              Développez les compétences de vos équipes avec nos formations
+              expertes adaptées à tous les niveaux
+            </p>
           </div>
           <div className="formation-grid">
             {serviceData.formations.formations.map((formation, index) => (
@@ -2015,7 +2288,17 @@ function App() {
                   <span className="formation-price">{formation.price}</span>
                 </div>
                 <div className="formation-duration">{formation.duration}</div>
-                <div className="formation-description" style={{margin: '1rem 0', padding: '1rem', backgroundColor: 'var(--light-bg)', borderRadius: '8px', fontSize: '0.9rem', lineHeight: '1.4'}}>
+                <div
+                  className="formation-description"
+                  style={{
+                    margin: "1rem 0",
+                    padding: "1rem",
+                    backgroundColor: "var(--light-bg)",
+                    borderRadius: "8px",
+                    fontSize: "0.9rem",
+                    lineHeight: "1.4",
+                  }}
+                >
                   {formation.description}
                 </div>
                 <ul className="formation-features">
@@ -2023,11 +2306,11 @@ function App() {
                     <li key={idx}>{feature}</li>
                   ))}
                 </ul>
-                <button 
-                  className="btn-primary" 
+                <button
+                  className="btn-primary"
                   onClick={() => {
-                    setSelectedFormation(formation)
-                    setShowContactModal(true)
+                    setSelectedFormation(formation);
+                    setShowContactModal(true);
                   }}
                 >
                   Réserver cette formation
@@ -2047,7 +2330,10 @@ function App() {
               </div>
               <div className="info-item">
                 <h4>📜 Certification</h4>
-                <p>Certificats weenov et préparation aux certifications officielles</p>
+                <p>
+                  Certificats weenov et préparation aux certifications
+                  officielles
+                </p>
               </div>
               <div className="info-item">
                 <h4>🤝 Support</h4>
@@ -2063,38 +2349,61 @@ function App() {
         <div className="container">
           <div className="section-title fade-in">
             <h2>Pourquoi Nous Choisir ?</h2>
-            <p>Notre expertise et notre approche client nous distinguent dans l'univers tech</p>
+            <p>
+              Notre expertise et notre approche client nous distinguent dans
+              l'univers tech
+            </p>
           </div>
           <div className="features-grid">
             <div className="feature-card fade-in">
               <div className="feature-icon">🚀</div>
               <h3>Innovation Constante</h3>
-              <p>Nous restons à la pointe des dernières technologies pour vous offrir des solutions d'avant-garde qui anticipent les besoins de demain.</p>
+              <p>
+                Nous restons à la pointe des dernières technologies pour vous
+                offrir des solutions d'avant-garde qui anticipent les besoins de
+                demain.
+              </p>
             </div>
             <div className="feature-card fade-in">
               <div className="feature-icon">⚡</div>
               <h3>Livraison Rapide</h3>
-              <p>Méthodologie agile et équipes dédiées pour des projets livrés dans les délais, sans compromis sur la qualité.</p>
+              <p>
+                Méthodologie agile et équipes dédiées pour des projets livrés
+                dans les délais, sans compromis sur la qualité.
+              </p>
             </div>
             <div className="feature-card fade-in">
               <div className="feature-icon">🎯</div>
               <h3>Approche Sur Mesure</h3>
-              <p>Chaque projet est unique. Nous adaptons nos solutions à vos besoins spécifiques et à votre secteur d'activité.</p>
+              <p>
+                Chaque projet est unique. Nous adaptons nos solutions à vos
+                besoins spécifiques et à votre secteur d'activité.
+              </p>
             </div>
             <div className="feature-card fade-in">
               <div className="feature-icon">🛡️</div>
               <h3>Sécurité Maximale</h3>
-              <p>La cybersécurité est au cœur de nos développements. Vos données et systèmes sont protégés selon les plus hauts standards.</p>
+              <p>
+                La cybersécurité est au cœur de nos développements. Vos données
+                et systèmes sont protégés selon les plus hauts standards.
+              </p>
             </div>
             <div className="feature-card fade-in">
               <div className="feature-icon">💡</div>
               <h3>Conseil Expert</h3>
-              <p>Notre équipe vous accompagne dans la définition de votre stratégie digitale pour maximiser votre retour sur investissement.</p>
+              <p>
+                Notre équipe vous accompagne dans la définition de votre
+                stratégie digitale pour maximiser votre retour sur
+                investissement.
+              </p>
             </div>
             <div className="feature-card fade-in">
               <div className="feature-icon">🤝</div>
               <h3>Support Premium</h3>
-              <p>Accompagnement continu, formation des équipes et support technique réactif pour garantir votre succès.</p>
+              <p>
+                Accompagnement continu, formation des équipes et support
+                technique réactif pour garantir votre succès.
+              </p>
             </div>
           </div>
         </div>
@@ -2105,34 +2414,87 @@ function App() {
         <div className="container">
           <div className="section-title fade-in">
             <h2>Ils Nous Font Confiance</h2>
-            <p>Plus de 150 entreprises nous ont fait confiance pour leur transformation digitale</p>
+            <p>
+              Plus de 150 entreprises nous ont fait confiance pour leur
+              transformation digitale
+            </p>
           </div>
-          
+
           <div className="clients-grid fade-in">
             <div className="client-logo">
-              <div style={{fontSize: '2rem', fontWeight: 'bold', color: 'var(--primary-blue)'}}>TechCorp</div>
+              <div
+                style={{
+                  fontSize: "2rem",
+                  fontWeight: "bold",
+                  color: "var(--primary-blue)",
+                }}
+              >
+                TechCorp
+              </div>
             </div>
             <div className="client-logo">
-              <div style={{fontSize: '2rem', fontWeight: 'bold', color: 'var(--primary-blue)'}}>InnovLab</div>
+              <div
+                style={{
+                  fontSize: "2rem",
+                  fontWeight: "bold",
+                  color: "var(--primary-blue)",
+                }}
+              >
+                InnovLab
+              </div>
             </div>
             <div className="client-logo">
-              <div style={{fontSize: '2rem', fontWeight: 'bold', color: 'var(--primary-blue)'}}>DataFlow</div>
+              <div
+                style={{
+                  fontSize: "2rem",
+                  fontWeight: "bold",
+                  color: "var(--primary-blue)",
+                }}
+              >
+                DataFlow
+              </div>
             </div>
             <div className="client-logo">
-              <div style={{fontSize: '2rem', fontWeight: 'bold', color: 'var(--primary-blue)'}}>SmartSys</div>
+              <div
+                style={{
+                  fontSize: "2rem",
+                  fontWeight: "bold",
+                  color: "var(--primary-blue)",
+                }}
+              >
+                SmartSys
+              </div>
             </div>
             <div className="client-logo">
-              <div style={{fontSize: '2rem', fontWeight: 'bold', color: 'var(--primary-blue)'}}>CloudTech</div>
+              <div
+                style={{
+                  fontSize: "2rem",
+                  fontWeight: "bold",
+                  color: "var(--primary-blue)",
+                }}
+              >
+                CloudTech
+              </div>
             </div>
             <div className="client-logo">
-              <div style={{fontSize: '2rem', fontWeight: 'bold', color: 'var(--primary-blue)'}}>SecureNet</div>
+              <div
+                style={{
+                  fontSize: "2rem",
+                  fontWeight: "bold",
+                  color: "var(--primary-blue)",
+                }}
+              >
+                SecureNet
+              </div>
             </div>
           </div>
 
           <div className="testimonials">
             <div className="testimonial-card fade-in">
               <p className="testimonial-text">
-                "weenov a transformé notre infrastructure IT. Leur expertise en cloud et cybersécurité nous a permis de sécuriser notre croissance tout en optimisant nos coûts."
+                "weenov a transformé notre infrastructure IT. Leur expertise en
+                cloud et cybersécurité nous a permis de sécuriser notre
+                croissance tout en optimisant nos coûts."
               </p>
               <div className="testimonial-author">
                 <div className="author-avatar">JD</div>
@@ -2144,7 +2506,9 @@ function App() {
             </div>
             <div className="testimonial-card fade-in">
               <p className="testimonial-text">
-                "L'équipe weenov a développé notre plateforme IA en un temps record. Leur approche agile et leur expertise technique sont remarquables."
+                "L'équipe weenov a développé notre plateforme IA en un temps
+                record. Leur approche agile et leur expertise technique sont
+                remarquables."
               </p>
               <div className="testimonial-author">
                 <div className="author-avatar">ML</div>
@@ -2156,7 +2520,9 @@ function App() {
             </div>
             <div className="testimonial-card fade-in">
               <p className="testimonial-text">
-                "Grâce à weenov, nous avons modernisé toute notre stack technique. Leur accompagnement et leur support sont exceptionnels."
+                "Grâce à weenov, nous avons modernisé toute notre stack
+                technique. Leur accompagnement et leur support sont
+                exceptionnels."
               </p>
               <div className="testimonial-author">
                 <div className="author-avatar">PR</div>
@@ -2175,90 +2541,124 @@ function App() {
         <div className="container">
           <div className="section-title fade-in">
             <h2>Notre Méthode de Travail</h2>
-            <p>Une méthodologie éprouvée pour garantir le succès de vos projets</p>
+            <p>
+              Une méthodologie éprouvée pour garantir le succès de vos projets
+            </p>
           </div>
           <div className="workflow-steps">
             <div className="workflow-step fade-in">
               <div className="step-number">1</div>
               <h3>Analyse & Découverte</h3>
-              <p>Nous analysons vos besoins, définis les objectifs et élaborons une stratégie personnalisée pour votre projet.</p>
+              <p>
+                Nous analysons vos besoins, définis les objectifs et élaborons
+                une stratégie personnalisée pour votre projet.
+              </p>
             </div>
             <div className="workflow-step fade-in">
               <div className="step-number">2</div>
               <h3>Conception & Planification</h3>
-              <p>Création des maquettes, architecture technique et planification détaillée avec validation à chaque étape.</p>
+              <p>
+                Création des maquettes, architecture technique et planification
+                détaillée avec validation à chaque étape.
+              </p>
             </div>
             <div className="workflow-step fade-in">
               <div className="step-number">3</div>
               <h3>Développement Agile</h3>
-              <p>Développement itératif avec des livraisons régulières et des tests continus pour assurer la qualité.</p>
+              <p>
+                Développement itératif avec des livraisons régulières et des
+                tests continus pour assurer la qualité.
+              </p>
             </div>
             <div className="workflow-step fade-in">
               <div className="step-number">4</div>
               <h3>Tests & Validation</h3>
-              <p>Tests complets, validation utilisateur et optimisation des performances avant la mise en production.</p>
+              <p>
+                Tests complets, validation utilisateur et optimisation des
+                performances avant la mise en production.
+              </p>
             </div>
             <div className="workflow-step fade-in">
               <div className="step-number">5</div>
               <h3>Déploiement & Suivi</h3>
-              <p>Mise en production sécurisée, formation des utilisateurs et support continu pour garantir le succès.</p>
+              <p>
+                Mise en production sécurisée, formation des utilisateurs et
+                support continu pour garantir le succès.
+              </p>
             </div>
           </div>
         </div>
       </section>
-
-
 
       {/* About Section */}
       <section id="about" className="about">
         <div className="container">
           <div className="section-title fade-in">
             <h2>À propos de weenov</h2>
-            <p>Votre partenaire technologique de confiance pour l'innovation digitale.</p>
+            <p>
+              Votre partenaire technologique de confiance pour l'innovation
+              digitale.
+            </p>
           </div>
           <div className="about-content">
             <div className="about-text fade-in">
               <div className="about-story">
                 <h3>🚀 Notre Mission</h3>
                 <p>
-                  Chez weenov, nous croyons que la technologie doit être au service de l'humain et des entreprises. 
-                  Notre mission est de démocratiser l'accès aux technologies de pointe en proposant des solutions 
-                  sur-mesure qui répondent aux défis spécifiques de chaque client.
+                  Chez weenov, nous croyons que la technologie doit être au
+                  service de l'humain et des entreprises. Notre mission est de
+                  démocratiser l'accès aux technologies de pointe en proposant
+                  des solutions sur-mesure qui répondent aux défis spécifiques
+                  de chaque client.
                 </p>
               </div>
-              
+
               <div className="about-story">
                 <h3>💡 Notre Vision</h3>
                 <p>
-                  Nous aspirons à devenir le partenaire technologique de référence qui transforme les idées 
-                  en solutions innovantes. Nous accompagnons nos clients dans leur transformation digitale 
-                  en alliant expertise technique, créativité et approche humaine.
+                  Nous aspirons à devenir le partenaire technologique de
+                  référence qui transforme les idées en solutions innovantes.
+                  Nous accompagnons nos clients dans leur transformation
+                  digitale en alliant expertise technique, créativité et
+                  approche humaine.
                 </p>
               </div>
-              
+
               <div className="about-story">
                 <h3>🌟 Nos Valeurs</h3>
                 <div className="values-grid">
                   <div className="value-item">
                     <h4>Excellence</h4>
-                    <p>Nous visons l'excellence dans chaque projet, en utilisant les meilleures pratiques et technologies.</p>
+                    <p>
+                      Nous visons l'excellence dans chaque projet, en utilisant
+                      les meilleures pratiques et technologies.
+                    </p>
                   </div>
                   <div className="value-item">
                     <h4>Innovation</h4>
-                    <p>Nous restons à la pointe des innovations pour offrir des solutions d'avant-garde.</p>
+                    <p>
+                      Nous restons à la pointe des innovations pour offrir des
+                      solutions d'avant-garde.
+                    </p>
                   </div>
                   <div className="value-item">
                     <h4>Transparence</h4>
-                    <p>Communication claire, processus transparents et collaboration étroite avec nos clients.</p>
+                    <p>
+                      Communication claire, processus transparents et
+                      collaboration étroite avec nos clients.
+                    </p>
                   </div>
                   <div className="value-item">
                     <h4>Agilité</h4>
-                    <p>Adaptabilité et réactivité pour répondre rapidement aux besoins changeants du marché.</p>
+                    <p>
+                      Adaptabilité et réactivité pour répondre rapidement aux
+                      besoins changeants du marché.
+                    </p>
                   </div>
                 </div>
               </div>
             </div>
-            
+
             <div className="about-stats fade-in">
               <div className="stats-grid">
                 <div className="stat-item">
@@ -2280,11 +2680,8 @@ function App() {
               </div>
             </div>
           </div>
-          
-
         </div>
       </section>
-      
 
       {/* Team Section */}
       <section id="team" className="team">
@@ -2296,114 +2693,146 @@ function App() {
           <div className="team-grid">
             <div className="team-member fade-in">
               <div className="member-avatar">
-                <img 
-                  src="/images/elodie.jpg" 
+                <img
+                  src="/images/elodie.jpg"
                   alt="Elodie BANTOS"
                   className="member-photo"
                 />
               </div>
               <h3>Elodie BANTOS</h3>
               <h4>Machine Learning Engineer & Product Owner</h4>
-              <p>Je développe des modèles d’intelligence artificielle performants tout en assurant la gestion stratégique du produit, de l’idée à la livraison.</p>
+              <p>
+                Je développe des modèles d'intelligence artificielle performants
+                tout en assurant la gestion stratégique du produit, de l'idée à
+                la livraison.
+              </p>
             </div>
             <div className="team-member fade-in">
               <div className="member-avatar">
-                <img 
-                  src="/images/noumouke.jpg" 
+                <img
+                  src="/images/noumouke.jpg"
                   alt="Noumouké SOUARE"
                   className="member-photo"
                 />
               </div>
               <h3>Noumouké SOUARE</h3>
               <h4>Gérant & Ingénieur Logiciel</h4>
-              <p>Je mets en œuvre un management d'équipe structuré et une ingénierie logicielle rigoureuse pour garantir le succès de vos projets digitaux.</p>
+              <p>
+                Je mets en œuvre un management d'équipe structuré et une
+                ingénierie logicielle rigoureuse pour garantir le succès de vos
+                projets digitaux.
+              </p>
             </div>
             <div className="team-member fade-in">
               <div className="member-avatar">
-                <img 
-                  src="/images/aime.jpg" 
+                <img
+                  src="/images/aime.jpg"
                   alt="Aimé BERTRAND"
                   className="member-photo"
                 />
               </div>
               <h3>Aimé BERTRAND</h3>
               <h4>Ing. Sécurité & Développeur Blockchain</h4>
-              <p>Je sécurise les systèmes d’information tout en développant des applications blockchain robustes et innovantes.</p>
+              <p>
+                Je sécurise les systèmes d'information tout en développant des
+                applications blockchain robustes et innovantes.
+              </p>
             </div>
             <div className="team-member fade-in">
               <div className="member-avatar">
-                <img 
-                  src="/images/alassane.jpg" 
+                <img
+                  src="/images/alassane.jpg"
                   alt="Alassane MARIKO"
                   className="member-photo"
                 />
               </div>
               <h3>Alassane MARIKO</h3>
               <h4>Ingénieur Logiciel & Business Analyst</h4>
-              <p>Je conçois des solutions logicielles efficaces en m’appuyant sur une compréhension fine des besoins métiers et des enjeux fonctionnels.</p>
+              <p>
+                Je conçois des solutions logicielles efficaces en m'appuyant sur
+                une compréhension fine des besoins métiers et des enjeux
+                fonctionnels.
+              </p>
             </div>
             <div className="team-member fade-in">
               <div className="member-avatar">
-                <img 
-                  src="/images/bademba.jpg" 
+                <img
+                  src="/images/bademba.jpg"
                   alt="Abdoulaye Bademba DIALLO"
                   className="member-photo"
                 />
               </div>
               <h3>Abdoulaye Bademba DIALLO</h3>
               <h4>Ing. Réseaux & Sécurité</h4>
-              <p>Spécialiste des infrastructures et de la cybersécurité, j’assure la mise en place de réseaux performants et le déploiement de solutions de défense proactive.</p>
+              <p>
+                Spécialiste des infrastructures et de la cybersécurité, j'assure
+                la mise en place de réseaux performants et le déploiement de
+                solutions de défense proactive.
+              </p>
             </div>
             <div className="team-member fade-in">
               <div className="member-avatar">
-                <img 
-                  src="/images/mohamed.jpg" 
+                <img
+                  src="/images/mohamed.jpg"
                   alt="Mohamed NABE"
                   className="member-photo"
                 />
               </div>
               <h3>Mohamed NABE</h3>
               <h4>Ing. DevOps & Administrateur Systèmes</h4>
-              <p>J’automatise les processus de déploiement et j’administre des infrastructures systèmes stables, sécurisées et performantes.</p>
+              <p>
+                J'automatise les processus de déploiement et j'administre des
+                infrastructures systèmes stables, sécurisées et performantes.
+              </p>
             </div>
-            
+
             <div className="team-member fade-in">
               <div className="member-avatar">
-                <img 
-                  src="https://via.placeholder.com/120x120/0066ff/ffffff?text=JM" 
+                <img
+                  src="https://via.placeholder.com/120x120/0066ff/ffffff?text=JM"
                   alt="Souleymane DIALLO"
                   className="member-photo"
                 />
               </div>
               <h3>Souleymane DIALLO</h3>
               <h4>Développeur Fullstack</h4>
-              <p>Je conçois des applications web complètes, du backend à l’interface utilisateur, en alliant performance, sécurité et expérience fluide.</p>
-
+              <p>
+                Je conçois des applications web complètes, du backend à
+                l'interface utilisateur, en alliant performance, sécurité et
+                expérience fluide.
+              </p>
             </div>
             <div className="team-member fade-in">
               <div className="member-avatar">
-                <img 
-                  src="https://via.placeholder.com/120x120/0066ff/ffffff?text=JM" 
+                <img
+                  src="https://via.placeholder.com/120x120/0066ff/ffffff?text=JM"
                   alt="Ibrahima BAH"
                   className="member-photo"
                 />
               </div>
               <h3>Ibrahima BAH</h3>
               <h4>Développeur Fullstack</h4>
-              <p>Spécialisé dans les architectures modernes, je développe des solutions web robustes en intégrant API, bases de données, et interfaces réactives.</p>
+              <p>
+                Spécialisé dans les architectures modernes, je développe des
+                solutions web robustes en intégrant API, bases de données, et
+                interfaces réactives.
+              </p>
             </div>
 
             <div className="team-member fade-in">
               <div className="member-avatar">
-                <img 
-                  src="/images/fatoumata.jpg" 
+                <img
+                  src="/images/fatoumata.jpg"
                   alt="Fatoumata SOUARE"
                   className="member-photo"
                 />
               </div>
               <h3>Fatoumata SOUARE</h3>
               <h4>Community Manager & UI/UX Designer</h4>
-               <p>Je crée des expériences digitales engageantes, en combinant stratégie communautaire et design centré utilisateur. </p>
+              <p>
+                Je crée des expériences digitales engageantes, en combinant
+                stratégie communautaire et design centré utilisateur.{" "}
+              </p>
             </div>
           </div>
         </div>
@@ -2419,31 +2848,47 @@ function App() {
           <div className="faq-list">
             {[
               {
-                question: 'Quels sont vos tarifs pour un site web ?',
-                answer: 'Nos tarifs varient selon la complexité du projet. Un site vitrine commence à partir de 1500€, une application web à partir de 5000€. Nous proposons toujours un devis personnalisé après analyse de vos besoins.'
+                question: "Quels sont vos tarifs pour un site web ?",
+                answer:
+                  "Nos tarifs varient selon la complexité du projet. Un site vitrine commence à partir de 1500€, une application web à partir de 5000€. Nous proposons toujours un devis personnalisé après analyse de vos besoins.",
               },
               {
-                question: 'Combien de temps faut-il pour développer une application ?',
-                answer: 'Le délai dépend de la complexité : 2-4 semaines pour un site vitrine, 2-6 mois pour une application web complexe, 3-8 mois pour une application mobile native. Nous respectons scrupuleusement les délais convenus.'
+                question:
+                  "Combien de temps faut-il pour développer une application ?",
+                answer:
+                  "Le délai dépend de la complexité : 2-4 semaines pour un site vitrine, 2-6 mois pour une application web complexe, 3-8 mois pour une application mobile native. Nous respectons scrupuleusement les délais convenus.",
               },
               {
-                question: 'Proposez-vous un support après livraison ?',
-                answer: 'Oui, nous offrons 3 mois de support gratuit après livraison, puis des contrats de maintenance adaptés. Nous assurons également la formation de vos équipes et la documentation complète.'
+                question: "Proposez-vous un support après livraison ?",
+                answer:
+                  "Oui, nous offrons 3 mois de support gratuit après livraison, puis des contrats de maintenance adaptés. Nous assurons également la formation de vos équipes et la documentation complète.",
               },
               {
-                question: 'Travaillez-vous avec des entreprises de toutes tailles ?',
-                answer: 'Absolument ! Nous accompagnons aussi bien les startups que les grandes entreprises. Notre approche modulaire nous permet de nous adapter à tous les budgets et besoins.'
+                question:
+                  "Travaillez-vous avec des entreprises de toutes tailles ?",
+                answer:
+                  "Absolument ! Nous accompagnons aussi bien les startups que les grandes entreprises. Notre approche modulaire nous permet de nous adapter à tous les budgets et besoins.",
               },
               {
-                question: 'Vos formations sont-elles certifiantes ?',
-                answer: 'Nos formations délivrent des certificats de participation. Nous préparons également aux certifications officielles (AWS, Google Cloud, etc.) selon vos besoins professionnels.'
-              }
+                question: "Vos formations sont-elles certifiantes ?",
+                answer:
+                  "Nos formations délivrent des certificats de participation. Nous préparons également aux certifications officielles (AWS, Google Cloud, etc.) selon vos besoins professionnels.",
+              },
             ].map((faq, index) => (
-              <div key={index} className={`faq-item fade-in ${activeFaq === index ? 'active' : ''}`}>
+              <div
+                key={index}
+                className={`faq-item fade-in ${
+                  activeFaq === index ? "active" : ""
+                }`}
+              >
                 <div className="faq-question" onClick={() => toggleFaq(index)}>
                   {faq.question}
                 </div>
-                <div className={`faq-answer ${activeFaq === index ? 'active' : ''}`}>
+                <div
+                  className={`faq-answer ${
+                    activeFaq === index ? "active" : ""
+                  }`}
+                >
                   <p>{faq.answer}</p>
                 </div>
               </div>
@@ -2459,32 +2904,81 @@ function App() {
             <div className="contact-info">
               <h2>Contactez-nous</h2>
               <p>Prêt à démarrer votre projet ? Parlons-en ensemble !</p>
-              <div style={{marginTop: '2rem'}}>
-                <p><strong>📧 Email:</strong> hello@weenov.tech</p>
-                <p><strong>📱 Téléphone:</strong> +224 620 24 26 12 / +336 16 90 87 42</p>
-                <p><strong>📍 Adresse:</strong> Conakry, ManquePas, Immeuble Kébé au 3ème étage, Guinée (En cours de rénovation)</p>
-                <p><strong>⏰ Horaires:</strong> Lun-Ven 9h-18h</p>
+              <div style={{ marginTop: "2rem" }}>
+                <p>
+                  <strong>📧 Email:</strong> hello@weenov.tech
+                </p>
+                <p>
+                  <strong>📱 Téléphone:</strong> +224 620 24 26 12 / +336 16 90
+                  87 42
+                </p>
+                <p>
+                  <strong>📍 Adresse:</strong> Conakry, ManquePas, Immeuble Kébé
+                  au 3ème étage, Guinée (En cours de rénovation)
+                </p>
+                <p>
+                  <strong>⏰ Horaires:</strong> Lun-Ven 9h-18h
+                </p>
               </div>
             </div>
             <div className="contact-form">
               <form onSubmit={submitContact}>
                 <div className="form-group">
                   <label>Nom</label>
-                  <input type="text" required />
+                  <input
+                    type="text"
+                    value={contactForm.name}
+                    onChange={(e) =>
+                      setContactForm({ ...contactForm, name: e.target.value })
+                    }
+                    required
+                  />
                 </div>
                 <div className="form-group">
                   <label>Email</label>
-                  <input type="email" required />
+                  <input
+                    type="email"
+                    value={contactForm.email}
+                    onChange={(e) =>
+                      setContactForm({ ...contactForm, email: e.target.value })
+                    }
+                    required
+                  />
                 </div>
                 <div className="form-group">
                   <label>Sujet</label>
-                  <input type="text" required />
+                  <input
+                    type="text"
+                    value={contactForm.subject}
+                    onChange={(e) =>
+                      setContactForm({
+                        ...contactForm,
+                        subject: e.target.value,
+                      })
+                    }
+                    required
+                  />
                 </div>
                 <div className="form-group">
                   <label>Message</label>
-                  <textarea required></textarea>
+                  <textarea
+                    value={contactForm.message}
+                    onChange={(e) =>
+                      setContactForm({
+                        ...contactForm,
+                        message: e.target.value,
+                      })
+                    }
+                    required
+                  ></textarea>
                 </div>
-                <button type="submit" className="btn-primary">Envoyer le message</button>
+                <button
+                  type="submit"
+                  className="btn-primary"
+                  disabled={isSubmitting}
+                >
+                  {isSubmitting ? "⏳ Envoi..." : "Envoyer le message"}
+                </button>
               </form>
             </div>
           </div>
@@ -2497,14 +2991,25 @@ function App() {
           <div className="footer-content">
             <div className="footer-section">
               <h3>weenov</h3>
-              <p>Votre partenaire technologique pour l'innovation digitale. Nous transformons vos idées en solutions performantes.</p>
+              <p>
+                Votre partenaire technologique pour l'innovation digitale. Nous
+                transformons vos idées en solutions performantes.
+              </p>
             </div>
             <div className="footer-section">
               <h3>Services</h3>
-              <p><a href="#services">Développement Web</a></p>
-              <p><a href="#services">Applications Mobile</a></p>
-              <p><a href="#services">Intelligence Artificielle</a></p>
-              <p><a href="#services">Cybersécurité</a></p>
+              <p>
+                <a href="#services">Développement Web</a>
+              </p>
+              <p>
+                <a href="#services">Applications Mobile</a>
+              </p>
+              <p>
+                <a href="#services">Intelligence Artificielle</a>
+              </p>
+              <p>
+                <a href="#services">Cybersécurité</a>
+              </p>
             </div>
             <div className="footer-section">
               <h3>Contact</h3>
@@ -2514,9 +3019,15 @@ function App() {
             </div>
             <div className="footer-section">
               <h3>Suivez-nous</h3>
-              <p><a href="#">LinkedIn</a></p>
-              <p><a href="#">Twitter</a></p>
-              <p><a href="#">GitHub</a></p>
+              <p>
+                <a href="#">LinkedIn</a>
+              </p>
+              <p>
+                <a href="#">Twitter</a>
+              </p>
+              <p>
+                <a href="#">GitHub</a>
+              </p>
             </div>
           </div>
           <div className="footer-bottom">
@@ -2527,24 +3038,39 @@ function App() {
 
       {/* Contact Modal for Formation Booking */}
       {showContactModal && (
-        <div className="modal" style={{display: 'block'}}>
+        <div className="modal" style={{ display: "block" }}>
           <div className="modal-content">
             <div className="modal-header">
               <h2>🎓 Demande de réservation - {selectedFormation?.title}</h2>
-              <button className="modal-close" onClick={() => setShowContactModal(false)}>&times;</button>
+              <button
+                className="modal-close"
+                onClick={() => setShowContactModal(false)}
+              >
+                &times;
+              </button>
             </div>
             <div className="modal-body">
               <div className="formation-summary">
                 <h4>Détails de la formation :</h4>
-                <p><strong>Formation :</strong> {selectedFormation?.title}</p>
-                <p><strong>Durée :</strong> {selectedFormation?.duration}</p>
-                <p><strong>Prix :</strong> {selectedFormation?.price}</p>
+                <p>
+                  <strong>Formation :</strong> {selectedFormation?.title}
+                </p>
+                <p>
+                  <strong>Durée :</strong> {selectedFormation?.duration}
+                </p>
+                <p>
+                  <strong>Prix :</strong> {selectedFormation?.price}
+                </p>
               </div>
-              <form onSubmit={(e) => {
-                e.preventDefault()
-                alert(`Demande de réservation pour "${selectedFormation?.title}" envoyée ! Nous vous contacterons sous 24h pour finaliser votre inscription.`)
-                setShowContactModal(false)
-              }}>
+              <form
+                onSubmit={(e) => {
+                  e.preventDefault();
+                  alert(
+                    `Demande de réservation pour "${selectedFormation?.title}" envoyée ! Nous vous contacterons sous 24h pour finaliser votre inscription.`
+                  );
+                  setShowContactModal(false);
+                }}
+              >
                 <div className="form-group">
                   <label>Nom complet *</label>
                   <input type="text" required />
@@ -2584,8 +3110,16 @@ function App() {
                   <textarea placeholder="Décrivez vos objectifs, contraintes ou questions..."></textarea>
                 </div>
                 <div className="form-actions">
-                  <button type="button" className="btn-secondary" onClick={() => setShowContactModal(false)}>Annuler</button>
-                  <button type="submit" className="btn-primary">Envoyer la demande</button>
+                  <button
+                    type="button"
+                    className="btn-secondary"
+                    onClick={() => setShowContactModal(false)}
+                  >
+                    Annuler
+                  </button>
+                  <button type="submit" className="btn-primary">
+                    Envoyer la demande
+                  </button>
                 </div>
               </form>
             </div>
@@ -2595,41 +3129,64 @@ function App() {
 
       {/* Modal for Service Details */}
       {modalService && (
-        <div className="modal" style={{display: 'block'}}>
+        <div className="modal" style={{ display: "block" }}>
           <div className="modal-content">
             <div className="modal-header">
-              <h2>{serviceData[modalService]?.icon} {serviceData[modalService]?.title}</h2>
-              <button className="modal-close" onClick={closeModal}>&times;</button>
+              <h2>
+                {serviceData[modalService]?.icon}{" "}
+                {serviceData[modalService]?.title}
+              </h2>
+              <button className="modal-close" onClick={closeModal}>
+                &times;
+              </button>
             </div>
             <div className="modal-body">
               <div className="modal-tabs">
-                <button 
-                  className={`modal-tab ${activeTab === 'overview' ? 'active' : ''}`} 
-                  onClick={() => setActiveTab('overview')}
+                <button
+                  className={`modal-tab ${
+                    activeTab === "overview" ? "active" : ""
+                  }`}
+                  onClick={() => setActiveTab("overview")}
                 >
                   Vue d'ensemble
                 </button>
-                <button 
-                  className={`modal-tab ${activeTab === 'workflow' ? 'active' : ''}`} 
-                  onClick={() => setActiveTab('workflow')}
+                <button
+                  className={`modal-tab ${
+                    activeTab === "workflow" ? "active" : ""
+                  }`}
+                  onClick={() => setActiveTab("workflow")}
                 >
                   Workflow
                 </button>
-                {modalService === 'formations' && (
-                  <button 
-                    className={`modal-tab ${activeTab === 'formations' ? 'active' : ''}`} 
-                    onClick={() => setActiveTab('formations')}
+                {modalService === "formations" && (
+                  <button
+                    className={`modal-tab ${
+                      activeTab === "formations" ? "active" : ""
+                    }`}
+                    onClick={() => setActiveTab("formations")}
                   >
                     Formations
                   </button>
                 )}
               </div>
-              
-              <div className={`tab-content ${activeTab === 'overview' ? 'active' : ''}`}>
-                <div dangerouslySetInnerHTML={{__html: serviceData[modalService]?.overview}}></div>
+
+              <div
+                className={`tab-content ${
+                  activeTab === "overview" ? "active" : ""
+                }`}
+              >
+                <div
+                  dangerouslySetInnerHTML={{
+                    __html: serviceData[modalService]?.overview,
+                  }}
+                ></div>
               </div>
-              
-              <div className={`tab-content ${activeTab === 'workflow' ? 'active' : ''}`}>
+
+              <div
+                className={`tab-content ${
+                  activeTab === "workflow" ? "active" : ""
+                }`}
+              >
                 <h3>Processus de développement</h3>
                 <div className="workflow-detail">
                   {serviceData[modalService]?.workflow?.map((item, index) => (
@@ -2640,33 +3197,45 @@ function App() {
                   ))}
                 </div>
               </div>
-              
 
-              
-              {modalService === 'formations' && (
-                <div className={`tab-content ${activeTab === 'formations' ? 'active' : ''}`}>
+              {modalService === "formations" && (
+                <div
+                  className={`tab-content ${
+                    activeTab === "formations" ? "active" : ""
+                  }`}
+                >
                   <h3>Formations disponibles</h3>
                   <div className="formation-grid">
-                    {serviceData[modalService]?.formations?.map((formation, index) => (
-                      <div key={index} className="formation-card">
-                        <div className="formation-header">
-                          <h4>{formation.title}</h4>
-                          <span className="formation-price">{formation.price}</span>
+                    {serviceData[modalService]?.formations?.map(
+                      (formation, index) => (
+                        <div key={index} className="formation-card">
+                          <div className="formation-header">
+                            <h4>{formation.title}</h4>
+                            <span className="formation-price">
+                              {formation.price}
+                            </span>
+                          </div>
+                          <div className="formation-duration">
+                            {formation.duration}
+                          </div>
+                          <ul className="formation-features">
+                            {formation.features.map((feature, idx) => (
+                              <li key={idx}>{feature}</li>
+                            ))}
+                          </ul>
+                          <button
+                            className="btn-primary"
+                            onClick={() =>
+                              alert(
+                                `Demande de réservation pour la formation "${formation.title}" envoyée ! Nous vous contacterons sous 24h pour finaliser votre inscription.`
+                              )
+                            }
+                          >
+                            Réserver cette formation
+                          </button>
                         </div>
-                        <div className="formation-duration">{formation.duration}</div>
-                        <ul className="formation-features">
-                          {formation.features.map((feature, idx) => (
-                            <li key={idx}>{feature}</li>
-                          ))}
-                        </ul>
-                        <button 
-                          className="btn-primary" 
-                          onClick={() => alert(`Demande de réservation pour la formation "${formation.title}" envoyée ! Nous vous contacterons sous 24h pour finaliser votre inscription.`)}
-                        >
-                          Réserver cette formation
-                        </button>
-                      </div>
-                    ))}
+                      )
+                    )}
                   </div>
                 </div>
               )}
@@ -2677,11 +3246,16 @@ function App() {
 
       {/* Booking Modal */}
       {showBookingModal && (
-        <div className="modal" style={{display: 'block'}}>
+        <div className="modal" style={{ display: "block" }}>
           <div className="modal-content booking-modal">
             <div className="modal-header">
               <h2>📅 Réserver un appel avec notre équipe</h2>
-              <button className="modal-close" onClick={() => setShowBookingModal(false)}>&times;</button>
+              <button
+                className="modal-close"
+                onClick={() => setShowBookingModal(false)}
+              >
+                &times;
+              </button>
             </div>
             <div className="modal-body">
               {bookingStep === 1 && (
@@ -2690,60 +3264,86 @@ function App() {
                   <div className="calendar">
                     {/* En-têtes des jours de la semaine */}
                     <div className="calendar-header">
-                      {['Dim', 'Lun', 'Mar', 'Mer', 'Jeu', 'Ven', 'Sam'].map((day, index) => (
-                        <div key={day} className={`calendar-day-header ${index === 0 || index === 6 ? 'weekend-header' : ''}`}>
-                          {day}
-                        </div>
-                      ))}
+                      {["Dim", "Lun", "Mar", "Mer", "Jeu", "Ven", "Sam"].map(
+                        (day, index) => (
+                          <div
+                            key={day}
+                            className={`calendar-day-header ${
+                              index === 0 || index === 6 ? "weekend-header" : ""
+                            }`}
+                          >
+                            {day}
+                          </div>
+                        )
+                      )}
                     </div>
                     {/* Calendrier simple */}
                     <div className="calendar-grid">
                       {/* Génération des jours du mois */}
                       {(() => {
-                        const today = new Date()
-                        const currentMonth = today.getMonth()
-                        const currentYear = today.getFullYear()
-                        const daysInMonth = new Date(currentYear, currentMonth + 1, 0).getDate()
-                        const firstDayOfMonth = new Date(currentYear, currentMonth, 1).getDay()
-                        const days = []
-                        
+                        const today = new Date();
+                        const currentMonth = today.getMonth();
+                        const currentYear = today.getFullYear();
+                        const daysInMonth = new Date(
+                          currentYear,
+                          currentMonth + 1,
+                          0
+                        ).getDate();
+                        const firstDayOfMonth = new Date(
+                          currentYear,
+                          currentMonth,
+                          1
+                        ).getDay();
+                        const days = [];
+
                         // Jours vides pour aligner le premier jour
                         for (let i = 0; i < firstDayOfMonth; i++) {
-                          days.push(<div key={`empty-${i}`} className="calendar-day empty"></div>)
+                          days.push(
+                            <div
+                              key={`empty-${i}`}
+                              className="calendar-day empty"
+                            ></div>
+                          );
                         }
-                        
+
                         // Jours du mois
                         for (let day = 1; day <= daysInMonth; day++) {
-                          const isToday = day === today.getDate()
-                          const isPast = day < today.getDate()
-                          const isWeekend = new Date(currentYear, currentMonth, day).getDay() === 0 || new Date(currentYear, currentMonth, day).getDay() === 6
-                          
+                          const isToday = day === today.getDate();
+                          const isPast = day < today.getDate();
+                          const isWeekend =
+                            new Date(
+                              currentYear,
+                              currentMonth,
+                              day
+                            ).getDay() === 0 ||
+                            new Date(
+                              currentYear,
+                              currentMonth,
+                              day
+                            ).getDay() === 6;
+
                           days.push(
-                            <div 
+                            <div
                               key={day}
                               className={`calendar-day ${
-                                isPast ? 'past' : ''
-                              } ${
-                                isToday ? 'today' : ''
-                              } ${
-                                isWeekend ? 'weekend' : ''
-                              } ${
-                                selectedDate === day ? 'selected' : ''
-                              }`}
+                                isPast ? "past" : ""
+                              } ${isToday ? "today" : ""} ${
+                                isWeekend ? "weekend" : ""
+                              } ${selectedDate === day ? "selected" : ""}`}
                               onClick={() => {
                                 if (!isPast && !isWeekend) {
-                                  setSelectedDate(day)
-                                  setBookingStep(2)
+                                  setSelectedDate(day);
+                                  setBookingStep(2);
                                 }
                               }}
                             >
                               {day}
                             </div>
-                          )
+                          );
                         }
-                        
-                        return days
-                      })()} 
+
+                        return days;
+                      })()}
                     </div>
                     <div className="calendar-legend">
                       <span>Sélectionnez une date disponible (Lun-Ven)</span>
@@ -2751,115 +3351,191 @@ function App() {
                   </div>
                 </div>
               )}
-              
+
               {bookingStep === 2 && (
                 <div className="booking-step">
                   <h3>🕐 Choisissez un créneau</h3>
-                  <p>Date sélectionnée : {selectedDate} {new Date().toLocaleDateString('fr-FR', { month: 'long', year: 'numeric' })}</p>
+                  <p>
+                    Date sélectionnée : {selectedDate}{" "}
+                    {new Date().toLocaleDateString("fr-FR", {
+                      month: "long",
+                      year: "numeric",
+                    })}
+                  </p>
                   <div className="time-slots">
-                    {['09:00', '10:00', '11:00', '14:00', '15:00', '16:00', '17:00'].map(time => (
-                      <button 
+                    {[
+                      "09:00",
+                      "10:00",
+                      "11:00",
+                      "14:00",
+                      "15:00",
+                      "16:00",
+                      "17:00",
+                    ].map((time) => (
+                      <button
                         key={time}
-                        className={`time-slot ${selectedTime === time ? 'selected' : ''}`}
+                        className={`time-slot ${
+                          selectedTime === time ? "selected" : ""
+                        }`}
                         onClick={() => {
-                          setSelectedTime(time)
-                          setBookingStep(3)
+                          setSelectedTime(time);
+                          setBookingStep(3);
                         }}
                       >
                         {time}
                       </button>
                     ))}
                   </div>
-                  <button className="btn-secondary" onClick={() => setBookingStep(1)}>← Retour</button>
+                  <button
+                    className="btn-secondary"
+                    onClick={() => setBookingStep(1)}
+                  >
+                    ← Retour
+                  </button>
                 </div>
               )}
-              
+
               {bookingStep === 3 && (
                 <div className="booking-step">
                   <h3>📋 Informations de contact</h3>
                   <div className="booking-summary">
-                    <p><strong>📅 Date :</strong> {selectedDate} {new Date().toLocaleDateString('fr-FR', { month: 'long', year: 'numeric' })}</p>
-                    <p><strong>🕐 Heure :</strong> {selectedTime}</p>
+                    <p>
+                      <strong>📅 Date :</strong> {selectedDate}{" "}
+                      {new Date().toLocaleDateString("fr-FR", {
+                        month: "long",
+                        year: "numeric",
+                      })}
+                    </p>
+                    <p>
+                      <strong>🕐 Heure :</strong> {selectedTime}
+                    </p>
                   </div>
-                  
-                  <form onSubmit={(e) => {
-                    e.preventDefault()
-                    alert('Rendez-vous confirmé ! Nous vous enverrons une invitation par email.')
-                    setShowBookingModal(false)
-                    setBookingStep(1)
-                    setSelectedDate(null)
-                    setSelectedTime(null)
-                  }}>
+
+                  <form
+                    onSubmit={(e) => {
+                      e.preventDefault();
+                      alert(
+                        "Rendez-vous confirmé ! Nous vous enverrons une invitation par email."
+                      );
+                      setShowBookingModal(false);
+                      setBookingStep(1);
+                      setSelectedDate(null);
+                      setSelectedTime(null);
+                    }}
+                  >
                     <div className="form-group">
                       <label>Nom complet *</label>
-                      <input 
-                        type="text" 
-                        required 
+                      <input
+                        type="text"
+                        required
                         value={bookingData.name}
-                        onChange={(e) => setBookingData({...bookingData, name: e.target.value})}
+                        onChange={(e) =>
+                          setBookingData({
+                            ...bookingData,
+                            name: e.target.value,
+                          })
+                        }
                       />
                     </div>
-                    
+
                     <div className="form-group">
                       <label>Email *</label>
-                      <input 
-                        type="email" 
-                        required 
+                      <input
+                        type="email"
+                        required
                         value={bookingData.email}
-                        onChange={(e) => setBookingData({...bookingData, email: e.target.value})}
+                        onChange={(e) =>
+                          setBookingData({
+                            ...bookingData,
+                            email: e.target.value,
+                          })
+                        }
                       />
                     </div>
-                    
+
                     <div className="form-group">
                       <label>Email(s) pour invité(s) (optionnel)</label>
-                      <input 
-                        type="text" 
+                      <input
+                        type="text"
                         placeholder="invites@exemple.com, autre@exemple.com"
                         value={bookingData.guestEmails}
-                        onChange={(e) => setBookingData({...bookingData, guestEmails: e.target.value})}
+                        onChange={(e) =>
+                          setBookingData({
+                            ...bookingData,
+                            guestEmails: e.target.value,
+                          })
+                        }
                       />
-                      <small style={{color: '#666', fontSize: '0.8rem'}}>Séparez plusieurs emails par des virgules</small>
+                      <small style={{ color: "#666", fontSize: "0.8rem" }}>
+                        Séparez plusieurs emails par des virgules
+                      </small>
                     </div>
-                    
+
                     <div className="form-group">
                       <label>Type de réunion *</label>
                       <div className="radio-group">
                         <label className="radio-option">
-                          <input 
-                            type="radio" 
-                            name="meetingType" 
+                          <input
+                            type="radio"
+                            name="meetingType"
                             value="google-meet"
-                            checked={bookingData.meetingType === 'google-meet'}
-                            onChange={(e) => setBookingData({...bookingData, meetingType: e.target.value})}
+                            checked={bookingData.meetingType === "google-meet"}
+                            onChange={(e) =>
+                              setBookingData({
+                                ...bookingData,
+                                meetingType: e.target.value,
+                              })
+                            }
                           />
                           <span>🎥 Google Meet</span>
                         </label>
                         <label className="radio-option">
-                          <input 
-                            type="radio" 
-                            name="meetingType" 
+                          <input
+                            type="radio"
+                            name="meetingType"
                             value="phone-call"
-                            checked={bookingData.meetingType === 'phone-call'}
-                            onChange={(e) => setBookingData({...bookingData, meetingType: e.target.value})}
+                            checked={bookingData.meetingType === "phone-call"}
+                            onChange={(e) =>
+                              setBookingData({
+                                ...bookingData,
+                                meetingType: e.target.value,
+                              })
+                            }
                           />
                           <span>📞 Appel téléphonique</span>
                         </label>
                       </div>
                     </div>
-                    
+
                     <div className="form-group">
-                      <label>Veuillez partager tout ce qui pourra être utile à la préparation de notre réunion</label>
-                      <textarea 
+                      <label>
+                        Veuillez partager tout ce qui pourra être utile à la
+                        préparation de notre réunion
+                      </label>
+                      <textarea
                         rows="4"
                         placeholder="Décrivez votre projet, vos besoins, vos objectifs, ou toute information qui nous aiderait à préparer au mieux cette réunion..."
                         value={bookingData.notes}
-                        onChange={(e) => setBookingData({...bookingData, notes: e.target.value})}
+                        onChange={(e) =>
+                          setBookingData({
+                            ...bookingData,
+                            notes: e.target.value,
+                          })
+                        }
                       ></textarea>
                     </div>
-                    
+
                     <div className="form-actions">
-                      <button type="button" className="btn-secondary" onClick={() => setBookingStep(2)}>← Retour</button>
-                      <button type="submit" className="btn-primary">✅ Confirmer le rendez-vous</button>
+                      <button
+                        type="button"
+                        className="btn-secondary"
+                        onClick={() => setBookingStep(2)}
+                      >
+                        ← Retour
+                      </button>
+                      <button type="submit" className="btn-primary">
+                        ✅ Confirmer le rendez-vous
+                      </button>
                     </div>
                   </form>
                 </div>
@@ -2870,15 +3546,15 @@ function App() {
       )}
 
       {/* Back to Top Button */}
-      <button 
-        className={`back-to-top ${showBackToTop ? 'visible' : ''}`}
+      <button
+        className={`back-to-top ${showBackToTop ? "visible" : ""}`}
         onClick={scrollToTop}
         aria-label="Remonter en haut de la page"
       >
         ↑
       </button>
     </div>
-  )
+  );
 }
 
-export default App
+export default App;
