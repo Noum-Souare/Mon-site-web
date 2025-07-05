@@ -1,0 +1,16 @@
+---
+deployment:
+  tasks:
+    # IMPORTANT: Remplacez "weenoovte" par votre VRAI nom d'utilisateur cPanel
+    # Vous le trouvez dans l'URL de votre cPanel ou dans vos infos de compte Obambu
+    - export DEPLOYPATH=/home/weenoovc/public_html/
+    
+    # Nettoyer public_html en gardant les fichiers système
+    - /bin/find $DEPLOYPATH -type f -not -name '.htaccess' -not -name 'robots.txt' -not -name 'error_log' -delete
+    
+    # Copier TOUT le contenu du dossier dist (build de Vite)
+    - /bin/cp -R dist/* $DEPLOYPATH
+    
+    # Configurer les bonnes permissions
+    - /bin/find $DEPLOYPATH -type f -exec chmod 644 {} \;
+    - /bin/find $DEPLOYPATH -type d -exec chmod 755 {} \;
