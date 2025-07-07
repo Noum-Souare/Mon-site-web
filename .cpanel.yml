@@ -2,7 +2,7 @@
 deployment:
   tasks:
     # Username correct confirmé : weenoovc
-    - export DEPLOYPATH=/home/weenoovc/Mon-site-web/
+    - export DEPLOYPATH=/home/weenoovc/repositories/Mon-site-web
     
     # Nettoyer public_html en gardant les fichiers système
     - /bin/find $DEPLOYPATH -type f -not -name '.htaccess' -not -name 'robots.txt' -not -name 'error_log' -delete
