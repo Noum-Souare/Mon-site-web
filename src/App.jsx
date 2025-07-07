@@ -2509,7 +2509,7 @@ function App() {
             <div className="footer-section">
               <h3>Contact</h3>
               <p>contact@weenoov.com</p>
-              <p>+224 620 24 26 12 / +336 16 90 87 42</p>
+              <p>+224 620 24 26 12 / 627 02 30 37</p>
               <p>Conakry, ManquePas, Immeuble Kébé au 3ème étage, Guinée</p>
             </div>
             <div className="footer-section">
