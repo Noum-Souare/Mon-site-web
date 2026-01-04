@@ -80,6 +80,17 @@ function App() {
     meetingType: 'google-meet',
     notes: ''
   })
+  
+  // États pour le bandeau de conception et les cookies
+  const [showConstructionBanner, setShowConstructionBanner] = useState(true)
+  const [showCookieSettings, setShowCookieSettings] = useState(false)
+  const [showCookieModal, setShowCookieModal] = useState(false)
+  const [cookiePreferences, setCookiePreferences] = useState({
+    necessary: true,
+    analytics: false,
+    marketing: false,
+    preferences: false
+  })
 
   const serviceData = {
     'web-dev': {
@@ -519,7 +530,7 @@ function App() {
           <ul style="line-height: 1.8; margin-left: 1rem;">
             <li>Évaluation par d'anciens experts NSA qui découvrent 99.7% des failles</li>
             <li>Tests d'intrusion par des hackers éthiques certifiés OSCP</li>
-            <li>Audit de conformité RGPD, ISO 27001 garantie</li>
+            <li>Audit de conformité, ISO 27001 garantie</li>
           </ul>
         </div>
         
@@ -666,7 +677,7 @@ function App() {
       workflow: [
         { 
           title: 'Audit de Sécurité Global & Cartographie des Risques (2-3 semaines)', 
-          desc: 'Cartographie complète de l\'infrastructure IT, inventaire des actifs critiques, évaluation des vulnérabilités techniques (scan automatisé + manuel), audit des configurations et des politiques de sécurité existantes, compliance check (RGPD, ISO 27001, SOC2), analyse des risques méthodologie EBIOS RM.'
+          desc: 'Cartographie complète de l\'infrastructure IT, inventaire des actifs critiques, évaluation des vulnérabilités techniques (scan automatisé + manuel), audit des configurations et des politiques de sécurité existantes, compliance check (ISO 27001, SOC2), analyse des risques méthodologie EBIOS RM.'
         },
         { 
           title: 'Sécurisation Infrastructure SI & Durcissement (3-4 semaines)', 
@@ -696,7 +707,7 @@ function App() {
       blog: [
         { date: '20 Mai 2025', title: 'Zero Trust : révolution de la sécurité IT', excerpt: 'Découvrez comment l\'approche Zero Trust transforme la cybersécurité d\'entreprise.' },
         { date: '16 Mai 2025', title: 'Ransomware : prévention et réponse', excerpt: 'Guide complet pour se protéger contre les ransomwares et réagir en cas d\'attaque.' },
-        { date: '11 Mai 2025', title: 'RGPD en 2025 : nouveautés et sanctions', excerpt: 'Mise à jour des exigences RGPD et bonnes pratiques pour rester conforme.' }
+        { date: '11 Mai 2025', title: 'Protection des données en 2025 : nouveautés et sanctions', excerpt: 'Mise à jour des exigences et bonnes pratiques pour rester conforme.' }
       ]
     },
     'blockchain': {
@@ -836,6 +847,184 @@ function App() {
         { date: '22 Mai 2025', title: 'Web3 et entreprises : cas d\'usage concrets', excerpt: 'Comment les entreprises utilisent la blockchain pour transformer leurs activités.' },
         { date: '17 Mai 2025', title: 'Sécurité des Smart Contracts', excerpt: 'Bonnes pratiques pour développer des contrats intelligents sécurisés.' },
         { date: '13 Mai 2025', title: 'NFT B2B : au-delà de l\'art numérique', excerpt: 'Applications professionnelles des NFT : certification, authentification, propriété.' }
+      ]
+    },
+    'conformite-donnees': {
+      title: 'Gouvernance des données & Accompagnement dans la conformité',
+      icon: '🛡️',
+      overview: `
+        <div class="persuasive-intro">
+          <p><strong>🛡️ Protégez vos données et assurez votre conformité légale !</strong></p>
+          <p>⚡ <em>La conformité et protection des données devient obligatoire en Guinée.</em> Avec la future Autorité de Protection des Données à Caractère Personnel (APDP), anticipez les nouvelles réglementations et protégez votre entreprise des sanctions. Notre expertise vous accompagne dans cette transition réglementaire cruciale !</p>
+        </div>
+        
+        <div style="margin: 2rem 0;">
+          <h4 style="color: var(--primary-blue); margin-bottom: 1.5rem; font-size: 1.3rem;">🔒 Cadre légal guinéen :</h4>
+        </div>
+        
+        <div style="margin-bottom: 2.5rem; padding: 1.5rem; background: linear-gradient(135deg, #f8f9ff 0%, #e8f2ff 100%); border-radius: 12px; border-left: 4px solid var(--primary-blue);">
+          <h5 style="color: var(--primary-blue); font-weight: bold; font-size: 1.1rem; margin-bottom: 1rem;">📋 Loi N° L/2016/037/AN</h5>
+          <p style="line-height: 1.8; margin-bottom: 1rem;">La loi relative à la cybersécurité et à la protection des données à caractère personnel en République de Guinée établit le cadre légal pour la protection des données personnelles.</p>
+          <ul style="line-height: 1.8; margin-left: 1rem;">
+            <li><strong>Article 14 :</strong> Obligation de désigner un correspondant à la protection des données (DPO)</li>
+          </ul>
+        </div>
+        
+        <div style="margin-bottom: 2.5rem; padding: 1.5rem; background: linear-gradient(135deg, #e8f5e9 0%, #c8e6c9 100%); border-radius: 12px; border-left: 4px solid #2e7d32;">
+          <h5 style="color: #2e7d32; font-weight: bold; font-size: 1.1rem; margin-bottom: 1rem;">📊 Gouvernance des données</h5>
+          <p style="line-height: 1.8; margin-bottom: 1rem;">Mise en place d'un cadre de gouvernance complet pour maîtriser, sécuriser et valoriser vos données tout au long de leur cycle de vie, en conformité avec les exigences réglementaires.</p>
+          <ul style="line-height: 1.8; margin-left: 1rem;">
+            <li>Définition des politiques et procédures de gestion des données</li>
+            <li>Cartographie complète et inventaire des données de l'organisation</li>
+            <li>Classification et catégorisation des données selon leur sensibilité</li>
+            <li>Mise en place d'un catalogue de données et gestion des métadonnées</li>
+            <li>Définition des rôles et responsabilités (Data Owner, Data Steward, etc.)</li>
+            <li>Traçabilité et linéage des données (data lineage)</li>
+            <li>Qualité des données : définition de règles, monitoring et correction</li>
+            <li>Gestion du cycle de vie des données (création, utilisation, archivage, suppression)</li>
+            <li>Conformité réglementaire et respect des obligations légales</li>
+            <li>Mise en place d'indicateurs de performance (KPI) pour la gouvernance</li>
+          </ul>
+        </div>
+        
+        <div style="margin-bottom: 2.5rem; padding: 1.5rem; background: linear-gradient(135deg, #f0f8ff 0%, #e0f0ff 100%); border-radius: 12px; border-left: 4px solid #4285f4;">
+          <h5 style="color: #4285f4; font-weight: bold; font-size: 1.1rem; margin-bottom: 1rem;">🏛️ Autorité de Protection des Données (APDP)</h5>
+          <p style="line-height: 1.8; margin-bottom: 1rem;">La future APDP sera l'autorité de contrôle chargée de garantir la mise en œuvre effective des dispositions légales en matière de protection des données.</p>
+          <ul style="line-height: 1.8; margin-left: 1rem;">
+            <li>Contrôle et vérification de la conformité des traitements</li>
+            <li>Sanctions en cas de non-conformité</li>
+            <li>Accompagnement des organisations dans leur mise en conformité</li>
+          </ul>
+        </div>
+        
+        <div style="margin: 2rem 0;">
+          <h4 style="color: var(--primary-blue); margin-bottom: 1.5rem; font-size: 1.3rem;">🎯 Nos services d'accompagnement :</h4>
+        </div>
+        
+        <div style="margin-bottom: 2.5rem; padding: 1.5rem; background: linear-gradient(135deg, #f8f9ff 0%, #e8f2ff 100%); border-radius: 12px; border-left: 4px solid var(--primary-blue);">
+          <h5 style="color: var(--primary-blue); font-weight: bold; font-size: 1.1rem; margin-bottom: 1rem;">👨‍💼 Assistance DPO</h5>
+          <p style="line-height: 1.8; margin-bottom: 1rem;">Soutien complet aux Délégués à la Protection des Données dans l'exercice de leurs missions conformément à l'article 14 de la loi guinéenne.</p>
+          <ul style="line-height: 1.8; margin-left: 1rem;">
+            <li>Conseil juridique et technique spécialisé</li>
+            <li>Veille réglementaire et mise à jour des obligations</li>
+            <li>Gestion des relations avec l'APDP</li>
+            <li>Tenue et mise à jour du registre des traitements</li>
+            <li>Accompagnement dans les procédures de notification</li>
+          </ul>
+        </div>
+        
+        <div style="margin-bottom: 2.5rem; padding: 1.5rem; background: linear-gradient(135deg, #f0f8ff 0%, #e0f0ff 100%); border-radius: 12px; border-left: 4px solid #4285f4;">
+          <h5 style="color: #4285f4; font-weight: bold; font-size: 1.1rem; margin-bottom: 1rem;">🔍 Audit de conformité</h5>
+          <p style="line-height: 1.8; margin-bottom: 1rem;">Évaluation complète du niveau de conformité de votre organisation aux exigences de la loi guinéenne sur la protection des données.</p>
+          <ul style="line-height: 1.8; margin-left: 1rem;">
+            <li>Analyse des processus de collecte et traitement des données</li>
+            <li>Vérification de la conformité des systèmes d'information</li>
+            <li>Évaluation des mesures de sécurité techniques et organisationnelles</li>
+            <li>Rapport détaillé avec plan d'actions correctives</li>
+            <li>Préparation aux contrôles de l'APDP</li>
+          </ul>
+        </div>
+        
+        <div style="margin-bottom: 2.5rem; padding: 1.5rem; background: linear-gradient(135deg, #fff8f0 0%, #ffe8d0 100%); border-radius: 12px; border-left: 4px solid #ff9800;">
+          <h5 style="color: #ff9800; font-weight: bold; font-size: 1.1rem; margin-bottom: 1rem;">🏗️ Gouvernance SSI</h5>
+          <p style="line-height: 1.8; margin-bottom: 1rem;">Mise en place d'une gouvernance efficace de la Sécurité des Systèmes d'Information alignée avec les exigences légales guinéennes.</p>
+          <ul style="line-height: 1.8; margin-left: 1rem;">
+            <li>Élaboration de politiques de sécurité des données</li>
+            <li>Gestion des risques et classification des données</li>
+            <li>Mise en œuvre de mesures techniques de protection</li>
+            <li>Procédures de gestion des incidents de sécurité</li>
+            <li>Contrôles d'accès et traçabilité des actions</li>
+          </ul>
+        </div>
+        
+        <div style="margin-bottom: 2.5rem; padding: 1.5rem; background: linear-gradient(135deg, #f0fff0 0%, #e0ffe0 100%); border-radius: 12px; border-left: 4px solid #4caf50;">
+          <h5 style="color: #4caf50; font-weight: bold; font-size: 1.1rem; margin-bottom: 1rem;">🤝 DPO externalisé</h5>
+          <p style="line-height: 1.8; margin-bottom: 1rem;">Service de DPO externalisé pour les organisations ne disposant pas de ressources internes dédiées, assurant la conformité continue.</p>
+          <ul style="line-height: 1.8; margin-left: 1rem;">
+            <li>Désignation d'un DPO qualifié selon l'article 14</li>
+            <li>Assistance permanente dans les obligations légales</li>
+            <li>Interface privilégiée avec l'APDP</li>
+            <li>Mise à jour continue du registre des traitements</li>
+            <li>Formation des équipes internes</li>
+          </ul>
+        </div>
+        
+        <div style="margin-bottom: 2.5rem; padding: 1.5rem; background: linear-gradient(135deg, #faf5ff 0%, #f3e8ff 100%); border-radius: 12px; border-left: 4px solid #9c27b0;">
+          <h5 style="color: #9c27b0; font-weight: bold; font-size: 1.1rem; margin-bottom: 1rem;">🎓 Formation DPO</h5>
+          <p style="line-height: 1.8; margin-bottom: 1rem;">Formations spécialisées pour les DPO et professionnels impliqués dans la protection des données personnelles.</p>
+          <ul style="line-height: 1.8; margin-left: 1rem;">
+            <li>Formation aux aspects juridiques de la loi guinéenne</li>
+            <li>Acquisition des compétences techniques nécessaires</li>
+            <li>Gestion des relations avec les autorités de contrôle</li>
+            <li>Certification et validation des acquis</li>
+            <li>Formation continue et mise à jour réglementaire</li>
+          </ul>
+        </div>
+        
+        <div style="margin-bottom: 2.5rem; padding: 1.5rem; background: linear-gradient(135deg, #fff5f5 0%, #ffe8e8 100%); border-radius: 12px; border-left: 4px solid #f44336;">
+          <h5 style="color: #f44336; font-weight: bold; font-size: 1.1rem; margin-bottom: 1rem;">📢 Sensibilisation</h5>
+          <p style="line-height: 1.8; margin-bottom: 1rem;">Sessions de sensibilisation pour promouvoir une culture de protection des données personnelles au sein de votre organisation.</p>
+          <ul style="line-height: 1.8; margin-left: 1rem;">
+            <li>Sensibilisation du personnel aux enjeux de protection des données</li>
+            <li>Formation aux bonnes pratiques et obligations légales</li>
+            <li>Simulation d'incidents et procédures d'urgence</li>
+            <li>Création d'une charte de protection des données</li>
+            <li>Évaluation et suivi des comportements</li>
+          </ul>
+        </div>
+        
+        <div style="margin-top: 3rem; padding: 2rem; background: linear-gradient(135deg, #f5f8ff 0%, #e8f2ff 100%); border-radius: 16px; border: 2px solid var(--primary-blue); box-shadow: 0 8px 24px rgba(0, 102, 255, 0.1);">
+          <h4 style="color: var(--primary-blue); font-weight: bold; font-size: 1.3rem; margin-bottom: 1.5rem; text-align: center;">🛡️ Avantages de la conformité</h4>
+          <div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(250px, 1fr)); gap: 1.5rem; margin-top: 1.5rem;">
+            <div style="text-align: center; padding: 1rem; background: white; border-radius: 12px; box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);">
+              <div style="font-size: 2rem; font-weight: bold; color: var(--primary-blue); margin-bottom: 0.5rem;">100%</div>
+              <div style="font-size: 0.9rem; color: #666;">Conformité aux exigences légales guinéennes</div>
+            </div>
+            <div style="text-align: center; padding: 1rem; background: white; border-radius: 12px; box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);">
+              <div style="font-size: 2rem; font-weight: bold; color: #4caf50; margin-bottom: 0.5rem;">-90%</div>
+              <div style="font-size: 0.9rem; color: #666;">Réduction des risques de sanctions</div>
+            </div>
+            <div style="text-align: center; padding: 1rem; background: white; border-radius: 12px; box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);">
+              <div style="font-size: 2rem; font-weight: bold; color: #ff9800; margin-bottom: 0.5rem;">+75%</div>
+              <div style="font-size: 0.9rem; color: #666;">Confiance des clients et partenaires</div>
+            </div>
+            <div style="text-align: center; padding: 1rem; background: white; border-radius: 12px; box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);">
+              <div style="font-size: 2rem; font-weight: bold; color: #9c27b0; margin-bottom: 0.5rem;">24/7</div>
+              <div style="font-size: 0.9rem; color: #666;">Support et veille réglementaire</div>
+            </div>
+          </div>
+        </div>
+      `,
+      workflow: [
+        { 
+          title: 'Audit initial & Cartographie des données (2-3 semaines)', 
+          desc: 'Inventaire complet des traitements de données personnelles, cartographie des flux de données, évaluation du niveau de conformité actuel, identification des risques et non-conformités, analyse des obligations légales spécifiques à votre secteur d\'activité selon la loi guinéenne.'
+        },
+        { 
+          title: 'Désignation DPO & Mise en conformité (3-4 semaines)', 
+          desc: 'Désignation du DPO interne ou externalisé selon l\'article 14 de la loi, création du registre des traitements, mise en place des procédures de consentement et d\'information des personnes, élaboration des politiques de protection des données et des procédures de gestion des droits des personnes.'
+        },
+        { 
+          title: 'Sécurisation technique & Gouvernance SSI (4-5 semaines)', 
+          desc: 'Mise en œuvre des mesures techniques de sécurité (chiffrement, contrôle d\'accès, traçabilité), durcissement des systèmes d\'information, mise en place de la gouvernance SSI, procédures de gestion des incidents de sécurité et plan de continuité d\'activité en cas de violation de données.'
+        },
+        { 
+          title: 'Formation & Sensibilisation (2-3 semaines)', 
+          desc: 'Formation complète du DPO et des équipes techniques, sensibilisation de l\'ensemble du personnel aux enjeux de protection des données, création de supports de formation et de communication, simulation d\'incidents et tests des procédures d\'urgence, évaluation des acquis et certification.'
+        },
+        { 
+          title: 'Tests & Validation (2-3 semaines)', 
+          desc: 'Tests de conformité complets, audit interne par un expert externe, simulation de contrôles de l\'APDP, validation des procédures et documentation, tests de résistance aux violations de données, optimisation des processus et correction des non-conformités identifiées.'
+        },
+        { 
+          title: 'Déploiement & Suivi continu (1-2 semaines puis continu)', 
+          desc: 'Mise en production des mesures de conformité, formation des utilisateurs finaux, mise en place du monitoring et de la veille réglementaire, accompagnement dans les relations avec l\'APDP, audits de conformité périodiques et mise à jour continue des procédures selon l\'évolution réglementaire.'
+        }
+      ],
+      blog: [
+        { date: '25 Mai 2025', title: 'APDP en Guinée : préparer votre organisation', excerpt: 'Comment anticiper la mise en place de l\'Autorité de Protection des Données et assurer votre conformité.' },
+        { date: '21 Mai 2025', title: 'Loi guinéenne sur les données : obligations des entreprises', excerpt: 'Décryptage des obligations légales pour les organisations en Guinée selon la loi L/2016/037/AN.' },
+        { date: '19 Mai 2025', title: 'DPO en Guinée : rôle et responsabilités', excerpt: 'Guide complet sur le rôle du Délégué à la Protection des Données selon la législation guinéenne.' }
       ]
     },
     'cloud-devops': {
@@ -1844,8 +2033,92 @@ function App() {
     }
   }, [isDarkTheme])
 
+  // useEffect pour le bandeau de conception
+  useEffect(() => {
+    if (showConstructionBanner) {
+      const timer = setTimeout(() => {
+        setShowConstructionBanner(false)
+      }, 5000) // Disparaît après 5 secondes
+      
+      return () => clearTimeout(timer)
+    }
+  }, [showConstructionBanner])
+
+  // useEffect pour les paramètres de cookies
+  useEffect(() => {
+    // Vérifier si l'utilisateur a déjà fait un choix de cookies
+    const cookieChoice = localStorage.getItem('cookiePreferences')
+    if (!cookieChoice) {
+      // Afficher les paramètres de cookies après 2 secondes
+      const timer = setTimeout(() => {
+        setShowCookieSettings(true)
+      }, 2000)
+      
+      return () => clearTimeout(timer)
+    } else {
+      // Charger les préférences sauvegardées
+      setCookiePreferences(JSON.parse(cookieChoice))
+    }
+  }, [])
+
+  // Fonctions pour gérer les cookies
+  const handleAcceptAllCookies = () => {
+    const allAccepted = {
+      necessary: true,
+      analytics: true,
+      marketing: true,
+      preferences: true
+    }
+    setCookiePreferences(allAccepted)
+    localStorage.setItem('cookiePreferences', JSON.stringify(allAccepted))
+    setShowCookieSettings(false)
+  }
+
+  const handleRejectAllCookies = () => {
+    const onlyNecessary = {
+      necessary: true,
+      analytics: false,
+      marketing: false,
+      preferences: false
+    }
+    setCookiePreferences(onlyNecessary)
+    localStorage.setItem('cookiePreferences', JSON.stringify(onlyNecessary))
+    setShowCookieSettings(false)
+  }
+
+  const handleCustomizeCookies = () => {
+    setShowCookieModal(true)
+  }
+
+  const handleSaveCookiePreferences = () => {
+    localStorage.setItem('cookiePreferences', JSON.stringify(cookiePreferences))
+    setShowCookieSettings(false)
+    setShowCookieModal(false)
+  }
+
+  const toggleCookieCategory = (category) => {
+    if (category === 'necessary') return // Les cookies nécessaires ne peuvent pas être désactivés
+    setCookiePreferences(prev => ({
+      ...prev,
+      [category]: !prev[category]
+    }))
+  }
+
   return (
     <div>
+      {/* Construction Banner */}
+      {showConstructionBanner && (
+        <div className={`construction-banner ${!showConstructionBanner ? 'hidden' : ''}`}>
+          <div className="construction-banner-content">
+            <div className="construction-icon">🚧</div>
+            <div>
+              <span className="construction-text">Site en construction</span>
+              <span className="construction-subtext">- Version bêta en cours de développement</span>
+            </div>
+          </div>
+        </div>
+      )}
+
       {/* Header */}
       <header className="header">
         <nav className="nav">
@@ -1910,6 +2183,10 @@ function App() {
                 <div className="service-icon">⛓️</div>
                 <strong>Blockchain</strong>
               </div>
+              <div className="floating-card">
+                <div className="service-icon">🛡️</div>
+                <strong>Conformité & Protection des Données</strong>
+              </div>
             </div>
           </div>
         </div>
@@ -1951,6 +2228,12 @@ function App() {
               <div className="service-icon">⛓️</div>
               <h3>Blockchain</h3>
               <p>Développement d'applications décentralisées (DApps), smart contracts, solutions NFT et intégration blockchain pour la traçabilité et la sécurisaton des transactions.</p>
+              <div className="card-arrow">→</div>
+            </div>
+            <div className="service-card fade-in" onClick={() => openServiceModal('conformite-donnees')}>
+              <div className="service-icon">🛡️</div>
+              <h3>Gouvernance des données & Accompagnement dans la conformité</h3>
+              <p>Assistance DPO, audit de conformité, gouvernance SSI, DPO externalisé, formation DPO et sensibilisation selon la loi guinéenne L/2016/037/AN et la future APDP.</p>
               <div className="card-arrow">→</div>
             </div>
             <div className="service-card fade-in" onClick={() => openServiceModal('cloud-devops')}>
@@ -2864,6 +3147,150 @@ function App() {
                   </form>
                 </div>
               )}
+            </div>
+          </div>
+        </div>
+      )}
+
+      {/* Cookie Settings */}
+      {showCookieSettings && (
+        <div className="cookie-settings visible">
+          <div className="cookie-settings-content">
+            <div className="cookie-text">
+              <div className="cookie-title">🍪 Gestion des cookies</div>
+              <div className="cookie-description">
+                Nous utilisons des cookies pour améliorer votre expérience sur notre site. 
+                Vous pouvez choisir quels cookies accepter.
+              </div>
+            </div>
+            <div className="cookie-actions">
+              <button 
+                className="cookie-btn cookie-btn-reject"
+                onClick={handleRejectAllCookies}
+              >
+                Tout refuser
+              </button>
+              <button 
+                className="cookie-btn cookie-btn-customize"
+                onClick={handleCustomizeCookies}
+              >
+                Personnaliser
+              </button>
+              <button 
+                className="cookie-btn cookie-btn-accept"
+                onClick={handleAcceptAllCookies}
+              >
+                Tout accepter
+              </button>
+            </div>
+          </div>
+        </div>
+      )}
+
+      {/* Cookie Customization Modal */}
+      {showCookieModal && (
+        <div className="cookie-modal">
+          <div className="cookie-modal-content">
+            <div className="cookie-modal-header">
+              <h3 className="cookie-modal-title">🍪 Paramètres des cookies</h3>
+              <button 
+                className="cookie-modal-close"
+                onClick={() => setShowCookieModal(false)}
+              >
+                ×
+              </button>
+            </div>
+            
+            <div className="cookie-category">
+              <div className="cookie-category-header">
+                <h4 className="cookie-category-title">Cookies nécessaires</h4>
+                <div className="cookie-toggle active">
+                  <div className="cookie-toggle-slider"></div>
+                </div>
+              </div>
+              <div className="cookie-category-description">
+                Ces cookies sont essentiels au fonctionnement du site et ne peuvent pas être désactivés.
+              </div>
+              <div className="cookie-category-details">
+                • Mémorisation de vos préférences de cookies<br/>
+                • Sécurité et authentification<br/>
+                • Fonctionnalités de base du site
+              </div>
+            </div>
+
+            <div className="cookie-category">
+              <div className="cookie-category-header">
+                <h4 className="cookie-category-title">Cookies d'analyse</h4>
+                <div 
+                  className={`cookie-toggle ${cookiePreferences.analytics ? 'active' : ''}`}
+                  onClick={() => toggleCookieCategory('analytics')}
+                >
+                  <div className="cookie-toggle-slider"></div>
+                </div>
+              </div>
+              <div className="cookie-category-description">
+                Ces cookies nous aident à comprendre comment vous utilisez notre site.
+              </div>
+              <div className="cookie-category-details">
+                • Statistiques de visite<br/>
+                • Pages les plus consultées<br/>
+                • Temps passé sur le site
+              </div>
+            </div>
+
+            <div className="cookie-category">
+              <div className="cookie-category-header">
+                <h4 className="cookie-category-title">Cookies marketing</h4>
+                <div 
+                  className={`cookie-toggle ${cookiePreferences.marketing ? 'active' : ''}`}
+                  onClick={() => toggleCookieCategory('marketing')}
+                >
+                  <div className="cookie-toggle-slider"></div>
+                </div>
+              </div>
+              <div className="cookie-category-description">
+                Ces cookies permettent d'afficher des publicités personnalisées.
+              </div>
+              <div className="cookie-category-details">
+                • Publicités ciblées<br/>
+                • Suivi des conversions<br/>
+                • Personnalisation des offres
+              </div>
+            </div>
+
+            <div className="cookie-category">
+              <div className="cookie-category-header">
+                <h4 className="cookie-category-title">Cookies de préférences</h4>
+                <div 
+                  className={`cookie-toggle ${cookiePreferences.preferences ? 'active' : ''}`}
+                  onClick={() => toggleCookieCategory('preferences')}
+                >
+                  <div className="cookie-toggle-slider"></div>
+                </div>
+              </div>
+              <div className="cookie-category-description">
+                Ces cookies mémorisent vos choix pour personnaliser votre expérience.
+              </div>
+              <div className="cookie-category-details">
+                • Thème sombre/clair<br/>
+                • Langue préférée<br/>
+                • Paramètres d'affichage
+              </div>
+            </div>
+
+            <div className="cookie-modal-actions">
+              <button 
+                className="cookie-modal-btn cookie-modal-btn-secondary"
+                onClick={() => setShowCookieModal(false)}
+              >
+                Annuler
+              </button>
+              <button 
+                className="cookie-modal-btn cookie-modal-btn-primary"
+                onClick={handleSaveCookiePreferences}
+              >
+                Sauvegarder mes préférences
+              </button>
             </div>
           </div>
         </div>
