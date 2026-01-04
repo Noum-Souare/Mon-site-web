@@ -2312,7 +2312,7 @@ function App() {
                 <div className="service-icon">⛓️</div>
                 <strong>Blockchain</strong>
               </div>
-              <div className="floating-card">
+              <div className="floating-card" style={{padding: '0.75rem', maxWidth: '180px'}}>
                 <div className="service-icon">🛡️</div>
                 <strong>Gouvernance des données & Accompagnement dans la conformité</strong>
               </div>
