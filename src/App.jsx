@@ -1635,100 +1635,229 @@ function App() {
       ]
     },
     'automatisation-n8n': {
-      title: 'Automatisation n8n',
+      title: "Solutions d'Automatisation & Agents IA",
       icon: '⚡',
       overview: `
         <div class="persuasive-intro">
-          <p><strong>⚡ Libérez le potentiel caché de votre équipe !</strong></p>
-          <p>🤖 <em>L'automatisation n8n fait économiser 50k€/an à nos clients en moyenne.</em> Stop aux tâches répétitives qui tuent la créativité ! Connectez tous vos outils en workflows intelligents qui travaillent pour vous 24/7. Vos concurrents automatisent déjà... ne restez pas à la traîne !</p>
+          <p><strong>🤖 Révolutionnez votre entreprise avec l'IA et l'automatisation !</strong></p>
+          <p>⚡ <em>Agents IA intelligents et workflows automatisés qui travaillent 24/7 pour vous.</em> Libérez votre équipe des tâches répétitives et concentrez-vous sur l'essentiel. De la startup à l'institution, nous adaptons nos solutions à vos besoins.</p>
         </div>
         
         <div style="margin: 2rem 0;">
-          <h4 style="color: var(--primary-blue); margin-bottom: 1.5rem; font-size: 1.3rem;">🚀 Solutions d'automatisation révolutionnaires :</h4>
+          <h4 style="color: var(--primary-blue); margin-bottom: 1.5rem; font-size: 1.3rem;">1️⃣ Services autour des Agents IA</h4>
         </div>
         
         <div style="margin-bottom: 2.5rem; padding: 1.5rem; background: linear-gradient(135deg, #f8f9ff 0%, #e8f2ff 100%); border-radius: 12px; border-left: 4px solid var(--primary-blue);">
-          <h5 style="color: var(--primary-blue); font-weight: bold; font-size: 1.1rem; margin-bottom: 1rem;">⚙️ Workflows Sur Mesure</h5>
+          <h5 style="color: var(--primary-blue); font-weight: bold; font-size: 1.1rem; margin-bottom: 1rem;">🤖 Agents IA métiers sur mesure</h5>
+          <ul style="line-height: 1.8; margin-left: 1rem; margin-bottom: 1rem;">
+            <li>Agents IA pour support client (chat, email, WhatsApp)</li>
+            <li>Agents IA pour back-office (RH, finance, conformité)</li>
+            <li>Agents IA pour veille & analyse (documents, données, rapports)</li>
+            <li>Agents IA décisionnels (aide à la décision, scoring, recommandations)</li>
+          </ul>
+          <div style="margin-top: 1rem; padding: 1rem; background: rgba(255, 255, 255, 0.7); border-radius: 8px;">
+            <p style="font-weight: bold; margin-bottom: 0.5rem;">👉 Cas concrets :</p>
           <ul style="line-height: 1.8; margin-left: 1rem;">
-            <li>Automatisation de processus métier complexes</li>
-            <li>Logique conditionnelle et branchements intelligents</li>
-            <li>Gestion d'erreurs et retry automatique</li>
+              <li>Agent IA qui répond aux clients 24/7</li>
+              <li>Agent qui analyse des dossiers (PDF, contrats, factures)</li>
+              <li>Agent qui prépare des rapports automatiques</li>
+          </ul>
+          </div>
+          <div style="margin-top: 1rem; padding: 1rem; background: rgba(255, 255, 255, 0.7); border-radius: 8px;">
+            <p style="font-weight: bold; margin-bottom: 0.5rem;">🔹 Agents IA connectés aux outils existants</p>
+            <ul style="line-height: 1.8; margin-left: 1rem;">
+              <li>CRM (HubSpot, Salesforce…)</li>
+              <li>ERP</li>
+              <li>Google Workspace / Microsoft 365</li>
+              <li>Bases de données internes</li>
+              <li>API métiers</li>
+            </ul>
+          </div>
+        </div>
+        
+        <div style="margin: 2rem 0;">
+          <h4 style="color: var(--primary-blue); margin-bottom: 1.5rem; font-size: 1.3rem;">2️⃣ Automatisation de processus (n8n / no-code / low-code)</h4>
+        </div>
+        
+        <div style="margin-bottom: 2.5rem; padding: 1.5rem; background: linear-gradient(135deg, #f0f8ff 0%, #e0f0ff 100%); border-radius: 12px; border-left: 4px solid #4285f4;">
+          <h5 style="color: #4285f4; font-weight: bold; font-size: 1.1rem; margin-bottom: 1rem;">⚙️ Automatisation des workflows métiers</h5>
+          <ul style="line-height: 1.8; margin-left: 1rem; margin-bottom: 1rem;">
+            <li>Automatisation des emails, formulaires, notifications</li>
+            <li>Synchronisation de données entre applications</li>
+            <li>Traitement automatique de documents</li>
+            <li>Génération et envoi de rapports</li>
+          </ul>
+          <div style="margin-top: 1rem; padding: 1rem; background: rgba(255, 255, 255, 0.7); border-radius: 8px;">
+            <p style="font-weight: bold; margin-bottom: 0.5rem;">👉 Exemples :</p>
+          <ul style="line-height: 1.8; margin-left: 1rem;">
+              <li>Un formulaire → validation → stockage → notification</li>
+              <li>Facture reçue → analyse → archivage → comptabilité</li>
+              <li>Ticket client → classification → réponse → suivi</li>
+          </ul>
+          </div>
+          <div style="margin-top: 1rem; padding: 1rem; background: rgba(255, 255, 255, 0.7); border-radius: 8px;">
+            <p style="font-weight: bold; margin-bottom: 0.5rem;">🔹 Automatisation API & intégrations</p>
+            <ul style="line-height: 1.8; margin-left: 1rem;">
+              <li>Connexion entre systèmes hétérogènes</li>
+              <li>Orchestration d'API (internes & externes)</li>
+              <li>Automatisation inter-applications (sans développement lourd)</li>
+            </ul>
+          </div>
+        </div>
+        
+        <div style="margin: 2rem 0;">
+          <h4 style="color: var(--primary-blue); margin-bottom: 1.5rem; font-size: 1.3rem;">🧩 3. MCP / orchestration intelligente des systèmes</h4>
+        </div>
+        
+        <div style="margin-bottom: 2.5rem; padding: 1.5rem; background: linear-gradient(135deg, #fff8f0 0%, #ffe8d0 100%); border-radius: 12px; border-left: 4px solid #ff9800;">
+          <h5 style="color: #ff9800; font-weight: bold; font-size: 1.1rem; margin-bottom: 1rem;">🎯 Orchestration IA & systèmes</h5>
+          <ul style="line-height: 1.8; margin-left: 1rem; margin-bottom: 1rem;">
+            <li>Coordination entre plusieurs agents IA</li>
+            <li>Orchestration IA + workflows automatisés</li>
+            <li>Supervision des actions et décisions automatiques</li>
+          </ul>
+          <div style="margin-top: 1rem; padding: 1rem; background: rgba(255, 255, 255, 0.7); border-radius: 8px;">
+            <p style="font-weight: bold; margin-bottom: 0.5rem;">👉 Exemple :</p>
+            <p style="margin-left: 1rem;">Un agent analyse → un autre décide → un workflow exécute</p>
+          </div>
+          <div style="margin-top: 1rem; padding: 1rem; background: rgba(255, 255, 255, 0.7); border-radius: 8px;">
+            <p style="font-weight: bold; margin-bottom: 0.5rem;">🔹 Gouvernance & contrôle des agents</p>
+          <ul style="line-height: 1.8; margin-left: 1rem;">
+              <li>Logs et traçabilité des actions IA</li>
+              <li>Règles métier et garde-fous</li>
+              <li>Supervision humaine (human-in-the-loop)</li>
+          </ul>
+          </div>
+        </div>
+        
+        <div style="margin: 2rem 0;">
+          <h4 style="color: var(--primary-blue); margin-bottom: 1.5rem; font-size: 1.3rem;">📊 4. Services Data & Intelligence</h4>
+        </div>
+        
+        <div style="margin-bottom: 2.5rem; padding: 1.5rem; background: linear-gradient(135deg, #f0fff0 0%, #e0ffe0 100%); border-radius: 12px; border-left: 4px solid #4caf50;">
+          <h5 style="color: #4caf50; font-weight: bold; font-size: 1.1rem; margin-bottom: 1rem;">📈 Collecte automatisée des données</h5>
+          <ul style="line-height: 1.8; margin-left: 1rem; margin-bottom: 1rem;">
+            <li>Nettoyage & structuration</li>
+            <li>Analyse intelligente (IA)</li>
+            <li>Restitution via tableaux de bord</li>
+          </ul>
+          <div style="margin-top: 1rem; padding: 1rem; background: rgba(255, 255, 255, 0.7); border-radius: 8px;">
+            <p style="font-weight: bold; margin-bottom: 0.5rem;">👉 Parfait pour :</p>
+          <ul style="line-height: 1.8; margin-left: 1rem;">
+              <li>Décideurs</li>
+              <li>Ministères</li>
+              <li>PME</li>
+              <li>Directions métiers</li>
+          </ul>
+          </div>
+        </div>
+        
+        <div style="margin: 2rem 0;">
+          <h4 style="color: var(--primary-blue); margin-bottom: 1.5rem; font-size: 1.3rem;">🔐 5. Sécurité, conformité & IA responsable</h4>
+            </div>
+        
+        <div style="margin-bottom: 2.5rem; padding: 1.5rem; background: linear-gradient(135deg, #fff5f5 0%, #ffe8e8 100%); border-radius: 12px; border-left: 4px solid #f44336;">
+          <h5 style="color: #f44336; font-weight: bold; font-size: 1.1rem; margin-bottom: 1rem;">🛡️ Sécurisation des flux automatisés</h5>
+          <ul style="line-height: 1.8; margin-left: 1rem;">
+            <li>Gestion des accès et permissions</li>
+            <li>Conformité RGPD / protection des données</li>
+            <li>IA explicable et responsable</li>
+          </ul>
+            </div>
+        
+        <div style="margin: 2rem 0;">
+          <h4 style="color: var(--primary-blue); margin-bottom: 1.5rem; font-size: 1.3rem;">🧪 6. POC, MVP & expérimentation IA</h4>
+            </div>
+        
+        <div style="margin-bottom: 2.5rem; padding: 1.5rem; background: linear-gradient(135deg, #faf5ff 0%, #f3e8ff 100%); border-radius: 12px; border-left: 4px solid #9c27b0;">
+          <ul style="line-height: 1.8; margin-left: 1rem; margin-bottom: 1rem;">
+            <li>Proof of Concept IA</li>
+            <li>MVP automatisé en quelques semaines</li>
+            <li>Tests de faisabilité</li>
+            <li>Validation ROI rapide</li>
+          </ul>
+          <div style="margin-top: 1rem; padding: 1rem; background: rgba(255, 255, 255, 0.7); border-radius: 8px;">
+            <p style="font-weight: bold; margin-bottom: 0.5rem;">👉 Service très demandé par :</p>
+            <ul style="line-height: 1.8; margin-left: 1rem;">
+              <li>Startups</li>
+              <li>Institutions</li>
+              <li>Grandes entreprises</li>
+            </ul>
+            </div>
+          </div>
+        
+        <div style="margin: 2rem 0;">
+          <h4 style="color: var(--primary-blue); margin-bottom: 1.5rem; font-size: 1.3rem;">🧠 7. Conseil & stratégie IA</h4>
+        </div>
+        
+        <div style="margin-bottom: 2.5rem; padding: 1.5rem; background: linear-gradient(135deg, #e8f5e9 0%, #c8e6c9 100%); border-radius: 12px; border-left: 4px solid #2e7d32;">
+          <ul style="line-height: 1.8; margin-left: 1rem;">
+            <li>Audit des processus</li>
+            <li>Identification des cas d'usage à fort ROI</li>
+            <li>Roadmap IA & automatisation</li>
+            <li>Aide à la priorisation</li>
+          </ul>
+        </div>
+        
+        <div style="margin: 2rem 0;">
+          <h4 style="color: var(--primary-blue); margin-bottom: 1.5rem; font-size: 1.3rem;">📦 Packagings possibles (très startup-friendly)</h4>
+        </div>
+        
+        <div style="margin-bottom: 2.5rem; padding: 1.5rem; background: linear-gradient(135deg, #f8f9ff 0%, #e8f2ff 100%); border-radius: 12px; border-left: 4px solid var(--primary-blue);">
+          <h5 style="color: var(--primary-blue); font-weight: bold; font-size: 1.1rem; margin-bottom: 1rem;">🔹 Pack Startup</h5>
+          <ul style="line-height: 1.8; margin-left: 1rem;">
+            <li>1 agent IA</li>
+            <li>3 workflows automatisés</li>
+            <li>Intégration outils existants</li>
           </ul>
         </div>
         
         <div style="margin-bottom: 2.5rem; padding: 1.5rem; background: linear-gradient(135deg, #f0f8ff 0%, #e0f0ff 100%); border-radius: 12px; border-left: 4px solid #4285f4;">
-          <h5 style="color: #4285f4; font-weight: bold; font-size: 1.1rem; margin-bottom: 1rem;">🔗 Intégrations & API</h5>
+          <h5 style="color: #4285f4; font-weight: bold; font-size: 1.1rem; margin-bottom: 1rem;">🔹 Pack Entreprise</h5>
           <ul style="line-height: 1.8; margin-left: 1rem;">
-            <li>500+ connecteurs prêts à l'emploi</li>
-            <li>Connexions API REST, GraphQL et webhooks</li>
-            <li>Authentification OAuth et sécurisée</li>
+            <li>Agents IA multi-métiers</li>
+            <li>Orchestration MCP</li>
+            <li>Sécurité & supervision</li>
           </ul>
         </div>
         
         <div style="margin-bottom: 2.5rem; padding: 1.5rem; background: linear-gradient(135deg, #fff8f0 0%, #ffe8d0 100%); border-radius: 12px; border-left: 4px solid #ff9800;">
-          <h5 style="color: #ff9800; font-weight: bold; font-size: 1.1rem; margin-bottom: 1rem;">📊 Traitement & Transformation</h5>
+          <h5 style="color: #ff9800; font-weight: bold; font-size: 1.1rem; margin-bottom: 1rem;">🔹 Pack Institution / État</h5>
           <ul style="line-height: 1.8; margin-left: 1rem;">
-            <li>ETL et synchronisation automatisée des données</li>
-            <li>Transformation et enrichissement en temps réel</li>
-            <li>Manipulation JSON, XML et formats propriétaires</li>
+            <li>Automatisation à grande échelle</li>
+            <li>Gouvernance des agents IA</li>
+            <li>Reporting & traçabilité</li>
           </ul>
-        </div>
-        
-        <div style="margin-bottom: 2.5rem; padding: 1.5rem; background: linear-gradient(135deg, #f0fff0 0%, #e0ffe0 100%); border-radius: 12px; border-left: 4px solid #4caf50;">
-          <h5 style="color: #4caf50; font-weight: bold; font-size: 1.1rem; margin-bottom: 1rem;">🔔 Notifications & Monitoring</h5>
-          <ul style="line-height: 1.8; margin-left: 1rem;">
-            <li>Alertes intelligentes et rapports automatiques</li>
-            <li>Surveillance des workflows et métriques de performance</li>
-            <li>Notifications multi-canal (email, Slack, Teams)</li>
-          </ul>
-        </div>
-        
-        <div style="margin-top: 3rem; padding: 2rem; background: linear-gradient(135deg, #f5f8ff 0%, #e8f2ff 100%); border-radius: 16px; border: 2px solid var(--primary-blue); box-shadow: 0 8px 24px rgba(0, 102, 255, 0.1);">
-          <h4 style="color: var(--primary-blue); font-weight: bold; font-size: 1.3rem; margin-bottom: 1.5rem; text-align: center;">💰 ROI exceptionnel</h4>
-          <div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(250px, 1fr)); gap: 1.5rem; margin-top: 1.5rem;">
-            <div style="text-align: center; padding: 1rem; background: white; border-radius: 12px; box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);">
-              <div style="font-size: 2rem; font-weight: bold; color: var(--primary-blue); margin-bottom: 0.5rem;">50k€</div>
-              <div style="font-size: 0.9rem; color: #666;">Économies annuelles moyennes par client</div>
-            </div>
-            <div style="text-align: center; padding: 1rem; background: white; border-radius: 12px; box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);">
-              <div style="font-size: 2rem; font-weight: bold; color: #4caf50; margin-bottom: 0.5rem;">20h</div>
-              <div style="font-size: 0.9rem; color: #666;">Temps libéré par semaine</div>
-            </div>
-            <div style="text-align: center; padding: 1rem; background: white; border-radius: 12px; box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);">
-              <div style="font-size: 2rem; font-weight: bold; color: #ff9800; margin-bottom: 0.5rem;">500+</div>
-              <div style="font-size: 0.9rem; color: #666;">Intégrations disponibles</div>
-            </div>
-            <div style="text-align: center; padding: 1rem; background: white; border-radius: 12px; box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);">
-              <div style="font-size: 2rem; font-weight: bold; color: #9c27b0; margin-bottom: 0.5rem;">24/7</div>
-              <div style="font-size: 0.9rem; color: #666;">Workflows actifs en continu</div>
-            </div>
-          </div>
         </div>
       `,
       workflow: [
         { 
-          title: 'Analyse des Processus Métier (1-2 semaines)', 
-          desc: 'Cartographie des workflows existants et identification des tâches répétitives, analyse des outils et applications utilisés par les équipes, évaluation du potentiel d\'automatisation et ROI estimé, priorisation des cas d\'usage selon l\'impact business.'
+          title: 'Audit & Stratégie IA (1-2 semaines)', 
+          desc: 'Audit des processus métier et identification des cas d\'usage à fort ROI, analyse des outils existants (CRM, ERP, bases de données), évaluation du potentiel d\'automatisation et d\'IA, priorisation des projets selon l\'impact business, élaboration de la roadmap IA & automatisation.'
         },
         { 
-          title: 'Conception des Workflows (1-2 semaines)', 
-          desc: 'Modélisation des flux automatisés avec n8n, définition des triggers et conditions d\'exécution, conception de la logique métier et des transformations de données, validation des workflows avec les utilisateurs finaux, documentation technique des processus.'
+          title: 'Conception Agents IA & Workflows (2-3 semaines)', 
+          desc: 'Définition des agents IA métiers (support client, back-office, veille, décisionnels), modélisation des workflows automatisés (n8n/no-code), conception de l\'orchestration MCP pour coordonner agents et systèmes, définition des règles métier et garde-fous, validation des scénarios avec les utilisateurs finaux.'
         },
         { 
-          title: 'Développement et Configuration (2-4 semaines)', 
-          desc: 'Installation et configuration de l\'instance n8n (cloud/self-hosted), développement des workflows avec les nœuds appropriés, configuration des authentifications et connexions API, mise en place de la gestion d\'erreurs et retry logic, tests unitaires et d\'intégration.'
+          title: 'Développement & Intégration (3-5 semaines)', 
+          desc: 'Développement des agents IA sur mesure avec connexion aux outils existants (CRM, ERP, Google Workspace, Microsoft 365), développement des workflows automatisés et intégrations API, mise en place de l\'orchestration MCP et supervision, configuration de la sécurité, gestion des accès et conformité RGPD, tests unitaires et d\'intégration.'
         },
         { 
-          title: 'Tests et Validation Métier (1-2 semaines)', 
-          desc: 'Tests en environnement de pré-production avec données réelles, validation fonctionnelle avec les équipes métier, tests de charge et performance des workflows, correction des bugs et optimisation, validation de la conformité sécuritaire.'
+          title: 'Services Data & Intelligence (2-3 semaines)', 
+          desc: 'Mise en place de la collecte automatisée des données, nettoyage et structuration avec IA, développement des tableaux de bord et restitution intelligente, configuration des analyses prédictives et recommandations.'
         },
         { 
-          title: 'Déploiement et Formation (1 semaine)', 
-          desc: 'Mise en production des workflows avec migration progressive, formation des équipes à l\'utilisation et monitoring, documentation utilisateur et procédures de maintenance, mise en place des alertes et monitoring automatique.'
+          title: 'Tests & Validation (2-3 semaines)', 
+          desc: 'Tests en environnement de pré-production avec données réelles, validation fonctionnelle des agents IA et workflows avec les équipes métier, tests de charge et performance, validation de la traçabilité et logs des actions IA, correction des bugs et optimisation, validation de la conformité sécuritaire et IA responsable.'
         },
         { 
-          title: 'Support et Évolution (Continu)', 
-          desc: 'Monitoring des performances et erreurs des workflows, support technique réactif, optimisation continue selon les retours utilisateurs, développement de nouveaux workflows selon les besoins, maintenance et mises à jour de n8n.'
+          title: 'Déploiement & Formation (1-2 semaines)', 
+          desc: 'Mise en production progressive des agents IA et workflows automatisés, formation des équipes à l\'utilisation et au monitoring, documentation utilisateur et procédures de maintenance, mise en place des alertes, monitoring automatique et supervision humaine (human-in-the-loop).'
+        },
+        { 
+          title: 'Support & Évolution (Continu)', 
+          desc: 'Monitoring des performances des agents IA et workflows, support technique réactif, optimisation continue selon les retours utilisateurs, développement de nouveaux agents et workflows selon les besoins, maintenance et mises à jour, évolution de la stratégie IA selon les résultats obtenus.'
         }
       ],
       blog: [
@@ -1922,11 +2051,11 @@ function App() {
           description: "⚡ Révolutionnez votre façon de travailler ! Rejoignez les 97% de nos participants qui ont transformé leur productivité en équipe. Apprenez les secrets des entreprises Tech les plus performantes. Formation intensive avec des coachs agile certifiés. Places limitées à 12 participants pour un accompagnement personnalisé !"
         },
         {
-          title: 'Automatisation n8n sur-mesure',
+          title: "Solutions d'Automatisation & Agents IA",
           duration: '12 heures - 4 jours',
           price: '350€',
-          features: ['Maîtrise complète n8n', '500+ intégrations', 'Workflows complexes', 'Monitoring & alerting', 'ROI automation'],
-          description: "🤖 Libérez 20h/semaine de tâches répétitives ! L'automatisation n8n fait économiser 50k€/an à nos clients. Connectez tous vos outils sans coder. Formation exclusive avec le créateur de n8n France. Places ultra-limitées : seulement 8 participants max !"
+          features: ['Agents IA métiers sur mesure', 'Automatisation workflows (n8n/no-code)', 'Orchestration MCP', 'Services Data & Intelligence', 'ROI automation'],
+          description: "🤖 Libérez 20h/semaine de tâches répétitives ! Agents IA intelligents et automatisation de processus qui font économiser 50k€/an à nos clients. Créez vos agents IA métiers, automatisez vos workflows et orchestrez vos systèmes sans coder. Formation complète sur les solutions d'automatisation & agents IA. Places ultra-limitées : seulement 8 participants max !"
         },
         {
           title: 'Initiation à Docker et Sécurité des Conteneurs',
@@ -2269,8 +2398,8 @@ function App() {
             </div>
             <div className="service-card fade-in" onClick={() => openServiceModal('automatisation-n8n')}>
               <div className="service-icon">⚡</div>
-              <h3>Automatisation n8n sur-mesure</h3>
-              <p>Automatisez vos workflows métier avec n8n pour booster votre productivité et éliminer les tâches répétitives. Plus de 500 intégrations disponibles pour connecter tous vos outils.</p>
+              <h3>Solutions d'Automatisation & Agents IA</h3>
+              <p>Agents IA métiers sur mesure, automatisation de processus (n8n/no-code), orchestration intelligente des systèmes et services data & intelligence pour transformer votre entreprise.</p>
               <div className="card-arrow">→</div>
             </div>
             <div className="service-card fade-in" onClick={() => openServiceModal('conseil-transformation')}>
@@ -2393,6 +2522,9 @@ function App() {
           
           <div className="clients-grid fade-in">
             <div className="client-logo">
+              <div style={{fontSize: '1.5rem', fontWeight: 'bold', color: 'var(--primary-blue)'}}>La Cité de Cobaya</div>
+            </div>
+            <div className="client-logo">
               <div style={{fontSize: '2rem', fontWeight: 'bold', color: 'var(--primary-blue)'}}>TechCorp</div>
             </div>
             <div className="client-logo">
@@ -2403,12 +2535,6 @@ function App() {
             </div>
             <div className="client-logo">
               <div style={{fontSize: '2rem', fontWeight: 'bold', color: 'var(--primary-blue)'}}>SmartSys</div>
-            </div>
-            <div className="client-logo">
-              <div style={{fontSize: '2rem', fontWeight: 'bold', color: 'var(--primary-blue)'}}>CloudTech</div>
-            </div>
-            <div className="client-logo">
-              <div style={{fontSize: '2rem', fontWeight: 'bold', color: 'var(--primary-blue)'}}>SecureNet</div>
             </div>
           </div>
 
@@ -2599,7 +2725,7 @@ function App() {
               </div>
               <h3>Noumouké SOUARE</h3>
               <h4>Gérant & Ingénieur Logiciel</h4>
-              <p>Je mets en œuvre un management d'équipe structuré et une ingénierie logicielle rigoureuse pour garantir le succès de vos projets digitaux.</p>
+              <p>Je mets en œuvre un management d'équipe structuré, une ingénierie logicielle rigoureuse et une gouvernance des données avec accompagnement dans la conformité pour garantir le succès de vos projets digitaux.</p>
             </div>
             <div className="team-member fade-in">
               <div className="member-avatar">
@@ -2744,7 +2870,7 @@ function App() {
               <p>Prêt à démarrer votre projet ? Parlons-en ensemble !</p>
               <div style={{marginTop: '2rem'}}>
                 <p><strong>📧 Email:</strong> contact@weenoov.com</p>
-                <p><strong>📱 Téléphone:</strong> +224 620 24 26 12 / +336 16 90 87 42</p>
+                <p><strong>📱 Téléphone:</strong> +224 620 24 26 12 (WhatsApp) / +336 16 90 87 42</p>
                 <p><strong>📍 Adresse:</strong> ManquePas, Immeuble Kébé au 3ème étage, Conakry, Guinée (En cours de rénovation)</p>
                 <p><strong>⏰ Horaires:</strong> Lun-Ven 9h-17h30</p>
               </div>
@@ -2788,11 +2914,12 @@ function App() {
               <p><a href="#services">Applications Mobile</a></p>
               <p><a href="#services">Intelligence Artificielle</a></p>
               <p><a href="#services">Cybersécurité</a></p>
+              <p><a href="#services">Gouvernance des données & Accompagnement dans la conformité</a></p>
             </div>
             <div className="footer-section">
               <h3>Contact</h3>
-              <p>contact@weenoov.tech</p>
-              <p>+224 620 24 26 12 / +336 16 90 87 42</p>
+              <p>contact@weenoov.com</p>
+              <p>+224 620 24 26 12 (WhatsApp) / +336 16 90 87 42</p>
               <p>Conakry, ManquePas, Immeuble Kébé au 3ème étage, Guinée</p>
             </div>
             <div className="footer-section">
@@ -2803,7 +2930,7 @@ function App() {
             </div>
           </div>
           <div className="footer-bottom">
-            <p>&copy; 2025 weenoov. Tous droits réservés.</p>
+            <p>&copy; 2026 weenoov. Tous droits réservés.</p>
           </div>
         </div>
       </footer>
