@@ -2185,7 +2185,7 @@ function App() {
               </div>
               <div className="floating-card">
                 <div className="service-icon">🛡️</div>
-                <strong>Conformité & Protection des Données</strong>
+                <strong>Gouvernance des données & Accompagnement dans la conformité</strong>
               </div>
             </div>
           </div>
@@ -2233,7 +2233,7 @@ function App() {
             <div className="service-card fade-in" onClick={() => openServiceModal('conformite-donnees')}>
               <div className="service-icon">🛡️</div>
               <h3>Gouvernance des données & Accompagnement dans la conformité</h3>
-              <p>Assistance DPO, audit de conformité, gouvernance SSI, DPO externalisé, formation DPO et sensibilisation selon la loi guinéenne L/2016/037/AN et la future APDP.</p>
+              <p>Gouvernance des données, audit de conformité, gouvernance SSI, assistance DPO, DPO externalisé, formation DPO et sensibilisation selon la loi guinéenne L/2016/037/AN et la future APDP.</p>
               <div className="card-arrow">→</div>
             </div>
             <div className="service-card fade-in" onClick={() => openServiceModal('cloud-devops')}>
