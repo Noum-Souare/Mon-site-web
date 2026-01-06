@@ -3431,7 +3431,7 @@ function App() {
 
       {/* WhatsApp Chat Button */}
       <a
-        href="https://wa.me/00224620242612"
+        href="https://wa.me/+224620242612"
         target="_blank"
         rel="noopener noreferrer"
         className="whatsapp-float"
