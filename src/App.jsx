@@ -2308,14 +2308,11 @@ function App() {
                 <div className="service-icon">🔒</div>
                 <strong>Cybersécurité</strong>
               </div>
-              <div className="floating-card">
-                <div className="service-icon">⛓️</div>
-                <strong>Blockchain</strong>
-              </div>
-              <div className="floating-card" style={{padding: '0.75rem', maxWidth: '180px'}}>
+              <div className="floating-card" style={{padding: '0.75rem', maxWidth: '250px'}}>
                 <div className="service-icon">🛡️</div>
                 <strong>Gouvernance des données & Accompagnement dans la conformité</strong>
               </div>
+
             </div>
           </div>
         </div>
@@ -2718,7 +2715,7 @@ function App() {
             <div className="team-member fade-in">
               <div className="member-avatar">
                 <img 
-                  src="/images/noumouke.jpg" 
+                  src="/images/noumouke2.jpeg" 
                   alt="Noumouké SOUARE"
                   className="member-photo"
                 />
