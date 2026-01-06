@@ -1569,8 +1569,9 @@ body {
   }
 
   .floating-card:nth-child(5) {
-    top: 85px !important;
-    left: 30% !important;
+    top: auto !important;
+    bottom: 100px !important;
+    left: 50% !important;
     transform: translateX(-50%) !important;
   }
 
@@ -1918,7 +1919,7 @@ body {
 .back-to-top {
   position: fixed;
   bottom: 2rem;
-  right: 2rem;
+  left: 2rem;
   width: 60px;
   height: 60px;
   background: linear-gradient(135deg, var(--primary-blue), var(--secondary-blue));
