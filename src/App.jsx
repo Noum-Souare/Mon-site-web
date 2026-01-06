@@ -2310,7 +2310,7 @@ function App() {
               </div>
               <div className="floating-card" style={{padding: '1.05rem', maxWidth: '250px'}}>
                 <div className="service-icon">🛡️</div>
-                <strong>Gouvernance des données & Accompagnement dans la conformité</strong>
+                <strong>Gouvernance des données</strong>
               </div>
               
             </div>
