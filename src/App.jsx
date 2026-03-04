@@ -2736,6 +2736,20 @@ function App() {
               <h4>Ing. Sécurité & Développeur Blockchain</h4>
               <p>Je sécurise les systèmes d’information tout en développant des applications blockchain robustes et innovantes.</p>
             </div>
+
+            <div className="team-member fade-in">
+              <div className="member-avatar">
+                <img 
+                  src="/images/barry.jpg" 
+                  alt="Mohamed Lamine BARRY"
+                  className="member-photo"
+                />
+              </div>
+              <h3>Mohamed Lamine BARRY</h3>
+              <h4>Chargé des relations extérieures</h4>
+              <p>Je développe et entretiens des partenariats stratégiques en assurant une communication institutionnelle efficace et en renforçant l’image et l’influence de l’organisation auprès de ses parties prenantes.</p>
+            </div>
+
             <div className="team-member fade-in">
               <div className="member-avatar">
                 <img 
